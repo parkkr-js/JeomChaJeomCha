@@ -3,8 +3,6 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Nanum Gothic';
-  font-style: normal;
-  font-weight: 700;
   src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Bold.eot);
   src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Bold.eot?#iefix) format('embedded-opentype'),
        url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Bold.woff2) format('woff2'),
@@ -12,26 +10,27 @@ export const GlobalStyle = createGlobalStyle`
        url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Bold.ttf) format('truetype');
        font-display: swap;
 }
+
 @font-face {
   font-family: 'Nanum Gothic';
-  font-style: normal;
-  font-weight: 400;
-  src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot);
-  src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'),
-       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff2) format('woff2'),
-       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff) format('woff'),
-       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf) format('truetype');
-       font-display: swap;
-}
-@font-face {
-  font-family: 'Nanum Gothic';
-  font-style: normal;
-  font-weight: 800;
+  /* font-style: normal;
+  font-weight: 800; */
   src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-ExtraBold.eot);
   src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-ExtraBold.eot?#iefix) format('embedded-opentype'),
        url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-ExtraBold.woff2) format('woff2'),
        url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-ExtraBold.woff) format('woff'),
        url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-ExtraBold.ttf) format('truetype');
+       font-display: swap;
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  /* font-style: normal;
+  font-weight: 800; */
+  src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot);
+  src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'),
+       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff2) format('woff2'),
+       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.woff) format('woff'),
+       url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf) format('truetype');
        font-display: swap;
 }
 body {
@@ -67,7 +66,7 @@ export const theme = {
     },
     subtitle1Regular: {
       fontFamily: "Nanum Gothic",
-      fontWeight: "regular",
+      fontWeight: "normal",
       fontSize: "25px",
       letterSpacing: "0px",
     },
@@ -79,7 +78,7 @@ export const theme = {
     },
     body1Regular: {
       fontFamily: "Nanum Gothic",
-      fontWeight: "regular",
+      fontWeight: "normal",
       fontSize: "20px",
       letterSpacing: "0px",
     },
