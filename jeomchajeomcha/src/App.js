@@ -1,10 +1,13 @@
 import StyleTest from "./pages/StyleTest";
-
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
 function App() {
   return (
-  <>
-  <StyleTest />
-  </>
+    <>
+      <ThemeProvider theme={theme}>
+        <StyleTest />
+      </ThemeProvider>
+    </>
   );
 }
 

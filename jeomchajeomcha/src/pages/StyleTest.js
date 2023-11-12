@@ -1,13 +1,12 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { theme } from "../styles/theme";
+import styled from "styled-components";
 
 function StyleTest() {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Header1>헤더 0 스타일 적용 예시</Header1>
       <h1>미적용한거</h1>
-    </ThemeProvider>
+    </>
   );
 }
 
