@@ -38,7 +38,7 @@ const BookTitle = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
 `;
 
-const NewBook = styled.h0`
+const NewBook = styled.h1`
   font-weight: ${({ theme }) => theme.fontWeights.header0};
   font-size: ${({ theme }) => theme.fontSizes.header0};
 `;
