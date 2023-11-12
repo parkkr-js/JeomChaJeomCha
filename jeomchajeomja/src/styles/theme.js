@@ -34,8 +34,6 @@ export const GlobalStyle = createGlobalStyle`
        font-display: swap;
 }
 body {
-    margin: 0;
-    padding: 0;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -45,58 +43,25 @@ body {
 `;
 
 export const theme = {
-  typography: {
-    header0: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "extraBold",
-      fontSize: "65px",
-      letterSpacing: "0px",
-    },
-    header1: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "bold",
-      fontSize: "48px",
-      letterSpacing: "0px",
-    },
-    subtitle1: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "bold",
-      fontSize: "25px",
-      letterSpacing: "0px",
-    },
-    subtitle1Regular: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "normal",
-      fontSize: "25px",
-      letterSpacing: "0px",
-    },
-    body1Bold: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "bold",
-      fontSize: "20px",
-      letterSpacing: "0px",
-    },
-    body1Regular: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "normal",
-      fontSize: "20px",
-      letterSpacing: "0px",
-    },
-    body2: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "bold",
-      fontSize: "14px",
-      letterSpacing: "0px",
-    },
-    button1: {
-      fontFamily: "Nanum Gothic",
-      fontWeight: "bold",
-      fontSize: "24px",
-      letterSpacing: "0px",
-    },
+  fontSizes: {
+    header0: "65px",
+    header1: "40px",
+    subtitle1: "25px",
+    body1: "20px",
+    body2: "14px",
+    button1: "24px",
   },
+  fontWeights: {
+    header0: "800",
+    header1: "700",
+    subtitle1: "700",
+    body1: "700",
+    body2: "700",
+    button1: "700",
+  },
+  letterSpacing: "0px",
   colors: {
-    backgroundWhite: "#FFFFFF",
     black: "#000000",
+    white: "#FFFFFF",
   },
 };
