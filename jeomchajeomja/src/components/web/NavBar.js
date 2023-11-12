@@ -16,7 +16,7 @@ function NavBar() {
           <MainLogo src={Logo} alt="점차점자 로고" />
         </RowDiv>
         <SubHeader>
-        서비스 설명 한줄 정도는 들어가면 좋을 거 같다.
+        서비스 설명 한줄 정도는 들어가면 좋을 것 같다.
         </SubHeader>
       </Header>
     </Div>
@@ -27,6 +27,8 @@ export default NavBar;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
   height: 348px;
@@ -48,16 +50,20 @@ const Body = styled.body`
 
 const LinkDiv = styled.div`
   display: flex;
-  justify-content: flex-end;
-  padding-right: 200px;
-  padding-top: 20px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  background-color: red;
+  padding-top: 30px;
 `;
 
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-top: 150px;
-  padding-left: 200px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header0};
   font-size: 50px;
