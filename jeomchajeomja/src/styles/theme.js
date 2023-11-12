@@ -1,6 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
+
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap');
+       font-display: swap;
+}
+
 @font-face {
   font-family: 'Nanum Gothic';
   src: url(//themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Bold.eot);
