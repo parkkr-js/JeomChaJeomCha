@@ -1,17 +1,20 @@
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
+import { GlobalStyle } from "./styles/theme";
+import { BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
+import Router from "./router/Router";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </ThemeProvider>
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Router/>
+      </ThemeProvider>
+    </>
   );
 }
 
