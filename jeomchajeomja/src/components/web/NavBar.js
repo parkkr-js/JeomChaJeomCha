@@ -62,6 +62,7 @@ const Header = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.header0};
   font-size: 50px;
   width: fit-content;
+  font-family: "Nanum Myeongjo";
 `;
 
 const SubHeader = styled.div`
