@@ -46,28 +46,26 @@ const Body = styled.body`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
+  width: 80px;
 `;
 
 const LinkDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  background-color: red;
   padding-top: 30px;
+  padding-left: 860px;
 `;
 
 const Header = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding-top: 150px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header0};
   font-size: 50px;
-  width: fit-content;
+  width: 1000px;
   font-family: "Nanum Myeongjo";
 `;
 
