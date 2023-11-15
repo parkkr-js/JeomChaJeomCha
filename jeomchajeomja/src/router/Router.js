@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home";
 import NotFound from "../pages/NotFound";
-import Login from "../pages/Login";
+import Login from "../pages/login";
 
 function Router() {
   return (
