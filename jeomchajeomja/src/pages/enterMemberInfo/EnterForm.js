@@ -50,7 +50,7 @@ const Row = styled.div`
 
 const StyledInput = styled.input`
   border: none;
-  width: 220px;
+  width: 230px;
   border-radius: 15px;
   padding-left: 20px;
   padding-right: 10px;
@@ -94,8 +94,8 @@ const ActionButton = styled.button`
   bottom: 0;
   width: 109px;
   border: none;
-  font-size: ${({ theme }) => theme.fontSizes.button1};
-  font-weight: ${({ theme }) => theme.fontWeights.button1};
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-weight: ${({ theme }) => theme.fontWeights.body1};
   font-family: "Nanum Gothic", serif;
   background: transparent;
   color: ${({ theme }) => theme.colors.black};
