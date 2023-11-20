@@ -2,6 +2,7 @@ import styled from "styled-components";
 import arrowimg from "../../assets/img/ion_chevron-back.svg";
 import num1img from "../../assets/img/N1.svg";
 import num2img from "../../assets/img/N2.svg";
+import EnterForm from "../enterMemberInfo/EnterForm";
 
 function EnterMemberInfo() {
   return (
@@ -16,7 +17,9 @@ function EnterMemberInfo() {
         <Content1_2>
           <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
           <Body1>주문 및 배송 확인을 위해 필요합니다.</Body1>
+          <EnterForm />
         </Content1_2>
+       
       </Content1_1>
 
       <Content1_1>
