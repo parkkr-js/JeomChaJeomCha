@@ -2,6 +2,7 @@ import * as React from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
+import { Link } from "react-router-dom";
 
 export default function CustomSearch() {
   return (
@@ -32,12 +33,13 @@ export default function CustomSearch() {
         }}
         placeholder="음성입력"
       />
-
-      <Button
-        style={{ width: "96px", marginRight: "10px", marginLeft: "10px" }}
-      >
-        검색
-      </Button>
+      <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
+        <Button
+          style={{ width: "96px", marginRight: "10px", marginLeft: "10px" }}
+        >
+          검색
+        </Button>
+      </Link>
     </Paper>
   );
 }

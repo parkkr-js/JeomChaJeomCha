@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import NavBar from "../../components/web/NavBar";
 import { Button } from "../../components/web/home/Button";
-import  Search from "../../components/web/home/Search";
+import Search from "../../components/web/home/Search";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
@@ -18,38 +18,38 @@ function Home() {
       </Row>
       <Line />
       <Div>
-      <Row2>
-      <SubDiv>
-        <Header>학습자료 검색</Header>
-        <Body>
-          음성 검색은 alt 키를 누른 후<br />
-          벨소리가 나면 키워드를 말해주세요.
-        </Body>
-      </SubDiv>
-      <Search/>
-      </Row2>
-      <Space />
-      <Row2>
-        <SubDiv>
-          <Header>키워드 검색</Header>
-          <Body>
-            해당 키워드를 마우스로 클릭,
-            <br />
-            또는 키보드로 번호를 누르면
-            <br />
-            검색됩니다.
-          </Body>
-        </SubDiv>
-        <ButtonContainer>
-          {keyWords.map((keyWordText, index) => (
-            <Button key={index}>
-              <span>{index + 1}</span>
-              <span>{keyWordText}</span>
-            </Button>
-          ))}
-        </ButtonContainer>
-      </Row2>
-  </Div>
+        <Row2>
+          <SubDiv>
+            <Header>학습자료 검색</Header>
+            <Body>
+              음성 검색은 alt 키를 누른 후<br />
+              벨소리가 나면 키워드를 말해주세요.
+            </Body>
+          </SubDiv>
+          <Search />
+        </Row2>
+        <Space />
+        <Row2>
+          <SubDiv>
+            <Header>키워드 검색</Header>
+            <Body>
+              해당 키워드를 마우스로 클릭,
+              <br />
+              또는 키보드로 번호를 누르면
+              <br />
+              검색됩니다.
+            </Body>
+          </SubDiv>
+          <ButtonContainer>
+            {keyWords.map((keyWordText, index) => (
+              <Button key={index}>
+                <span>{index + 1}</span>
+                <span>{keyWordText}</span>
+              </Button>
+            ))}
+          </ButtonContainer>
+        </Row2>
+      </Div>
     </>
   );
 }
@@ -57,8 +57,7 @@ function Home() {
 export default Home;
 
 const Div = styled.div`
-
-  display: flex;  
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
