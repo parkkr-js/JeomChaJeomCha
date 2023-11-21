@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import NotFoundImg from "../assets/img/404.png";
-import Logo from "../assets/img/점차점자로고.svg";
+import NotFoundImg from "../../img/404.png";
+import Logo from "../../img/점차점자로고.svg";
 
 function NotFound() {
   return (

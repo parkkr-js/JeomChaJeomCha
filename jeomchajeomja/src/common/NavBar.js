@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "../../assets/img/점차점자로고.svg";
+import Logo from "../img/점차점자로고.svg";
 
 function NavBar() {
   return (

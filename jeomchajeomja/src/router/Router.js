@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/home";
-import NotFound from "../pages/NotFound";
-import Login from "../pages/login";
-import SearchResult from "../pages/search";
-import EnterMemberInfo from "../pages/enterMemberInfo";
+import Home from "../layout/home";
+import NotFound from "../layout/notFoundPage";
+import Login from "../layout/loginPage";
+import SearchResult from "../layout/searchResultPage";
+import EnterMemberInfo from "../layout/enterMemberInfoPage";
 
 function Router() {
   return (

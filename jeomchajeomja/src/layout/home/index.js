@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import NavBar from "../../components/web/NavBar";
-import { Button } from "../../components/web/home/Button";
-import Search from "../../components/web/home/Search";
+import NavBar from "../../common/NavBar";
+import { Button } from "./components/Button";
+import Search from "./components/Search";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);

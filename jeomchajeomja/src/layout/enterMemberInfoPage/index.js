@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import arrowimg from "../../assets/img/ion_chevron-back.svg";
-import num1img from "../../assets/img/N1.svg";
-import num2img from "../../assets/img/N2.svg";
-import EnterForm from "../enterMemberInfo/EnterForm";
+import arrowimg from "../../img/ion_chevron-back.svg";
+import num1img from "../../img/N1.svg";
+import num2img from "../../img/N2.svg";
+import EnterForm from "./components/EnterForm";
 
 function EnterMemberInfo() {
   return (
