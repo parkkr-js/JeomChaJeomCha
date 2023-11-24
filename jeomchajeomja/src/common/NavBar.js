@@ -6,7 +6,7 @@ function NavBar() {
   return (
     <Div>
       <LinkDiv>
-        <Link to="/login">
+        <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
           <Body>로그인</Body>
         </Link>
       </LinkDiv>
@@ -15,9 +15,7 @@ function NavBar() {
           점차점자
           <MainLogo src={Logo} alt="점차점자 로고" />
         </RowDiv>
-        <SubHeader>
-        서비스 설명 한줄 정도는 들어가면 좋을 것 같다.
-        </SubHeader>
+        <SubHeader>서비스 설명 한줄 정도는 들어가면 좋을 것 같다.</SubHeader>
       </Header>
     </Div>
   );
