@@ -12,13 +12,13 @@ function Home() {
   return (
     <>
       <NavBar />
-      <Row>
+      {/* <Row>
         {newBook && <BookTitle>{newBook.title}</BookTitle>}
         <NewBook>NEW BOOK</NewBook>
-      </Row>
+      </Row> */}
       <Line />
       <Div>
-        <Row2>
+        <ColumnsDiv2>
           <SubDiv>
             <Header>학습자료 검색</Header>
             <Body>
@@ -27,9 +27,9 @@ function Home() {
             </Body>
           </SubDiv>
           <Search />
-        </Row2>
+        </ColumnsDiv2>
         <Space />
-        <Row2>
+        <ColumnsDiv2>
           <SubDiv>
             <Header>키워드 검색</Header>
             <Body>
@@ -48,7 +48,7 @@ function Home() {
               </Button>
             ))}
           </ButtonContainer>
-        </Row2>
+        </ColumnsDiv2>
       </Div>
     </>
   );
@@ -95,9 +95,9 @@ const Row = styled.div`
   gap: 30px;
 `;
 
-const Row2 = styled.div`
+const ColumnsDiv2 = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -125,8 +125,9 @@ const ButtonContainer = styled.div`
 
 const Line = styled.div`
   width: 100%;
+  margin-top: 25px;
   margin-bottom: 55px;
-  height: 5px;
+  height: 2px;
   background-color: ${({ theme }) => theme.colors.black};
 `;
 
