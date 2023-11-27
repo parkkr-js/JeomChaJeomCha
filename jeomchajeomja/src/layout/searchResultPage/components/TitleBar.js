@@ -6,20 +6,26 @@ const TitleBar = () => {
   const navigate = useNavigate();
 
   return (
-    <Div>
-      <LinkDiv>
-        <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
-          <SubTitle>로그아웃</SubTitle>
-        </Link>
-        <Span> | </Span>
-        <Link style={{ textDecoration: "none", color: "inherit" }}>
-          <SubTitle>내정보</SubTitle>
-        </Link>
-        <Span> | </Span>
-        <Link style={{ textDecoration: "none", color: "inherit" }}>
-          <SubTitle>장바구니</SubTitle>
-        </Link>
-      </LinkDiv>
+    <Column>
+      <Row>
+        <Button>음성 사용 설명서 듣기</Button>
+        <LinkDiv>
+          <Link
+            to="/login"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <SubTitle>로그아웃</SubTitle>
+          </Link>
+          <Span>&nbsp; | &nbsp;</Span>
+          <Link style={{ textDecoration: "none", color: "inherit" }}>
+            <SubTitle>내정보</SubTitle>
+          </Link>
+          <Span>&nbsp; | &nbsp;</Span>
+          <Link style={{ textDecoration: "none", color: "inherit" }}>
+            <SubTitle>장바구니</SubTitle>
+          </Link>
+        </LinkDiv>
+      </Row>
       <div style={{ height: "83px" }} />
       <Row>
         <img
@@ -31,17 +37,14 @@ const TitleBar = () => {
         <Header>학습자료 검색</Header>
         <div style={{ width: "48px" }} />
       </Row>
-      <SubHeader>
-        모든 학습자료의 구매비용은 출력비 및 배송비를 포함한 수수료입니다.
-      </SubHeader>
       <div style={{ height: "65px" }} />
-    </Div>
+    </Column>
   );
 };
 
 export default TitleBar;
 
-const Div = styled.div`
+const Column = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +65,6 @@ const LinkDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100%;
 `;
 
 const Header = styled.div`
@@ -78,7 +80,7 @@ const Header = styled.div`
 
 const SubTitle = styled.div`
   color: ${({ theme }) => theme.colors.white};
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
 `;
 
@@ -89,9 +91,20 @@ const Span = styled.span`
   white-space: pre;
 `;
 
-const SubHeader = styled.div`
+const Button = styled.button`
+  padding: 5px 10px;
+  white-space: nowrap;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  font-weight: ${({ theme }) => theme.fontWeights.body1};
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+`;
+
+/* const SubHeader = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
   font-size: 26px;
   font-family: "Nanum Myeongjo";
-`;
+`; */
