@@ -22,8 +22,7 @@ function Home() {
           <SubDiv>
             <Header>학습자료 검색</Header>
             <Body>
-              음성 검색은 alt 키를 누른 후<br />
-              벨소리가 나면 키워드를 말해주세요.
+              음성 검색은 alt 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
             </Body>
           </SubDiv>
           <Search />
@@ -33,10 +32,7 @@ function Home() {
           <SubDiv>
             <Header>키워드 검색</Header>
             <Body>
-              해당 키워드를 마우스로 클릭,
-              <br />
-              또는 키보드로 번호를 누르면
-              <br />
+              해당 키워드를 마우스로 클릭, 또는 키보드로 번호를 누르면
               검색됩니다.
             </Body>
           </SubDiv>
@@ -68,7 +64,7 @@ const SubDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 430px;
+  width: fit-content;
   gap: 5px;
 `;
 
@@ -114,13 +110,12 @@ const NewBook = styled.h1`
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 561px;
-  height: 128px;
-  padding: 0;
+  width: fit-content;
+  height: fit-content;
 `;
 
 const Line = styled.div`

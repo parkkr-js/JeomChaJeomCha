@@ -15,7 +15,7 @@ function NavBar() {
           점차점자
           <MainLogo src={Logo} alt="점차점자 로고" />
         </RowDiv>
-        <SubHeader>서비스 설명 한줄 정도는 들어가면 좋을 것 같다.</SubHeader>
+        <SubHeader>더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.</SubHeader>
       </Header>
     </Div>
   );
@@ -29,7 +29,7 @@ const Div = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
-  height: 348px;
+  height: 293px;
 `;
 
 const RowDiv = styled.div`
@@ -59,11 +59,10 @@ const Header = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 150px;
+  /* padding-top: 50px; */
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header0};
   font-size: 50px;
-  width: 1000px;
   font-family: "Nanum Myeongjo";
 `;
 
