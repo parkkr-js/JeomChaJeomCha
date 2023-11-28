@@ -5,6 +5,7 @@ import AudioBtn from "../common/AudioBtn";
 
 function NavBar() {
   return (
+    <Container>
     <Div>
       <LinkDiv>
         <AudioBtn />
@@ -22,16 +23,28 @@ function NavBar() {
         </SubHeader>
       </Header>
     </Div>
+    </Container>
   );
 }
 export default NavBar;
 
-const Div = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
+  height: fit-content;
+  background-color: ${({ theme }) => theme.colors.black};
+`;
+
+const Div = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.black};
+  width: 1200px;
   height: 293px;
+  justify-content: center;
+  margin: 0 auto;
 `;
 
 const RowDiv = styled.div`
@@ -57,10 +70,10 @@ const LinkDiv = styled.div`
   justify-content: space-between;
   margin-top: 30px;
   margin-bottom: 88px;
-  padding-left: 250px;
-  padding-right: 240px;
-  width: 100%;
-  height: fit-content;
+  /* padding-left: 250px;
+  padding-right: 240px; */
+  /* width: 100%;
+  height: fit-content; */
 `;
 
 const Header = styled.div`
@@ -76,7 +89,6 @@ const Header = styled.div`
   font-family: "Nanum Myeongjo", serif;
   font-style: normal;
   line-height: 75px;
-  padding-left: 240px;
 `;
 
 const SubHeader = styled.div`
@@ -86,6 +98,7 @@ font-size: 26px;
 font-style: normal;
 font-weight: ${({ theme }) => theme.fontWeights.header1};
 line-height: 39px;
+padding-bottom: 23px;
 `;
 
 const MainLogo = styled.img`

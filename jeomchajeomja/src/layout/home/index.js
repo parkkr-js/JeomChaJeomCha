@@ -7,7 +7,7 @@ import Search from "./components/Search";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
-  const keyWords = ["점자학습", "초등저학", "초등고학", "중등", "고등"];
+  const keyWords = ["초등저학", "초등고학", "중등", "고등"];
 
   return (
     <>
@@ -18,27 +18,24 @@ function Home() {
       </Row> */}
       <Line />
       <Div>
-            <Header>학습자료 검색</Header>
-            <Body>
-              음성 검색은 alt 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
-            </Body>
-          <Search />
+        <Header>학습자료 검색</Header>
+        <Body>
+          음성 검색은 alt 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
+        </Body>
+        <Search />
         <Space />
-          <SubDiv>
-            <Header>키워드 검색</Header>
-            <Body>
-              해당 키워드를 마우스로 클릭, 또는 키보드로 번호를 누르면
-              검색됩니다.
-            </Body>
-          </SubDiv>
-          <ButtonContainer>
-            {keyWords.map((keyWordText, index) => (
-              <Button key={index}>
-                <span>{index + 1}</span>
-                <span>{keyWordText}</span>
-              </Button>
-            ))}
-          </ButtonContainer>
+        <Header>키워드 검색</Header>
+        <Body>
+          해당 키워드를 마우스로 클릭, 또는 키보드로 번호를 누르면 검색됩니다.
+        </Body>
+        <ButtonContainer>
+          {keyWords.map((keyWordText, index) => (
+            <Button key={index}>
+              <span>{index + 1}</span>
+              <span>{keyWordText}</span>
+            </Button>
+          ))}
+        </ButtonContainer>
       </Div>
     </>
   );
@@ -49,7 +46,10 @@ export default Home;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  width: 1200px;
+  flex-shrink: 0;
   align-items: start;
+  margin: 0 auto;
 `;
 
 const SubDiv = styled.div`
@@ -71,6 +71,7 @@ const Body = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  padding-bottom: 36px;
 `;
 
 const Row = styled.div`
@@ -109,6 +110,7 @@ const ButtonContainer = styled.div`
   gap: 10px;
   width: fit-content;
   height: fit-content;
+  margin-bottom: 80px;
 `;
 
 const Line = styled.div`
@@ -121,5 +123,5 @@ const Line = styled.div`
 
 const Space = styled.div`
   width: 100%;
-  height: 80px;
+  height: 70px;
 `;
