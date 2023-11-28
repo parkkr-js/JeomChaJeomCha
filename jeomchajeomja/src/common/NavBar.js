@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../img/점차점자로고.svg";
+import AudioBtn from "./AudioBtn";
 
 function NavBar() {
   return (
     <Div>
       <LinkDiv>
+        <AudioBtn />
         <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
           <Body>로그인</Body>
         </Link>
@@ -15,7 +17,9 @@ function NavBar() {
           점차점자
           <MainLogo src={Logo} alt="점차점자 로고" />
         </RowDiv>
-        <SubHeader>더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.</SubHeader>
+        <SubHeader>
+          더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.
+        </SubHeader>
       </Header>
     </Div>
   );
@@ -42,9 +46,14 @@ const RowDiv = styled.div`
 
 const Body = styled.body`
   font-size: ${({ theme }) => theme.fontSizes.body1};
-  color: ${({ theme }) => theme.colors.white};
+  font-style: normal;
   font-weight: ${({ theme }) => theme.fontWeights.body1};
+  /* font-family: NanumGothic; */
+  /* font-size: 25px; */
+  /* font-weight: 700; */
+  color: ${({ theme }) => theme.colors.white};
   width: 80px;
+  line-height: 37.5px;
 `;
 
 const LinkDiv = styled.div`
