@@ -33,7 +33,7 @@ export default function CustomSearch() {
           style={{
             display: "inline-flex",
             width: 'fit-content',
-            height: "'auto",
+            height: "auto",
             padding: "9px 25px",
             justifyContent: "center",
             alignItems: "center",

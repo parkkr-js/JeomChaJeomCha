@@ -18,12 +18,10 @@ function Home() {
       </Row> */}
       <Line />
       <Div>
-          <SubDiv>
             <Header>학습자료 검색</Header>
             <Body>
               음성 검색은 alt 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
             </Body>
-          </SubDiv>
           <Search />
         <Space />
           <SubDiv>
