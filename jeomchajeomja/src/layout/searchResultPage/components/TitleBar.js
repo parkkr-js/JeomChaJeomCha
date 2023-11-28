@@ -14,15 +14,15 @@ const TitleBar = () => {
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <SubTitle>로그아웃</SubTitle>
+            <SubTitleReg>로그아웃</SubTitleReg>
           </Link>
-          <Span>&nbsp; | &nbsp;</Span>
+          <SubTitle>&nbsp; | &nbsp;</SubTitle>
           <Link style={{ textDecoration: "none", color: "inherit" }}>
-            <SubTitle>내정보</SubTitle>
+            <SubTitleReg>내정보</SubTitleReg>
           </Link>
-          <Span>&nbsp; | &nbsp;</Span>
+          <SubTitle>&nbsp; | &nbsp;</SubTitle>
           <Link style={{ textDecoration: "none", color: "inherit" }}>
-            <SubTitle>장바구니</SubTitle>
+            <SubTitleReg>장바구니</SubTitleReg>
           </Link>
         </LinkDiv>
       </Row>
@@ -78,13 +78,13 @@ const Header = styled.div`
   font-family: "Nanum Myeongjo";
 `;
 
-const SubTitle = styled.div`
+const SubTitleReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
 `;
 
-const Span = styled.span`
+const SubTitle = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   color: ${({ theme }) => theme.colors.white};
