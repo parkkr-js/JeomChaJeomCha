@@ -3,28 +3,27 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 function EnterSearch() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => console.log(data);
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-      <Row>
-        <InputWrapper>
-          <StyledInput
-            {...register("keyword", { required: true })}
-            placeholder="키워드"
-          />
-          <ActionButton>음성입력</ActionButton>
-          <Button type="submit" value="Submit">
-            검색
-          </Button>
-        </InputWrapper>
-      </Row>
+      <Column>
+        <Row>
+          <InputWrapper>
+            <StyledInput
+              {...register("keyword", { required: true })}
+              placeholder="키워드"
+            />
+            <Button type="submit" value="Submit">
+              검색
+            </Button>
+          </InputWrapper>
+        </Row>
+        <SubTitle>
+          음성 검색은 alt키를 누른 후 벨소리가 나면 키워드를 말해주세요.
+        </SubTitle>
+      </Column>
     </form>
   );
 }
@@ -43,7 +42,15 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 20px 240px;
+  width: 100%;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 25px 240px;
+  gap: 5px;
 `;
 
 const StyledInput = styled.input`
@@ -84,17 +91,6 @@ const StyledInput = styled.input`
   }
 `;
 
-const ActionButton = styled.button`
-  border: none;
-  font-size: ${({ theme }) => theme.fontSizes.body1};
-  font-weight: ${({ theme }) => theme.fontWeights.body1};
-  font-family: "Nanum Gothic", serif;
-  background: transparent;
-  white-space: nowrap;
-  color: ${({ theme }) => theme.colors.black};
-  cursor: pointer;
-`;
-
 const Button = styled.button`
   padding: 9px 25px;
   white-space: nowrap;
@@ -105,3 +101,20 @@ const Button = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.button1};
   font-size: ${({ theme }) => theme.fontSizes.button1};
 `;
+
+const SubTitle = styled.div`
+  color: ${({ theme }) => theme.colors.b};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
+  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+`;
+
+/* const ActionButton = styled.button`
+  border: none;
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-weight: ${({ theme }) => theme.fontWeights.body1};
+  font-family: "Nanum Gothic", serif;
+  background: transparent;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.colors.black};
+  cursor: pointer;
+`; */
