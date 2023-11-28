@@ -18,7 +18,6 @@ function Home() {
       </Row> */}
       <Line />
       <Div>
-        <ColumnsDiv2>
           <SubDiv>
             <Header>학습자료 검색</Header>
             <Body>
@@ -26,9 +25,7 @@ function Home() {
             </Body>
           </SubDiv>
           <Search />
-        </ColumnsDiv2>
         <Space />
-        <ColumnsDiv2>
           <SubDiv>
             <Header>키워드 검색</Header>
             <Body>
@@ -44,7 +41,6 @@ function Home() {
               </Button>
             ))}
           </ButtonContainer>
-        </ColumnsDiv2>
       </Div>
     </>
   );
@@ -55,8 +51,7 @@ export default Home;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-items: start;
 `;
 
 const SubDiv = styled.div`
@@ -120,8 +115,8 @@ const ButtonContainer = styled.div`
 
 const Line = styled.div`
   width: 100%;
-  margin-top: 25px;
-  margin-bottom: 55px;
+  margin-top: 19px;
+  margin-bottom: 50px;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.black};
 `;

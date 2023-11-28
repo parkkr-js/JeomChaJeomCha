@@ -29,8 +29,6 @@ export default NavBar;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
   background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
   height: 293px;
@@ -48,9 +46,6 @@ const Body = styled.body`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   font-style: normal;
   font-weight: ${({ theme }) => theme.fontWeights.body1};
-  /* font-family: NanumGothic; */
-  /* font-size: 25px; */
-  /* font-weight: 700; */
   color: ${({ theme }) => theme.colors.white};
   width: 80px;
   line-height: 37.5px;
@@ -81,7 +76,7 @@ const Header = styled.div`
   font-family: "Nanum Myeongjo", serif;
   font-style: normal;
   line-height: 75px;
-  background-color: red;
+  padding-left: 240px;
 `;
 
 const SubHeader = styled.div`

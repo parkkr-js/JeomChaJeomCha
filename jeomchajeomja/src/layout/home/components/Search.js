@@ -11,8 +11,8 @@ export default function CustomSearch() {
       sx={{
         display: "flex",
         alignItems: "center",
-        width: 560,
-        height: 74,
+        width: "960px",
+        height: "74px",
         borderRadius: "20px",
         border: "3px solid #000000",
         overflow: "hidden",
@@ -25,17 +25,26 @@ export default function CustomSearch() {
           fontSize: "24px",
           fontWeight: "bold",
           color: "black",
-          "&::placeholder": {
-            color: "black",
-            opacity: 1,
-          },
           textAlign: "right",
         }}
-        placeholder="음성입력"
       />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
         <Button
-          style={{ width: "96px", marginRight: "10px", marginLeft: "10px" }}
+          style={{
+            display: "inline-flex",
+            width: 'fit-content',
+            height: "'auto",
+            padding: "9px 25px",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "15px",
+            fontSize: "24px",
+            fontWeight: 700,
+            fontFamily: 'NanumGothic',
+            fontStyle: 'normal',
+            lineHeight: "36px",
+            margin: "10px",
+          }}
         >
           검색
         </Button>
