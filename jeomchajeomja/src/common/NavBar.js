@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../img/점차점자로고.svg";
-import AudioBtn from "./AudioBtn";
+import AudioBtn from "../common/AudioBtn";
 
 function NavBar() {
   return (
@@ -29,8 +29,8 @@ export default NavBar;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
   height: 293px;
@@ -59,33 +59,42 @@ const Body = styled.body`
 const LinkDiv = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 30px;
-  padding-left: 860px;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 88px;
+  padding-left: 250px;
+  padding-right: 240px;
+  width: 100%;
+  height: fit-content;
 `;
 
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  height: auto;
   justify-content: center;
   align-items: flex-start;
-  /* padding-top: 50px; */
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header0};
-  font-size: 50px;
-  font-family: "Nanum Myeongjo";
+  font-size: ${({ theme }) => theme.fontSizes.header1};
+  font-family: "Nanum Myeongjo", serif;
+  font-style: normal;
+  line-height: 75px;
+  background-color: red;
 `;
 
 const SubHeader = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  padding-top: 20px;
-  color: ${({ theme }) => theme.colors.white};
-  font-weight: ${({ theme }) => theme.fontWeights.header1};
-  font-size: 26px;
+color: ${({ theme }) => theme.colors.white};
+font-family: 'NanumMyeongjo', serif;
+font-size: 26px;
+font-style: normal;
+font-weight: ${({ theme }) => theme.fontWeights.header1};
+line-height: 39px;
 `;
 
 const MainLogo = styled.img`
   background-color: ${({ theme }) => theme.colors.black};
-  width: 300px;
-  height: auto;
+  width: 316px;
+  height: 75px;
 `;

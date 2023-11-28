@@ -52,7 +52,7 @@ body {
 export const theme = {
   fontSizes: {
     header0: "65px",
-    header1: "40px",
+    header1: "50px",
     subtitle1: "25px",
     body1: "20px",
     body2: "14px",
