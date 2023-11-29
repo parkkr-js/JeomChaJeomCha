@@ -22,7 +22,7 @@ const BookBlock = ({ book, id }) => {
             <div style={{ width: "60px" }} />
             <BodyReg>
               재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}
-              &nbsp; &nbsp;작성년도 | {book.translationYear}
+              &nbsp; &nbsp;작성년도 | {book.publicationYear}
             </BodyReg>
           </Row>
           <div style={{ height: "25px" }} />
@@ -55,7 +55,6 @@ const ButtonBar = styled.div`
   justify-content: flex-end;
   gap: 15px;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const Button = styled.button`

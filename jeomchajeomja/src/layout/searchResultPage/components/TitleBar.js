@@ -20,7 +20,6 @@ const TitleBar = () => {
         >
           뒤로가기
         </Button>
-        <Body>ESC 버튼 클릭 시 이전 페이지로 돌아갑니다.</Body>
         <Button>음성 사용 설명서 듣기</Button>
         <LinkDiv>
           <Link
@@ -73,27 +72,25 @@ const LinkDiv = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const Header = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header0};
-  font-size: 50px;
+  font-size: ${({ theme }) => theme.fontSizes.header1};
   font-family: "Nanum Myeongjo";
   white-space: nowrap;
-  margin: 0 auto;
 `;
 
 const SubTitleReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  font-size: 25px;
   margin: 0 auto;
 `;
 
 const SubTitle = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  font-size: 25px;
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   color: ${({ theme }) => theme.colors.white};
   white-space: pre;
@@ -111,13 +108,13 @@ const Button = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.body1};
 `;
 
-const Body = styled.div`
+/* const Body = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body2};
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body2_reg};
   white-space: nowrap;
   margin: 0 auto;
-`;
+`; */
 
 /* const SubHeader = styled.div`
   color: ${({ theme }) => theme.colors.white};

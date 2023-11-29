@@ -68,6 +68,7 @@ export const theme = {
     body2: "700",
     body2_reg: "400",
     button1: "700",
+    button1_reg: "400",
   },
   letterSpacing: "0px",
   colors: {
