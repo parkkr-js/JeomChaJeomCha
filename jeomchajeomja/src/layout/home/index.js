@@ -28,9 +28,9 @@ function Home() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-
+      event.preventDefault();
       if (event.key === " " && !isListening) {
-        event.preventDefault();
+        // event.preventDefault();
         playBeep();
         setIsListening(true);
         SpeechRecognition.startListening();

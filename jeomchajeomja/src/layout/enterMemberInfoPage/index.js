@@ -9,14 +9,14 @@ function EnterMemberInfo() {
   const navigate = useNavigate();
   return (
     <Container>
-      <BackDiv>
-        <Btn onClick={() => navigate("../")} alt="뒤로가기" />
-      </BackDiv>
-      <AudioBtn/>
+      <NavDiv>
+        <Btn onClick={() => navigate("../")} alt="뒤로가기">
+          뒤로가기
+        </Btn>
+        <AudioBtn />
+      </NavDiv>
       <Header1>회원 정보 입력</Header1>
-
       <Content1_1>
-        <Num1Img src={num1img} alt="1" />
         <Content1_2>
           <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
           <Body1>주문 및 배송 확인을 위해 필요합니다.</Body1>
@@ -47,22 +47,35 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const BackDiv = styled.div`
+const NavDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
-  width: 959px;
-  padding-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  width: 1200px;
+  background-color: red;
+  height: 74px;
+  margin: 0 auto;
 `;
 
 const Btn = styled.button`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: baseline;
-  width: 40px;
+  padding: 5px 10px;
+  width: fit-content;
   height: 40px;
+  background-color: ${({ theme }) => theme.colors.white};
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid #000;
+  color: #000;
+  font-family: 'NanumGothic', serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
 `;
 
 const Header1 = styled.h1`
@@ -83,6 +96,8 @@ const Content1_1 = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  width: 560px;
+  background-color: red;
 `;
 const Content1_2 = styled.div`
   display: flex;
