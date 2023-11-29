@@ -19,7 +19,7 @@ const Detail = () => {
   }, [bookLists, id]);
 
   return (
-    <Column style={{ padding: "25px 240px" }}>
+    <Column>
       <TopNavBar ref={ref} />
       <div style={{ height: "45px" }} />
       <Header>{book?.title}</Header>
@@ -56,6 +56,7 @@ const Column = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  padding: 25px 240px;
 `;
 
 const SubTitle = styled.span`
