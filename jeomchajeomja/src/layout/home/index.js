@@ -4,7 +4,7 @@ import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
-import TtsTest from "../ttsTest"
+import TtsTest from "../ttsTest";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
@@ -21,14 +21,14 @@ function Home() {
       <Div>
         <Header>학습자료 검색</Header>
         <Body>
-          음성 검색은 alt(option) 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
+          스페이스바를 2초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.{" "}
         </Body>
         <Search />
         <Space />
         <Header>키워드 검색</Header>
-        <Body>
+        {/* <Body>
           해당 키워드를 마우스로 클릭, 또는 키보드로 번호를 누르면 검색됩니다.
-        </Body>
+        </Body> */}
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
             <Button key={index}>
@@ -113,6 +113,7 @@ const ButtonContainer = styled.div`
   width: fit-content;
   height: fit-content;
   margin-bottom: 80px;
+  margin-top: 36px;
 `;
 
 const Line = styled.div`
