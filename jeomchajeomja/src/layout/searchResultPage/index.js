@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 
 const SearchResult = () => {
   const params = useParams();
-  const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useState([]);
   const [keyword, setKeyword] = useState(params.keyword);
 
