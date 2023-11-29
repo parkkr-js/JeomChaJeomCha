@@ -1,5 +1,5 @@
-# JeomChaJeomCha - Impact Campus_Team LightYou (라이츄)
-# 점자점차
+# JeomChaJeomJa - Impact Campus_Team LightYou (라이츄)
+# 점차점자
 ## 개발자
 - 박지성
 - 김진서
