@@ -4,7 +4,6 @@ import EnterSearch from "./components/EnterSearch";
 import styled from "styled-components";
 import BookBlock from "./components/BookBlock";
 import magnifyingGlass from "../../img/magnifying_glass.svg";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const SearchResult = () => {

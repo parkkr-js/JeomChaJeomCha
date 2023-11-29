@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-function EnterSearch({ setResult, keyword, setKeyWord }) {
+function EnterSearch({ setResult, keyword, setKeyword }) {
   const bookLists = useSelector((state) => state.book.book);
   const { register, handleSubmit } = useForm();
   let temp = [];
 
   const onSubmit = (data) => {
-    setKeyWord(data.keyword);
+    setKeyword(data.keyword);
     if (data.keyword === "") {
       setResult([]);
     } else {
