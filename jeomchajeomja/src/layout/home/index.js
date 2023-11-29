@@ -32,8 +32,8 @@ function Home() {
     const handleKeyDown = (event) => {
       event.preventDefault();
       if (event.key === " " && !isListening) {
-        event.preventDefault(); // 스페이스바로 인한 스크롤 방지
-        playBeep(); // 삐 소리 재생
+        event.preventDefault(); 
+        playBeep(); 
         setIsListening(true);
         SpeechRecognition.startListening();
       }
