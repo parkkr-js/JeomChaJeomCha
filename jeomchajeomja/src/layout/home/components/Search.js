@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
 
 export default function Search({ transcript }) {
-  const [keyword, setKeyword] = useState(transcript);
-  // const [keyword, setKeyword] = React.useContext(SearchContext);
+  const [keyword, setKeyword] = React.useContext(SearchContext);
 
   const handleKeywordChange = (event) => {
     setKeyword(event.target.value);
   };
+
   useEffect(() => {
     setKeyword(transcript);
   }, [transcript]);

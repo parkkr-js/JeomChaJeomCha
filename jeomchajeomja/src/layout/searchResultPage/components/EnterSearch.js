@@ -21,7 +21,10 @@ function EnterSearch({ setResult, keyword, setKeyword }) {
       <Column>
         <Row>
           <InputWrapper>
-            <StyledInput {...register("keyword")} placeholder={keyword} />
+            <StyledInput
+              {...register("keyword", { required: true })}
+              placeholder={keyword}
+            />
             <Button type="submit" value="Submit">
               검색
             </Button>
