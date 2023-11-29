@@ -1,15 +1,18 @@
 import styled from "styled-components";
-import arrowimg from "../../img/ion_chevron-back.svg";
 import num1img from "../../img/N1.svg";
 import num2img from "../../img/N2.svg";
+import { Link, useNavigate } from "react-router-dom";
 import EnterForm from "./components/EnterForm";
+import AudioBtn from "../../common/AudioBtn";
 
 function EnterMemberInfo() {
+  const navigate = useNavigate();
   return (
     <Container>
       <BackDiv>
-        <BackBtn src={arrowimg} alt="뒤로가기" />
+        <Btn onClick={() => navigate("../")} alt="뒤로가기" />
       </BackDiv>
+      <AudioBtn/>
       <Header1>회원 정보 입력</Header1>
 
       <Content1_1>
@@ -19,7 +22,6 @@ function EnterMemberInfo() {
           <Body1>주문 및 배송 확인을 위해 필요합니다.</Body1>
           <EnterForm />
         </Content1_2>
-       
       </Content1_1>
 
       <Content1_1>
@@ -54,7 +56,7 @@ const BackDiv = styled.div`
   padding-top: 30px;
 `;
 
-const BackBtn = styled.img`
+const Btn = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

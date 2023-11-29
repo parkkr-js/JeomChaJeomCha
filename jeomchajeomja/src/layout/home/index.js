@@ -20,6 +20,7 @@ function Home() {
     setKeyword(keyWordText);
     navigate("/search");
   };
+  
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
