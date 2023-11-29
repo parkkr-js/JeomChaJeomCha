@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-function AudioBtn() {
+function AudioBtn({ customStyle }) {
+  const { color } = customStyle || {};
   return (
-    <Btn>
-      <Body>음성 사용 설명서 듣기</Body>
+    <Btn style={customStyle}>
+      <Body style={{color}}>음성 사용 설명서 듣기</Body>
     </Btn>
   );
 }
@@ -19,7 +20,7 @@ const Btn = styled.button`
   gap: 10px;
   border-radius: 10px;
   border: 1.5px solid ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: transparent;
 `;
 
 const Body = styled.div`

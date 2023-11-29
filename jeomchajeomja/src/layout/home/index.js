@@ -9,7 +9,6 @@ import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import LoadingAnimation from "./components/LoadingAnimation";
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
@@ -28,9 +27,8 @@ function Home() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      event.preventDefault();
+      // event.preventDefault();
       if (event.key === " " && !isListening) {
-        // event.preventDefault();
         playBeep();
         setIsListening(true);
         SpeechRecognition.startListening();
