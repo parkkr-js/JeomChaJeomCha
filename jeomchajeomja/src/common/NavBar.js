@@ -43,7 +43,6 @@ const Div = styled.div`
   background-color: ${({ theme }) => theme.colors.black};
   width: 1200px;
   height: 293px;
-  justify-content: center;
   margin: 0 auto;
 `;
 
@@ -71,9 +70,7 @@ const LinkDiv = styled.div`
   justify-content: flex-end;
   margin-top: 30px;
   margin-bottom: 88px;
-  /* padding-left: 250px;
-  padding-right: 240px; */
-  width: 960px;
+  width: 100%;
 `;
 
 const Header = styled.div`
