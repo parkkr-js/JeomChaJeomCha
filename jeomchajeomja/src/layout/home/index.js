@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
 import TtsTest from "../ttsTest";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
+  const [keyword, setKeyword] = useContext(SearchContext);
+  const navigate = useNavigate();
+
+  const handleButtonClick = (event, keyWordText) => {
+    event.preventDefault();
+    setKeyword(keyWordText);
+    navigate("/search");
+  };
+  
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -68,7 +78,8 @@ function Home() {
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
             <Link
-              to={`/search/${keyWords[index]}`}
+              to="/search"
+              onClick={(event) => handleButtonClick(event, keyWordText)}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button key={index}>

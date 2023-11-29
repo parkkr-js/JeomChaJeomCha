@@ -1,33 +1,39 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const BookBlock = ({ book, index }) => {
+const BookBlock = ({ book, id }) => {
   return (
-    <div style={{ width: "100%", padding: "0 240px" }}>
-      <Block>
-        <Row>
-          <Circle>
-            <Body style={{ color: "black" }}>{index + 1}</Body>
-          </Circle>
-          <div style={{ width: "24px" }} />
-          <Body style={{ fontSize: "30px" }}>{book.title}</Body>
-        </Row>
-        <div style={{ height: "8px" }} />
-        <Row>
-          <div style={{ width: "60px" }} />
-          <BodyReg>
-            재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}&nbsp;
-            &nbsp;작성년도 | {book.translationYear}
-          </BodyReg>
-        </Row>
-        <div style={{ height: "25px" }} />
-        <ButtonBar>
-          <Button style={{ color: "white", background: "black" }}>
-            장바구니
-          </Button>
-          <Button>구매하기</Button>
-        </ButtonBar>
-      </Block>
+    <div style={{ width: "100vw", padding: "0 240px" }}>
+      <Link
+        to={`/search/${book.title}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <Block>
+          <Row>
+            <Circle>
+              <Body style={{ color: "black" }}>{id + 1}</Body>
+            </Circle>
+            <div style={{ width: "24px" }} />
+            <Body style={{ fontSize: "30px" }}>{book.title}</Body>
+          </Row>
+          <div style={{ height: "8px" }} />
+          <Row>
+            <div style={{ width: "60px" }} />
+            <BodyReg>
+              재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}
+              &nbsp; &nbsp;작성년도 | {book.translationYear}
+            </BodyReg>
+          </Row>
+          <div style={{ height: "25px" }} />
+          <ButtonBar>
+            <Button style={{ color: "white", background: "black" }}>
+              장바구니
+            </Button>
+            <Button>구매하기</Button>
+          </ButtonBar>
+        </Block>
+      </Link>
     </div>
   );
 };
