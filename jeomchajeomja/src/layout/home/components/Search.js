@@ -5,6 +5,12 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 
 export default function CustomSearch() {
+  const [keyword, setKeyword] = React.useState("");
+
+  const handleKeywordChange = (event) => {
+    setKeyword(event.target.value);
+  };
+
   return (
     <Paper
       component="form"
@@ -19,6 +25,8 @@ export default function CustomSearch() {
       }}
     >
       <InputBase
+        value={keyword}
+        onChange={handleKeywordChange}
         sx={{
           ml: 1,
           flex: 1,
@@ -28,11 +36,14 @@ export default function CustomSearch() {
           textAlign: "right",
         }}
       />
-      <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
+      <Link
+        to={`/search/${keyword}`}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <Button
           style={{
             display: "inline-flex",
-            width: 'fit-content',
+            width: "fit-content",
             height: "auto",
             padding: "9px 25px",
             justifyContent: "center",
@@ -40,8 +51,8 @@ export default function CustomSearch() {
             borderRadius: "15px",
             fontSize: "24px",
             fontWeight: 700,
-            fontFamily: 'NanumGothic',
-            fontStyle: 'normal',
+            fontFamily: "NanumGothic",
+            fontStyle: "normal",
             lineHeight: "36px",
             margin: "10px",
           }}

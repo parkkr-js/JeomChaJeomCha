@@ -5,6 +5,7 @@ import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
 import TtsTest from "../ttsTest";
+import { Link } from "react-router-dom";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
@@ -31,10 +32,15 @@ function Home() {
         </Body> */}
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
-            <Button key={index}>
-              <span>{index + 1}</span>
-              <span>{keyWordText}</span>
-            </Button>
+            <Link
+              to={`/search/${keyWords[index]}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Button key={index}>
+                <span>{index + 1}</span>
+                <span>{keyWordText}</span>
+              </Button>
+            </Link>
           ))}
         </ButtonContainer>
         <TtsTest />
