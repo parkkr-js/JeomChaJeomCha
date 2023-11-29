@@ -9,13 +9,12 @@ import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import LoadingAnimation from "./components/LoadingAnimation"
+import LoadingAnimation from "./components/LoadingAnimation";
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
   const [keyword, setKeyword] = useContext(SearchContext);
   const navigate = useNavigate();
-
 
   const handleButtonClick = (event, keyWordText) => {
     event.preventDefault();
@@ -28,27 +27,25 @@ function Home() {
     useSpeechRecognition();
 
   useEffect(() => {
-
     const handleKeyDown = (event) => {
-      event.preventDefault();
+
       if (event.key === " " && !isListening) {
-        event.preventDefault(); 
-        playBeep(); 
+        event.preventDefault();
+        playBeep();
         setIsListening(true);
         SpeechRecognition.startListening();
       }
     };
-    
+
     const playBeep = () => {
-      const audioContext = new (window.AudioContext)();
+      const audioContext = new window.AudioContext();
       const oscillator = audioContext.createOscillator();
-      oscillator.type = 'sine'; // 순수한 톤
-      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // 440Hz
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
       oscillator.connect(audioContext.destination);
       oscillator.start();
-      oscillator.stop(audioContext.currentTime + 0.6); // 1초 후에 정지
+      oscillator.stop(audioContext.currentTime + 0.6);
     };
-    
 
     const handleKeyUp = (event) => {
       if (event.key === " " && isListening) {
@@ -80,10 +77,11 @@ function Home() {
       <NavBar />
       <Line />
       <Div>
-        <Header>학습자료 검색</Header>
-        <Body>
-          스페이스바를 누르는 동안 음성 검색이 활성화됩니다.
-        </Body>
+        <Row>
+          <Header>학습자료 검색</Header>
+          <Body>해당 학년 혹은 교재명과 같은 키워드를 입력해주세요.</Body>
+        </Row>
+        <Body>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</Body>
         <div>
           {/* <p>
             Microphone: {isListening ? <LoadingAnimation /> : "off"}
@@ -116,7 +114,6 @@ function Home() {
 
 export default Home;
 
-
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,19 +123,20 @@ const Div = styled.div`
   margin: 0 auto;
 `;
 
-const SubDiv = styled.div`
+const Row = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: baseline;
   width: fit-content;
-  gap: 5px;
+  gap: 20px;
 `;
 
 const Header = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.header1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
+  line-height: 150%;
 `;
 
 const Body = styled.div`
@@ -146,6 +144,7 @@ const Body = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   padding-bottom: 36px;
+  line-height: 150%;
 `;
 
 const ButtonContainer = styled.div`
@@ -154,7 +153,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: fit-content;
+  width: 1200px;
   height: fit-content;
   margin-bottom: 80px;
   margin-top: 36px;

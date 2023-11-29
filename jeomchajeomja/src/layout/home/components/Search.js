@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
@@ -6,8 +6,7 @@ import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
 
 export default function Search({ transcript, isListening }) {
-  const [keyword, setKeyword] = React.useContext(SearchContext);
-
+  const [keyword, setKeyword] = useContext(SearchContext);
   const handleKeywordChange = (event) => {
     setKeyword(event.target.value);
   };
@@ -21,12 +20,12 @@ export default function Search({ transcript, isListening }) {
       sx={{
         display: "flex",
         alignItems: "center",
-        width: "960px",
+        width: "1200px",
         height: "74px",
         borderRadius: "20px",
         border: "3px solid #000000",
         overflow: "hidden",
-        backgroundColor: isListening ? 'red' : 'transparent',
+        backgroundColor: isListening ? "red" : "transparent",
       }}
     >
       <InputBase
@@ -39,7 +38,7 @@ export default function Search({ transcript, isListening }) {
           fontWeight: "bold",
           color: "black",
           textAlign: "right",
-          backgroundColor: isListening ? 'red' : 'transparent',
+          backgroundColor: isListening ? "red" : "transparent",
         }}
       />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
