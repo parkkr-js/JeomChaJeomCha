@@ -11,7 +11,7 @@ function Router() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/search" element={<SearchResult />} />
+      <Route path="/search/:keyword" element={<SearchResult />} />
       <Route path="/enterMemberInfo" element={<EnterMemberInfo />} />
     </Routes>
   );

@@ -4,7 +4,8 @@ import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
-import TtsTest from "../ttsTest"
+import TtsTest from "../ttsTest";
+import { Link } from "react-router-dom";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
@@ -21,7 +22,8 @@ function Home() {
       <Div>
         <Header>학습자료 검색</Header>
         <Body>
-          음성 검색은 alt(option) 키를 누른 후 벨소리가 나면 키워드를 말해주세요.
+          음성 검색은 alt(option) 키를 누른 후 벨소리가 나면 키워드를
+          말해주세요.
         </Body>
         <Search />
         <Space />
@@ -31,10 +33,15 @@ function Home() {
         </Body>
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
-            <Button key={index}>
-              <span>{index + 1}</span>
-              <span>{keyWordText}</span>
-            </Button>
+            <Link
+              to={`/search/${keyWords[index]}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Button key={index}>
+                <span>{index + 1}</span>
+                <span>{keyWordText}</span>
+              </Button>
+            </Link>
           ))}
         </ButtonContainer>
         <TtsTest />
