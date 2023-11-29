@@ -16,7 +16,7 @@ const TitleBar = () => {
         <Button
           ref={ref}
           style={{ boxShadow: "0 0 5px #0079e0" }}
-          onClick={() => navigate("../")}
+          onClick={() => navigate(-1)}
         >
           뒤로가기
         </Button>
@@ -33,7 +33,10 @@ const TitleBar = () => {
             <SubTitleReg>내정보</SubTitleReg>
           </Link>
           <SubTitle>&nbsp; | &nbsp;</SubTitle>
-          <Link style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            to="/shoppingCart"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <SubTitleReg>장바구니</SubTitleReg>
           </Link>
         </LinkDiv>

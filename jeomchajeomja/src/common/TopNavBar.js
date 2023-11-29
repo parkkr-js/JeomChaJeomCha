@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const DetailNavBar = ({ ref }) => {
+const TopNavBar = ({ ref }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +10,7 @@ const DetailNavBar = ({ ref }) => {
       <TitleButton
         ref={ref}
         style={{ boxShadow: "0 0 5px #0079e0" }}
-        onClick={() => navigate("/search")}
+        onClick={() => navigate(-1)}
       >
         뒤로가기
       </TitleButton>
@@ -24,7 +24,10 @@ const DetailNavBar = ({ ref }) => {
           <SubTitleReg style={{ fontSize: "25px" }}>내정보</SubTitleReg>
         </Link>
         <SubTitleReg style={{ fontSize: "25px" }}>&nbsp; | &nbsp;</SubTitleReg>
-        <Link style={{ textDecoration: "none", color: "inherit" }}>
+        <Link
+          to="/shoppingCart"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <SubTitleReg style={{ fontSize: "25px" }}>장바구니</SubTitleReg>
         </Link>
       </LinkDiv>
@@ -32,7 +35,7 @@ const DetailNavBar = ({ ref }) => {
   );
 };
 
-export default DetailNavBar;
+export default TopNavBar;
 
 const Row = styled.div`
   display: flex;
