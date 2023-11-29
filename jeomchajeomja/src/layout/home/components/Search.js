@@ -1,16 +1,18 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 
-export default function CustomSearch() {
-  const [keyword, setKeyword] = React.useState("");
+export default function Search({ transcript }) {
+  const [keyword, setKeyword] = useState(transcript);
 
   const handleKeywordChange = (event) => {
     setKeyword(event.target.value);
   };
-
+  useEffect(() => {
+    setKeyword(transcript);
+  }, [transcript]);
   return (
     <Paper
       component="form"

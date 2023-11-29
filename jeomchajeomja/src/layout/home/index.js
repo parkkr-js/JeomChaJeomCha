@@ -1,35 +1,70 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
 import TtsTest from "../ttsTest";
 import { Link } from "react-router-dom";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 function Home() {
-  const newBook = useSelector((state) => state.book.book[0]);
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
+  const [isListening, setIsListening] = useState(false);
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === " " && !isListening) {
+        setIsListening(true);
+        SpeechRecognition.startListening();
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      if (event.key === " " && isListening) {
+        setIsListening(false);
+        SpeechRecognition.stopListening();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [isListening]);
+
+  if (!browserSupportsSpeechRecognition) {
+    return (
+      <span>
+        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
+        <br /> 크롬브라우저를 사용해주세요.
+      </span>
+    );
+  }
 
   return (
     <>
       <NavBar />
-      {/* <Row>
-        {newBook && <BookTitle>{newBook.title}</BookTitle>}
-        <NewBook>NEW BOOK</NewBook>
-      </Row> */}
       <Line />
       <Div>
         <Header>학습자료 검색</Header>
         <Body>
-          스페이스바를 2초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.{" "}
+          스페이스바를 2초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.
         </Body>
-        <Search />
+        <div>
+          <p>Microphone: {isListening ? "on" : "off"}</p>
+          <button onClick={resetTranscript}>Reset</button>
+          <p>{transcript}</p>
+        </div>
+        <Search transcript={transcript} />
         <Space />
         <Header>키워드 검색</Header>
-        {/* <Body>
-          해당 키워드를 마우스로 클릭, 또는 키보드로 번호를 누르면 검색됩니다.
-        </Body> */}
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
             <Link
@@ -50,6 +85,7 @@ function Home() {
 }
 
 export default Home;
+// 여기에 나머지 스타일 컴포넌트들을 포함시킵니다.
 
 const Div = styled.div`
   display: flex;
@@ -80,34 +116,6 @@ const Body = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   padding-bottom: 36px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 70px;
-  padding-left: 200px;
-  width: 100%;
-  gap: 30px;
-`;
-
-const ColumnsDiv2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BookTitle = styled.h1`
-  font-weight: ${({ theme }) => theme.fontWeights.header0};
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
-`;
-
-const NewBook = styled.h1`
-  font-weight: ${({ theme }) => theme.fontWeights.header0};
-  font-size: ${({ theme }) => theme.fontSizes.header1};
 `;
 
 const ButtonContainer = styled.div`
