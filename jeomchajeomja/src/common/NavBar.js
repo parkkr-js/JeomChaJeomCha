@@ -62,18 +62,18 @@ const Body = styled.body`
   color: ${({ theme }) => theme.colors.white};
   width: 80px;
   line-height: 37.5px;
+  margin-left: 20px;
 `;
 
 const LinkDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 30px;
   margin-bottom: 88px;
   /* padding-left: 250px;
   padding-right: 240px; */
-  /* width: 100%;
-  height: fit-content; */
+  width: 960px;
 `;
 
 const Header = styled.div`
