@@ -9,25 +9,30 @@ import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import LoadingAnimation from "./components/LoadingAnimation"
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
   const [keyword, setKeyword] = useContext(SearchContext);
   const navigate = useNavigate();
 
+
   const handleButtonClick = (event, keyWordText) => {
     event.preventDefault();
     setKeyword(keyWordText);
     navigate("/search");
   };
-  
+
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
   useEffect(() => {
+
     const handleKeyDown = (event) => {
+      event.preventDefault();
       if (event.key === " " && !isListening) {
+        event.preventDefault(); // 스페이스바로 인한 스크롤 방지
         setIsListening(true);
         SpeechRecognition.startListening();
       }
@@ -68,11 +73,13 @@ function Home() {
           스페이스바를 2초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.
         </Body>
         <div>
-          <p>Microphone: {isListening ? "on" : "off"}</p>
+          {/* <p>
+            Microphone: {isListening ? <LoadingAnimation /> : "off"}
+          </p> */}
           <button onClick={resetTranscript}>Reset</button>
           <p>{transcript}</p>
         </div>
-        <Search transcript={transcript} />
+        <Search transcript={transcript} isListening={isListening} />
         <Space />
         <Header>키워드 검색</Header>
         <ButtonContainer>
@@ -96,7 +103,7 @@ function Home() {
 }
 
 export default Home;
-// 여기에 나머지 스타일 컴포넌트들을 포함시킵니다.
+
 
 const Div = styled.div`
   display: flex;

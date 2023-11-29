@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
 
-export default function Search({ transcript }) {
+export default function Search({ transcript, isListening }) {
   const [keyword, setKeyword] = React.useContext(SearchContext);
 
   const handleKeywordChange = (event) => {
@@ -26,6 +26,7 @@ export default function Search({ transcript }) {
         borderRadius: "20px",
         border: "3px solid #000000",
         overflow: "hidden",
+        backgroundColor: isListening ? 'red' : 'transparent',
       }}
     >
       <InputBase
@@ -38,6 +39,7 @@ export default function Search({ transcript }) {
           fontWeight: "bold",
           color: "black",
           textAlign: "right",
+          backgroundColor: isListening ? 'red' : 'transparent',
         }}
       />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
