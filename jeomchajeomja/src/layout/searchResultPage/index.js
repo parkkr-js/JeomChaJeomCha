@@ -1,27 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import TitleBar from "./components/TitleBar";
 import EnterSearch from "./components/EnterSearch";
-import magnifyingGlass from "../../img/magnifying_glass.svg";
 import styled from "styled-components";
 import BookBlock from "./components/BookBlock";
+import magnifyingGlass from "../../img/magnifying_glass.svg";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const SearchResult = () => {
+  const params = useParams();
+  const bookLists = useSelector((state) => state.book.book);
+  const [result, setResult] = useState([]);
+  const [keyword, setKeyword] = useState(params.keyword);
+
   return (
     <Column>
       <TitleBar />
-      <EnterSearch />
+      <EnterSearch
+        setResult={setResult}
+        keyword={keyword}
+        setKeyword={setKeyword}
+      />
       <div style={{ height: "75px" }} />
-      <>
-        <BookBlock />
-        <div style={{ height: "100px" }} />
-      </>
-      {/* <>
-        <img src={magnifyingGlass} alt="돋보기 아이콘" />
-        <div style={{ height: "24px" }} />
-        <SubTitle>‘키워드’에 맞는 검색 결과가 없습니다</SubTitle>
-        <div style={{ height: "200px" }} />
-      </> */}
-      <Body>찾으시는 자료가 없다면, 새로 신청할 수 있습니다. </Body>
+      {result.length === 0 ? (
+        <>
+          <img src={magnifyingGlass} alt="돋보기 아이콘" />
+          <div style={{ height: "24px" }} />
+          <SubTitleReg>‘키워드’에 맞는 검색 결과가 없습니다</SubTitleReg>
+          <div style={{ height: "120px" }} />
+        </>
+      ) : (
+        <Column style={{ alignItems: "flex-start" }}>
+          <SubTitle style={{ margin: "0 240px 8px" }}>
+            "{keyword}" 검색 결과 총 {result.length}건
+          </SubTitle>
+          {result.map((book, i) => {
+            return (
+              <>
+                <BookBlock book={book} index={i} />
+                <div style={{ height: "20px" }} />
+              </>
+            );
+          })}
+        </Column>
+      )}
+      <div style={{ height: "80px" }} />
+      <BodyReg>찾으시는 자료가 없다면, 새로 신청할 수 있습니다. </BodyReg>
       <div style={{ height: "12px" }} />
       <Button>학습자료 신청하기</Button>
       <div style={{ height: "50px" }} />
@@ -36,12 +60,7 @@ const Column = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-`;
-
-const SubTitle = styled.div`
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  margin: 0 auto;
 `;
 
 const Button = styled.button`
@@ -54,8 +73,26 @@ const Button = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.button1};
 `;
 
-const Body = styled.div`
+const SubTitleReg = styled.div`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
+  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  white-space: nowrap;
+  margin: 0 auto;
+`;
+
+const SubTitle = styled.div`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  font-size: 25px;
+  white-space: nowrap;
+  margin: 0 auto;
+`;
+
+const BodyReg = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
+  white-space: nowrap;
+  margin: 0 auto;
 `;

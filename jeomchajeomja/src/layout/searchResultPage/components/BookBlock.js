@@ -1,23 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookBlock = () => {
+const BookBlock = ({ book, index }) => {
   return (
     <div style={{ width: "100%", padding: "0 240px" }}>
       <Block>
         <Row>
           <Circle>
-            <Body style={{ color: "black" }}>1</Body>
+            <Body style={{ color: "black" }}>{index + 1}</Body>
           </Circle>
           <div style={{ width: "24px" }} />
-          <Body style={{ fontSize: "30px" }}>개념원리 RPM 고등 수학(하)</Body>
+          <Body style={{ fontSize: "30px" }}>{book.title}</Body>
         </Row>
         <div style={{ height: "8px" }} />
         <Row>
           <div style={{ width: "60px" }} />
           <BodyReg>
-            재작 재단 | 행복 나눔 재단&nbsp; &nbsp;저자 | 이홍섭&nbsp;
-            &nbsp;작성년도 | 2022
+            재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}&nbsp;
+            &nbsp;작성년도 | {book.translationYear}
           </BodyReg>
         </Row>
         <div style={{ height: "25px" }} />
@@ -39,6 +39,8 @@ const Block = styled.div`
   border-radius: 20px;
   background: ${({ theme }) => theme.colors.black};
   padding: 25px 30px;
+  overflow: hidden;
+  margin: 0 auto;
 `;
 
 const ButtonBar = styled.div`
@@ -46,6 +48,8 @@ const ButtonBar = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 15px;
+  flex-shrink: 0;
+  margin: 0 auto;
 `;
 
 const Button = styled.button`
@@ -63,6 +67,7 @@ const Row = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-shrink: 0;
 `;
 
 const Circle = styled.div`
@@ -73,19 +78,21 @@ const Circle = styled.div`
   height: 36px;
   border-radius: 25px;
   background: ${({ theme }) => theme.colors.white};
+  flex-shrink: 0;
 `;
 
 const Body = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
+  white-space: nowrap;
 `;
 
 const BodyReg = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: pre;
+  white-space: nowrap;
 `;
 
 export default BookBlock;
