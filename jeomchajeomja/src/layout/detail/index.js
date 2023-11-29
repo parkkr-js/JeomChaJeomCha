@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BookIndex from "./components/BookIndex";
 import BookIntroduction from "./components/BookIntroduction";
 import BookInformation from "./components/BookInformation";
-import DetailNavBar from "./components/DetailNavBar";
+import TopNavBar from "../../common/TopNavBar";
 
 const Detail = () => {
   const bookLists = useSelector((state) => state.book.book);
@@ -20,7 +20,7 @@ const Detail = () => {
 
   return (
     <Column style={{ padding: "25px 240px" }}>
-      <DetailNavBar ref={ref} />
+      <TopNavBar ref={ref} />
       <div style={{ height: "45px" }} />
       <Header>{book?.title}</Header>
       <div style={{ height: "60px" }} />

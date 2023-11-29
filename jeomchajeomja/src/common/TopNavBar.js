@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const DetailNavBar = ({ ref }) => {
+const TopNavBar = ({ ref }) => {
   const navigate = useNavigate();
 
   return (
@@ -32,7 +32,7 @@ const DetailNavBar = ({ ref }) => {
   );
 };
 
-export default DetailNavBar;
+export default TopNavBar;
 
 const Row = styled.div`
   display: flex;
