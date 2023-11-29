@@ -4,15 +4,17 @@ import NotFound from "../layout/notFoundPage";
 import Login from "../layout/loginPage";
 import SearchResult from "../layout/searchResultPage";
 import EnterMemberInfo from "../layout/enterMemberInfoPage";
+import Detail from "../layout/detail";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="*" element={<NotFound />} />
-      <Route path="/search/:keyword" element={<SearchResult />} />
+      <Route path="/search" element={<SearchResult />} />
+      <Route path="/search/:id" element={<Detail />} />
       <Route path="/enterMemberInfo" element={<EnterMemberInfo />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

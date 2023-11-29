@@ -3,9 +3,10 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
+import { SearchContext } from "../../../model/SearchProvider";
 
 export default function CustomSearch() {
-  const [keyword, setKeyword] = React.useState("");
+  const [keyword, setKeyword] = React.useContext(SearchContext);
 
   const handleKeywordChange = (event) => {
     setKeyword(event.target.value);
@@ -36,10 +37,7 @@ export default function CustomSearch() {
           textAlign: "right",
         }}
       />
-      <Link
-        to={`/search/${keyword}`}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
+      <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
         <Button
           style={{
             display: "inline-flex",

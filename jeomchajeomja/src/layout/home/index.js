@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
 import TtsTest from "../ttsTest";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SearchContext } from "../../model/SearchProvider";
 
 function Home() {
   const newBook = useSelector((state) => state.book.book[0]);
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
+  const [keyword, setKeyword] = useContext(SearchContext);
+  const navigate = useNavigate();
+
+  const handleButtonClick = (event, keyWordText) => {
+    event.preventDefault();
+    setKeyword(keyWordText);
+    navigate("/search");
+  };
 
   return (
     <>
@@ -34,7 +43,8 @@ function Home() {
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
             <Link
-              to={`/search/${keyWords[index]}`}
+              to="/search"
+              onClick={(event) => handleButtonClick(event, keyWordText)}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Button key={index}>

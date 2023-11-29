@@ -6,40 +6,22 @@ import styled from "styled-components";
 function EnterSearch({ setResult, keyword, setKeyword }) {
   const bookLists = useSelector((state) => state.book.book);
   const { register, handleSubmit } = useForm();
-  let temp = [];
 
   const onSubmit = (data) => {
     setKeyword(data.keyword);
-    if (data.keyword === "") {
-      setResult([]);
-    } else {
-      bookLists.map((book) => {
-        if (book.title.includes(data.keyword)) {
-          temp = [...temp, book];
-        }
-      });
-      setResult(temp);
-    }
+    setResult(bookLists.filter((book) => book.title.includes(data.keyword)));
   };
 
   useEffect(() => {
-    bookLists.map((book) => {
-      if (book.title.includes(keyword)) {
-        temp = [...temp, book];
-      }
-    });
-    setResult(temp);
-  }, []);
+    setResult(bookLists.filter((book) => book.title.includes(keyword)));
+  }, [bookLists, keyword, setResult]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
       <Column>
         <Row>
           <InputWrapper>
-            <StyledInput
-              {...register("keyword", { required: true })}
-              placeholder="키워드"
-            />
+            <StyledInput {...register("keyword")} placeholder={keyword} />
             <Button type="submit" value="Submit">
               검색
             </Button>

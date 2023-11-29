@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TitleBar from "./components/TitleBar";
 import EnterSearch from "./components/EnterSearch";
 import styled from "styled-components";
 import BookBlock from "./components/BookBlock";
 import magnifyingGlass from "../../img/magnifying_glass.svg";
-import { useParams } from "react-router-dom";
+import { SearchContext } from "../../model/SearchProvider";
 
 const SearchResult = () => {
-  const params = useParams();
   const [result, setResult] = useState([]);
-  const [keyword, setKeyword] = useState(params.keyword);
+  const [keyword, setKeyword] = useContext(SearchContext);
 
   return (
     <Column>
@@ -32,14 +31,12 @@ const SearchResult = () => {
           <SubTitle style={{ margin: "0 240px 8px" }}>
             "{keyword}" 검색 결과 총 {result.length}건
           </SubTitle>
-          {result.map((book, i) => {
-            return (
-              <>
-                <BookBlock book={book} index={i} />
-                <div style={{ height: "20px" }} />
-              </>
-            );
-          })}
+          {result.map((book, i) => (
+            <>
+              <BookBlock book={book} id={i} />
+              <div style={{ height: "20px" }} />
+            </>
+          ))}
         </Column>
       )}
       <div style={{ height: "80px" }} />
