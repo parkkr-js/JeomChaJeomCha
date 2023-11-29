@@ -33,10 +33,22 @@ function Home() {
       event.preventDefault();
       if (event.key === " " && !isListening) {
         event.preventDefault(); // 스페이스바로 인한 스크롤 방지
+        playBeep(); // 삐 소리 재생
         setIsListening(true);
         SpeechRecognition.startListening();
       }
     };
+    
+    const playBeep = () => {
+      const audioContext = new (window.AudioContext)();
+      const oscillator = audioContext.createOscillator();
+      oscillator.type = 'sine'; // 순수한 톤
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // 440Hz
+      oscillator.connect(audioContext.destination);
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.6); // 1초 후에 정지
+    };
+    
 
     const handleKeyUp = (event) => {
       if (event.key === " " && isListening) {
