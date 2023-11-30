@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ShoppingCartContext } from "../../../model/ShoppingCartProvider";
 
 const BookBlock = ({ book, id }) => {
+  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+
+  const handleShoppingCartClick = (event) => {
+    event.preventDefault();
+    setShoppingCart([...shoppingCart, book]);
+    alert("장바구니에 추가되었습니다.");
+  };
+
   return (
     <div style={{ width: "100vw", padding: "0 240px" }}>
       <Link
@@ -27,7 +36,10 @@ const BookBlock = ({ book, id }) => {
           </Row>
           <div style={{ height: "25px" }} />
           <ButtonBar>
-            <Button style={{ color: "white", background: "black" }}>
+            <Button
+              style={{ color: "white", background: "black" }}
+              onClick={handleShoppingCartClick}
+            >
               장바구니
             </Button>
             <Button>구매하기</Button>
@@ -37,6 +49,8 @@ const BookBlock = ({ book, id }) => {
     </div>
   );
 };
+
+export default BookBlock;
 
 const Block = styled.div`
   width: 100%;
@@ -99,5 +113,3 @@ const BodyReg = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
   white-space: nowrap;
 `;
-
-export default BookBlock;

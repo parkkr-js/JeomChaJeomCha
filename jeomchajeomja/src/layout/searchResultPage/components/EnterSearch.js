@@ -19,6 +19,7 @@ function EnterSearch({ setResult, keyword, setKeyword }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
       <Column>
+        <SubTitle>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</SubTitle>
         <Row>
           <InputWrapper>
             <StyledInput
@@ -30,9 +31,6 @@ function EnterSearch({ setResult, keyword, setKeyword }) {
             </Button>
           </InputWrapper>
         </Row>
-        <SubTitle>
-          음성 검색은 alt(option)키를 누른 후 벨소리가 나면 키워드를 말해주세요.
-        </SubTitle>
       </Column>
     </form>
   );
@@ -47,7 +45,6 @@ const InputWrapper = styled.div`
   height: 74px;
   border-radius: 20px;
   overflow: hidden;
-  margin: 0 auto;
 `;
 
 const Row = styled.div`
@@ -57,17 +54,16 @@ const Row = styled.div`
   align-items: center;
   width: 100%;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
   padding: 25px 240px;
   gap: 5px;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const StyledInput = styled.input`
@@ -124,7 +120,6 @@ const SubTitle = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   white-space: nowrap;
-  margin: 0 auto;
 `;
 
 /* const ActionButton = styled.button`
