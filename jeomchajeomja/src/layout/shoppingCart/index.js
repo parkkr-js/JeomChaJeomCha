@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
 import { useDispatch, useSelector } from "react-redux";
-import { removeAll } from "../../features/shoppingCart/shoppingCartSlice";
+import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
 
 const ShoppingCart = () => {
   const ref = useRef(null);
@@ -11,7 +11,7 @@ const ShoppingCart = () => {
   const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
 
   const handleRemoveClick = () => {
-    dispatch(removeAll());
+    dispatch(removeAllCart());
     alert("삭제되었습니다.");
   };
 
