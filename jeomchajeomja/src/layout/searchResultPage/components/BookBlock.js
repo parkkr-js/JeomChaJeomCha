@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ShoppingCartContext } from "../../../model/ShoppingCartProvider";
+import { useDispatch } from "react-redux";
+import { addCart } from "../../../features/shoppingCart/shoppingCartSlice";
 
 const BookBlock = ({ book, id }) => {
-  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+  const dispatch = useDispatch();
 
   const handleShoppingCartClick = (event) => {
     event.preventDefault();
-    setShoppingCart([...shoppingCart, book]);
+    dispatch(addCart(book));
     alert("장바구니에 추가되었습니다.");
   };
 
