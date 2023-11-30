@@ -20,8 +20,9 @@ const TitleBar = () => {
         >
           뒤로가기
         </Button>
-        <Button>음성 사용 설명서 듣기</Button>
         <LinkDiv>
+          <Button>음성 사용 설명서 듣기</Button>
+          <div style={{ width: "20px" }} />
           <Link
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}

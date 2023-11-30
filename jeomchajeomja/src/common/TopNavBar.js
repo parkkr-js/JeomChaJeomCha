@@ -14,8 +14,9 @@ const TopNavBar = ({ ref }) => {
       >
         뒤로가기
       </TitleButton>
-      <TitleButton>음성 사용 설명서 듣기</TitleButton>
       <LinkDiv>
+        <TitleButton>음성 사용 설명서 듣기</TitleButton>
+        <div style={{ width: "20px" }} />
         <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
           <SubTitleReg style={{ fontSize: "25px" }}>로그아웃</SubTitleReg>
         </Link>

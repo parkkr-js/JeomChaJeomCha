@@ -25,7 +25,7 @@ const BookBlock = ({ book, id }) => {
   return (
     <div style={{ width: "100vw", padding: "0 240px" }}>
       <Link
-        to={`/search/${book.title}`}
+        to={`/search/${book.id}`}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Block>

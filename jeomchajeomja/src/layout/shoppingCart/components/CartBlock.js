@@ -17,7 +17,7 @@ const CartBlock = ({ book, id }) => {
     <Row>
       <Block>
         <Link
-          to={`/search/${book.title}`}
+          to={`/search/${book.id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <Row>
@@ -136,11 +136,4 @@ const BigBodyReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
   white-space: pre;
-`;
-
-const BodyReg = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
-  color: ${({ theme }) => theme.colors.white};
-  font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: nowrap;
 `;

@@ -1,4 +1,87 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { SearchContext } from "../../../model/SearchProvider";
+
+const EnterSearch = ({ transcript, isListening, setResult }) => {
+  const bookLists = useSelector((state) => state.book.book);
+  const [keyword, setKeyword] = useContext(SearchContext);
+  const [input, setInput] = useState("");
+
+  const handleSearchClick = (event) => {
+    event.preventDefault();
+    setKeyword(input);
+  };
+
+  const handleInputChange = (event) => {
+    if (isListening) {
+      event.preventDefault(); // isListening이 true일 때 스페이스바 쭈욱~입력 방지
+    } else {
+      // isListening이 false일 때 정상적으로 입력 처리 ㄱㄱ
+      setInput(event.target.value);
+    }
+  };
+
+  useEffect(() => {
+    setInput(transcript);
+  }, [transcript]);
+
+  useEffect(() => {
+    setResult(
+      bookLists.filter(
+        (book) =>
+          book.title.includes(keyword) ||
+          book.author.includes(keyword) ||
+          book.referenceGrade.includes(keyword)
+      )
+    );
+  }, [bookLists, keyword, setResult]);
+
+  return (
+    <Column>
+      <SubTitle>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</SubTitle>
+      <Paper
+        component="form"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          borderRadius: "20px",
+          border: "2px solid #000000",
+          overflow: "hidden",
+          backgroundColor: isListening ? "red" : "transparent",
+        }}
+      >
+        <InputBase
+          value={input}
+          onChange={handleInputChange}
+          sx={{
+            ml: 1,
+            flex: 1,
+            fontSize: "20px",
+            padding: "9px 18px",
+            color: "black",
+            textAlign: "right",
+            backgroundColor: isListening ? "red" : "transparent",
+          }}
+        />
+        <Button
+          disabled={input === ""}
+          style={input === "" ? { opacity: "0.2" } : {}}
+          onClick={handleSearchClick}
+        >
+          검색
+        </Button>
+      </Paper>
+    </Column>
+  );
+};
+
+export default EnterSearch;
+
+/* import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -22,10 +105,7 @@ function EnterSearch({ setResult, keyword, setKeyword }) {
         <SubTitle>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</SubTitle>
         <Row>
           <InputWrapper>
-            <StyledInput
-              {...register("keyword", { required: true })}
-              placeholder={keyword}
-            />
+            <StyledInput {...register("keyword", { required: true })} />
             <Button type="submit" value="Submit">
               검색
             </Button>
@@ -54,7 +134,7 @@ const Row = styled.div`
   align-items: center;
   width: 100%;
   flex-shrink: 0;
-`;
+`; */
 
 const Column = styled.div`
   display: flex;
@@ -66,7 +146,7 @@ const Column = styled.div`
   flex-shrink: 0;
 `;
 
-const StyledInput = styled.input`
+/* const StyledInput = styled.input`
   border: none;
   width: 100%;
   border-radius: 20px;
@@ -102,7 +182,7 @@ const StyledInput = styled.input`
     font-weight: ${({ theme }) => theme.fontWeights.body1};
     font-family: "Nanum Gothic", serif;
   }
-`;
+`; */
 
 const Button = styled.button`
   padding: 9px 25px;
@@ -118,7 +198,7 @@ const Button = styled.button`
 const SubTitle = styled.div`
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  font-size: 25px;
   white-space: nowrap;
 `;
 
