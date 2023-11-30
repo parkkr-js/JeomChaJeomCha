@@ -21,19 +21,37 @@ function Home() {
     navigate("/search");
   };
 
-  const [isListening, setIsListening] = useState(false);
-  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
+const [isListening, setIsListening] = useState(false);
+const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      // event.preventDefault();
-      if (event.key === " " && !isListening) {
+useEffect(() => {
+  let startTimer;
+
+  const handleKeyDown = (event) => {
+    if (event.key === " " && !isListening && !startTimer) {
+      // 스페이스바 누른 상태로 0.2초를 누르면 딱 작동
+      startTimer = setTimeout(() => {
         playBeep();
         setIsListening(true);
         SpeechRecognition.startListening();
+        startTimer = null; // 타이머 초기화
+      }, 200); 
+    }
+  };
+
+  const handleKeyUp = (event) => {
+    if (event.key === " ") {
+      // 스페이스바를 뗄 때 타이머 취소 => 입력 정상작동
+      if (startTimer) {
+        clearTimeout(startTimer);
+        startTimer = null;
       }
-    };
+      if (isListening) {
+        setIsListening(false);
+        SpeechRecognition.stopListening();
+      }
+    }
+  };
 
     const playBeep = () => {
       const audioContext = new window.AudioContext();
@@ -45,19 +63,15 @@ function Home() {
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    const handleKeyUp = (event) => {
-      if (event.key === " " && isListening) {
-        setIsListening(false);
-        SpeechRecognition.stopListening();
-      }
-    };
-
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
+      if (startTimer) {
+        clearTimeout(startTimer); // 컴포넌트 언마운트 시 타이머 취소
+      }
     };
   }, [isListening]);
 

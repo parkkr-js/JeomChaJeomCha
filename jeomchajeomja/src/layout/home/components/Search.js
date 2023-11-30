@@ -8,7 +8,12 @@ import { SearchContext } from "../../../model/SearchProvider";
 export default function Search({ transcript, isListening }) {
   const [keyword, setKeyword] = useContext(SearchContext);
   const handleKeywordChange = (event) => {
-    setKeyword(event.target.value);
+    if (isListening) {
+      event.preventDefault(); // isListening이 true일 때 스페이스바 쭈욱~입력 방지
+    } else {
+      // isListening이 false일 때 정상적으로 입력 처리 ㄱㄱ
+      setKeyword(event.target.value);
+    }
   };
 
   useEffect(() => {
