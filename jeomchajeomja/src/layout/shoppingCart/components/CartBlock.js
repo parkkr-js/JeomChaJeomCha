@@ -1,18 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Delete from "../../../img/icomoon-free_bin.svg";
-import { ShoppingCartContext } from "../../../model/ShoppingCartProvider";
+import { useDispatch } from "react-redux";
+import { removeCart } from "../../../features/shoppingCart/shoppingCartSlice";
 
 const CartBlock = ({ book, id }) => {
-  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+  const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
-    if (shoppingCart.length === 1) {
-      setShoppingCart([]);
-    } else {
-      setShoppingCart(shoppingCart.splice(id, 1));
-    }
+    dispatch(removeCart(id));
     alert("삭제되었습니다.");
   };
 

@@ -3,18 +3,18 @@ import { theme, GlobalStyle } from "./styles/theme";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./router/Router";
 import SearchProvider from "./model/SearchProvider";
-import ShoppingCartProvider from "./model/ShoppingCartProvider";
+import PurchaseProvider from "./model/PurchaseProvider";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <BrowserRouter>
-        <ShoppingCartProvider>
+        <PurchaseProvider>
           <SearchProvider>
             <Router />
           </SearchProvider>
-        </ShoppingCartProvider>
+        </PurchaseProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

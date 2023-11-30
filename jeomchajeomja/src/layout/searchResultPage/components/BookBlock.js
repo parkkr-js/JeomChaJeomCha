@@ -1,15 +1,25 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { ShoppingCartContext } from "../../../model/ShoppingCartProvider";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addCart } from "../../../features/shoppingCart/shoppingCartSlice";
+import { PurchaseContext } from "../../../model/PurchaseProvider";
 
 const BookBlock = ({ book, id }) => {
-  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [, setPurchase] = useContext(PurchaseContext);
 
   const handleShoppingCartClick = (event) => {
     event.preventDefault();
-    setShoppingCart([...shoppingCart, book]);
+    dispatch(addCart(book));
     alert("장바구니에 추가되었습니다.");
+  };
+
+  const handlePurchaseClick = (event) => {
+    event.preventDefault();
+    setPurchase(book);
+    navigate("/purchase");
   };
 
   return (
@@ -42,7 +52,7 @@ const BookBlock = ({ book, id }) => {
             >
               장바구니
             </Button>
-            <Button>구매하기</Button>
+            <Button onClick={handlePurchaseClick}>구매하기</Button>
           </ButtonBar>
         </Block>
       </Link>

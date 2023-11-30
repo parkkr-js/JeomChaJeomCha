@@ -1,15 +1,17 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
-import { ShoppingCartContext } from "../../model/ShoppingCartProvider";
 import CartBlock from "./components/CartBlock";
+import { useDispatch, useSelector } from "react-redux";
+import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
 
 const ShoppingCart = () => {
   const ref = useRef(null);
-  const [shoppingCart, setShoppingCart] = useContext(ShoppingCartContext);
+  const dispatch = useDispatch();
+  const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
 
   const handleRemoveClick = () => {
-    setShoppingCart([]);
+    dispatch(removeAllCart());
     alert("삭제되었습니다.");
   };
 
