@@ -1,17 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookIndex from "./components/BookIndex";
 import BookIntroduction from "./components/BookIntroduction";
 import BookInformation from "./components/BookInformation";
 import TopNavBar from "../../common/TopNavBar";
+import { PurchaseContext } from "../../model/PurchaseProvider";
+import { addCart } from "../../features/shoppingCart/shoppingCartSlice";
 
 const Detail = () => {
   const bookLists = useSelector((state) => state.book.book);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const ref = useRef(null);
   const [book, setBook] = useState();
+  const [, setPurchase] = useContext(PurchaseContext);
+
+  const handleShoppingCartClick = () => {
+    dispatch(addCart(book));
+    alert("장바구니에 추가되었습니다.");
+  };
+
+  const handlePurchaseClick = () => {
+    setPurchase(book);
+    navigate("/purchase/false");
+  };
 
   useEffect(() => {
     ref.current?.focus();
@@ -35,10 +50,13 @@ const Detail = () => {
       </SubTitle>
       <div style={{ height: "40px" }} />
       <ButtonBar>
-        <BodyButton style={{ color: "white", backgroundColor: "black" }}>
+        <BodyButton
+          style={{ color: "white", backgroundColor: "black" }}
+          onClick={handlePurchaseClick}
+        >
           ① 구매하기
         </BodyButton>
-        <BodyButton>② 장바구니</BodyButton>
+        <BodyButton onClick={handleShoppingCartClick}>② 장바구니</BodyButton>
         <BodyButton>③ 파일 다운받기</BodyButton>
       </ButtonBar>
       <div style={{ height: "60px" }} />

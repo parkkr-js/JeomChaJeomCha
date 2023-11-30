@@ -4,6 +4,7 @@ import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
+import { Link } from "react-router-dom";
 
 const ShoppingCart = () => {
   const ref = useRef(null);
@@ -52,7 +53,12 @@ const ShoppingCart = () => {
         >
           전체 삭제하기
         </Button>
-        <Button>전체 구매하기</Button>
+        <Link
+          to="/purchase/true"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Button>전체 구매하기</Button>
+        </Link>
       </ButtonBar>
     </Column>
   );
