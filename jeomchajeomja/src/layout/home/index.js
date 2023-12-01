@@ -8,7 +8,6 @@ import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { set } from "react-hook-form";
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
@@ -24,7 +23,7 @@ function Home() {
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-  const [transcriptCopy, setTranscriptCopy] = useState("");
+
   useEffect(() => {
     let startTimer;
 
@@ -75,30 +74,17 @@ function Home() {
       }
     };
   }, [isListening]);
-  // useEffect(() => {
-  //   if (transcript && !isListening) {
-  //     if (transcript !== transcriptCopy) {
-  //       setTranscriptCopy(transcript);
-  //       const speech = new SpeechSynthesisUtterance();
-  //       speech.lang = "ko-KR";
-  //       speech.text = transcript;
-  //       window.speechSynthesis.speak(speech);
-  //     }
-  //   }
-  // }, [transcript, isListening, transcriptCopy]);
 
   useEffect(() => {
     if (transcript && !isListening) {
-    
-       
-        const speech = new SpeechSynthesisUtterance();
-        speech.lang = "ko-KR";
-        speech.text = transcript;
-        window.speechSynthesis.speak(speech);
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = transcript;
+      window.speechSynthesis.speak(speech);
       console.log(transcript);
     }
   }, [transcript, isListening]);
-  
+
   if (!browserSupportsSpeechRecognition) {
     return (
       <span>
