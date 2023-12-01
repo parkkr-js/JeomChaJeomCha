@@ -12,7 +12,7 @@ const Purchase = () => {
   const { id } = useParams();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const totalPrice =
     id === "true"
       ? purchase.reduce((accumulator, item) => {

@@ -69,7 +69,7 @@ const EnterSearch = ({ transcript, isListening, setResult }) => {
         />
         <Button
           disabled={input === ""}
-          style={input === "" ? { opacity: "0.2" } : {}}
+          style={input === "" ? { opacity: "0.2", cursor: "not-allowed" } : {}}
           onClick={handleSearchClick}
         >
           검색
