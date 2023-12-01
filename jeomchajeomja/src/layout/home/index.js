@@ -75,17 +75,29 @@ function Home() {
       }
     };
   }, [isListening]);
+  // useEffect(() => {
+  //   if (transcript && !isListening) {
+  //     if (transcript !== transcriptCopy) {
+  //       setTranscriptCopy(transcript);
+  //       const speech = new SpeechSynthesisUtterance();
+  //       speech.lang = "ko-KR";
+  //       speech.text = transcript;
+  //       window.speechSynthesis.speak(speech);
+  //     }
+  //   }
+  // }, [transcript, isListening, transcriptCopy]);
+
   useEffect(() => {
     if (transcript && !isListening) {
-      if (transcript !== transcriptCopy) {
-        setTranscriptCopy(transcript);
+    
+       
         const speech = new SpeechSynthesisUtterance();
         speech.lang = "ko-KR";
         speech.text = transcript;
         window.speechSynthesis.speak(speech);
-      }
+      console.log(transcript);
     }
-  }, [transcript, isListening, transcriptCopy]);
+  }, [transcript, isListening]);
   
   if (!browserSupportsSpeechRecognition) {
     return (
