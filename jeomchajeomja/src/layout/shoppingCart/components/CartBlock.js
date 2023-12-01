@@ -69,8 +69,8 @@ const DeleteButton = styled.div`
   height: 140px;
   white-space: nowrap;
   border-radius: 0 20px 20px 0;
-  border: 2px solid ${({ theme }) => theme.colors.red};
-  background-color: ${({ theme }) => theme.colors.red};
+  border: 2px solid red;
+  background-color: red;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.button1};
   font-size: ${({ theme }) => theme.fontSizes.button1};

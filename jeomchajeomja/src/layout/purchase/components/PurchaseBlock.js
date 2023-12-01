@@ -27,7 +27,7 @@ const PurchaseBlock = ({ book, id }) => {
           </Row>
           <div style={{ height: "25px" }} />
           <ButtonBar>
-            <SubTitle>가격 {book.price.toLocaleString()}원</SubTitle>
+            <SubTitle>인쇄비 {book.price?.toLocaleString()}원</SubTitle>
           </ButtonBar>
         </Block>
       </Link>
