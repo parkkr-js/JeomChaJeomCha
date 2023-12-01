@@ -144,7 +144,6 @@ const Purchase = () => {
         <SubTitle>{(totalPrice * 1.1 + 3000)?.toLocaleString()}원</SubTitle>
       </Row>
       <div style={{ height: "47px" }} />
-
       <PurchaseButton onClick={() => setIsOpen(true)}>구매하기</PurchaseButton>
       <StyledModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </Column>

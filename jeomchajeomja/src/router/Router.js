@@ -7,6 +7,7 @@ import EnterMemberInfo from "../layout/enterMemberInfoPage";
 import Detail from "../layout/detail";
 import ShoppingCart from "../layout/shoppingCart";
 import Purchase from "../layout/purchase";
+import Complete from "../layout/complete";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/search/:id" element={<Detail />} />
       <Route path="/shoppingCart" element={<ShoppingCart />} />
       <Route path="/purchase/:id" element={<Purchase />} />
+      <Route path="/purchase/:id/complete" element={<Complete />} />
       <Route path="/enterMemberInfo" element={<EnterMemberInfo />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

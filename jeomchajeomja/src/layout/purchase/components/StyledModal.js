@@ -1,11 +1,12 @@
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
-import HeaderBar from "./HeaderBar";
 import { useState } from "react";
+import CompleteModal from "./CompleteModal";
 
 const StyledModal = ({ isOpen, setIsOpen }) => {
   const [paymentMethod, setPaymentMethod] = useState("네이버페이");
   const [agree, setAgree] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([
     { id: "①", name: "네이버페이", checked: true },
     { id: "②", name: "카카오페이", checked: false },
@@ -22,7 +23,6 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
   };
 
   const handleCancelClick = () => {
-    setIsOpen(false);
     setAgree(false);
     setPaymentMethod("네이버페이");
     setPaymentMethods([
@@ -32,6 +32,11 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
       { id: "④", name: "토스페이", checked: false },
       { id: "⑤", name: "가상계좌", checked: false },
     ]);
+    setIsOpen(false);
+  };
+
+  const handlePurchaseClick = () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -42,7 +47,13 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
       aria-describedby="modal-modal-description"
     >
       <Column>
-        <HeaderBar />
+        <Div>
+          <Header id="modal-modal-title">결제하기</Header>
+          <div style={{ height: "12px" }} />
+          <SubTitle id="modal-modal-description">
+            페이 앱 또는 가상계좌로 결제 가능합니다.
+          </SubTitle>
+        </Div>
         <ModalBody>
           <ButtonBar>
             {paymentMethods.map((item, index) => {
@@ -81,7 +92,20 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
           </Row>
           <div style={{ height: "90px" }} />
           <ButtonBar style={{ justifyContent: "center" }}>
-            <ModalButton>{paymentMethod} 결제하기</ModalButton>
+            <ModalButton
+              disabled={agree === false}
+              onClick={handlePurchaseClick}
+              style={
+                agree === false ? { opacity: "0.2", cursor: "not-allowed" } : {}
+              }
+            >
+              {paymentMethod} 결제하기
+            </ModalButton>
+            <CompleteModal
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              handleCancelClick={handleCancelClick}
+            />
             <ModalButton
               onClick={handleCancelClick}
               style={{ padding: "9px 20px" }}
@@ -173,5 +197,27 @@ const BodyReg = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
+  white-space: nowrap;
+`;
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.white};
+  width: 100%;
+  padding: 34px 40px 20px;
+`;
+
+const Header = styled.div`
+  font-weight: ${({ theme }) => theme.fontWeights.header1};
+  font-size: ${({ theme }) => theme.fontSizes.header1};
+  white-space: nowrap;
+`;
+
+const SubTitle = styled.div`
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  font-size: 25px;
   white-space: nowrap;
 `;
