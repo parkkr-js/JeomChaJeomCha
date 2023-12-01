@@ -3,12 +3,12 @@ import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
-import Tts from "../tts";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import { set } from "react-hook-form";
 
 function Home() {
   const keyWords = ["초등저학", "초등고학", "중등", "고등"];
@@ -21,37 +21,38 @@ function Home() {
     navigate("/search");
   };
 
-const [isListening, setIsListening] = useState(false);
-const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const [isListening, setIsListening] = useState(false);
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
+  const [transcriptCopy, setTranscriptCopy] = useState("");
+  useEffect(() => {
+    let startTimer;
 
-useEffect(() => {
-  let startTimer;
-
-  const handleKeyDown = (event) => {
-    if (event.key === " " && !isListening && !startTimer) {
-      // 스페이스바 누른 상태로 0.2초를 누르면 딱 작동
-      startTimer = setTimeout(() => {
-        playBeep();
-        setIsListening(true);
-        SpeechRecognition.startListening();
-        startTimer = null; // 타이머 초기화
-      }, 200); 
-    }
-  };
-
-  const handleKeyUp = (event) => {
-    if (event.key === " ") {
-      // 스페이스바를 뗄 때 타이머 취소 => 입력 정상작동
-      if (startTimer) {
-        clearTimeout(startTimer);
-        startTimer = null;
+    const handleKeyDown = (event) => {
+      if (event.key === " " && !isListening && !startTimer) {
+        // 스페이스바 누른 상태로 0.2초를 누르면 딱 작동
+        startTimer = setTimeout(() => {
+          playBeep();
+          setIsListening(true);
+          SpeechRecognition.startListening();
+          startTimer = null; // 타이머 초기화
+        }, 200);
       }
-      if (isListening) {
-        setIsListening(false);
-        SpeechRecognition.stopListening();
+    };
+
+    const handleKeyUp = (event) => {
+      if (event.key === " ") {
+        // 스페이스바를 뗄 때 타이머 취소 => 입력 정상작동
+        if (startTimer) {
+          clearTimeout(startTimer);
+          startTimer = null;
+        }
+        if (isListening) {
+          setIsListening(false);
+          SpeechRecognition.stopListening();
+        }
       }
-    }
-  };
+    };
 
     const playBeep = () => {
       const audioContext = new window.AudioContext();
@@ -74,7 +75,18 @@ useEffect(() => {
       }
     };
   }, [isListening]);
-
+  useEffect(() => {
+    if (transcript && !isListening) {
+      if (transcript !== transcriptCopy) {
+        setTranscriptCopy(transcript);
+        const speech = new SpeechSynthesisUtterance();
+        speech.lang = "ko-KR";
+        speech.text = transcript;
+        window.speechSynthesis.speak(speech);
+      }
+    }
+  }, [transcript, isListening, transcriptCopy]);
+  
   if (!browserSupportsSpeechRecognition) {
     return (
       <span>
@@ -95,7 +107,6 @@ useEffect(() => {
         </Row>
         <Body>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</Body>
         <Search transcript={transcript} isListening={isListening} />
-        <Tts transcript={transcript} isListening={isListening}/>
         <Space />
         <Header>키워드 검색</Header>
         <ButtonContainer>
@@ -112,7 +123,6 @@ useEffect(() => {
             </Link>
           ))}
         </ButtonContainer>
-       
       </Div>
     </>
   );

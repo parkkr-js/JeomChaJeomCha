@@ -4,10 +4,10 @@ import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
-import Tts from "../../tts";
 
 export default function Search({ transcript, isListening }) {
   const [keyword, setKeyword] = useContext(SearchContext);
+
   const handleKeywordChange = (event) => {
     if (isListening) {
       event.preventDefault(); // isListening이 true일 때 스페이스바 쭈욱~입력 방지
@@ -47,7 +47,6 @@ export default function Search({ transcript, isListening }) {
           backgroundColor: isListening ? "red" : "transparent",
         }}
       />
-      <Tts transcript={transcript} isListening={isListening} />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
         <Button
           style={{
