@@ -7,6 +7,7 @@ import AudioBtn from "../../common/AudioBtn";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import PostModal from "./components/PostModal";
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ function EnterMemberInfo() {
           isListening={isListening && activeForm === "address"}
         />
       </Content1_1>
+      <PostModal/>
     </Container>
   );
 }

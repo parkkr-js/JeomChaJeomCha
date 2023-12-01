@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NavBar from "../../common/NavBar";
 import { Button } from "./components/Button";
 import Search from "./components/Search";
-import TtsTest from "../ttsTest";
+import Tts from "../tts";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
@@ -94,14 +94,8 @@ useEffect(() => {
           <Body>해당 학년 혹은 교재명과 같은 키워드를 입력해주세요.</Body>
         </Row>
         <Body>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</Body>
-        <div>
-          {/* <p>
-            Microphone: {isListening ? <LoadingAnimation /> : "off"}
-          </p> */}
-          <button onClick={resetTranscript}>Reset</button>
-          <p>{transcript}</p>
-        </div>
         <Search transcript={transcript} isListening={isListening} />
+        <Tts transcript={transcript} isListening={isListening}/>
         <Space />
         <Header>키워드 검색</Header>
         <ButtonContainer>
@@ -118,7 +112,7 @@ useEffect(() => {
             </Link>
           ))}
         </ButtonContainer>
-        <TtsTest />
+       
       </Div>
     </>
   );
