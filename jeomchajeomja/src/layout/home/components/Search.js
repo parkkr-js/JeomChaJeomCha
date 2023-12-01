@@ -4,6 +4,7 @@ import InputBase from "@mui/material/InputBase";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
+import Tts from "../../tts";
 
 export default function Search({ transcript, isListening }) {
   const [keyword, setKeyword] = useContext(SearchContext);
@@ -46,6 +47,7 @@ export default function Search({ transcript, isListening }) {
           backgroundColor: isListening ? "red" : "transparent",
         }}
       />
+      <Tts transcript={transcript} isListening={isListening} />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
         <Button
           style={{
