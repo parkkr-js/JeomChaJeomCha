@@ -21,8 +21,8 @@ const PurchaseBlock = ({ book, id }) => {
           <Row>
             <div style={{ width: "60px" }} />
             <BodyReg>
-              재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}
-              &nbsp; &nbsp;작성년도 | {book.publicationYear}
+              과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
+              &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>
           </Row>
           <div style={{ height: "25px" }} />

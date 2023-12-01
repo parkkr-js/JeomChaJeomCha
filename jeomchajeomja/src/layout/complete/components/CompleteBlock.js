@@ -16,8 +16,8 @@ const CompleteBlock = ({ book, id }) => {
           <div style={{ height: "8px" }} />
           <Row>
             <BodyReg>
-              재작 재단 | {book.publisher}&nbsp; &nbsp;저자 | {book.author}
-              &nbsp; &nbsp;작성년도 | {book.publicationYear}
+              과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
+              &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>
           </Row>
         </Block>
