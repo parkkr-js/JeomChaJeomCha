@@ -1,21 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import BookIndex from "./components/BookIndex";
 import BookIntroduction from "./components/BookIntroduction";
 import BookInformation from "./components/BookInformation";
 import TopNavBar from "../../common/TopNavBar";
+import { PurchaseContext } from "../../model/PurchaseProvider";
+import { addCart } from "../../features/shoppingCart/shoppingCartSlice";
 
 const Detail = () => {
   const bookLists = useSelector((state) => state.book.book);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const ref = useRef(null);
   const [book, setBook] = useState();
+  const [, setPurchase] = useContext(PurchaseContext);
+
+  const handleShoppingCartClick = () => {
+    dispatch(addCart(book));
+    alert("장바구니에 추가되었습니다.");
+  };
+
+  const handlePurchaseClick = () => {
+    setPurchase(book);
+    navigate("/purchase/false");
+  };
 
   useEffect(() => {
     ref.current?.focus();
-    setBook(bookLists.find((item) => item.title === id));
+    setBook(bookLists.find((item) => String(item.id) === id));
   }, [bookLists, id]);
 
   return (
@@ -26,19 +41,24 @@ const Detail = () => {
       <div style={{ height: "60px" }} />
       <BookInformation book={book} />
       <div style={{ height: "78px" }} />
-      <SubTitle>
-        원가 : {book?.price.toLocaleString()} 원 + 배송비 : 3,000원
-      </SubTitle>
+      <Row>
+        <SubTitle>인쇄비 : {book?.price.toLocaleString()} 원</SubTitle>
+        <Title>+</Title>
+        <SubTitle>배송비 : 3,000 원</SubTitle>
+      </Row>
       <div style={{ height: "14px" }} />
       <SubTitle style={{ fontSize: "40px" }}>
         총 금액 : {(book?.price + 3000).toLocaleString()} 원
       </SubTitle>
       <div style={{ height: "40px" }} />
       <ButtonBar>
-        <BodyButton style={{ color: "white", backgroundColor: "black" }}>
+        <BodyButton
+          style={{ color: "white", backgroundColor: "black" }}
+          onClick={handlePurchaseClick}
+        >
           ① 구매하기
         </BodyButton>
-        <BodyButton>② 장바구니</BodyButton>
+        <BodyButton onClick={handleShoppingCartClick}>② 장바구니</BodyButton>
         <BodyButton>③ 파일 다운받기</BodyButton>
       </ButtonBar>
       <div style={{ height: "60px" }} />
@@ -59,6 +79,13 @@ const Column = styled.div`
   padding: 25px 240px;
 `;
 
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 25px;
+`;
+
 const SubTitle = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
@@ -77,12 +104,12 @@ const BodyButton = styled.button`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
 `;
 
-/* const Body = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body2};
+const Title = styled.div`
+  font-size: 40px;
   color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.body2_reg};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   white-space: nowrap;
-`; */
+`;
 
 const Header = styled.div`
   color: ${({ theme }) => theme.colors.black};

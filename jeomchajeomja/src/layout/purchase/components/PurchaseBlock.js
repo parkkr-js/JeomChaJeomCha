@@ -1,27 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addCart } from "../../../features/shoppingCart/shoppingCartSlice";
-import { PurchaseContext } from "../../../model/PurchaseProvider";
+import { Link } from "react-router-dom";
 
-const BookBlock = ({ book, id }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [, setPurchase] = useContext(PurchaseContext);
-
-  const handleShoppingCartClick = (event) => {
-    event.preventDefault();
-    dispatch(addCart(book));
-    alert("장바구니에 추가되었습니다.");
-  };
-
-  const handlePurchaseClick = (event) => {
-    event.preventDefault();
-    setPurchase(book);
-    navigate("/purchase/false");
-  };
-
+const PurchaseBlock = ({ book, id }) => {
   return (
     <div style={{ width: "100vw", padding: "0 240px" }}>
       <Link
@@ -46,13 +27,7 @@ const BookBlock = ({ book, id }) => {
           </Row>
           <div style={{ height: "25px" }} />
           <ButtonBar>
-            <Button
-              style={{ color: "white", background: "black" }}
-              onClick={handleShoppingCartClick}
-            >
-              장바구니
-            </Button>
-            <Button onClick={handlePurchaseClick}>구매하기</Button>
+            <SubTitle>가격 {book.price.toLocaleString()}원</SubTitle>
           </ButtonBar>
         </Block>
       </Link>
@@ -60,11 +35,10 @@ const BookBlock = ({ book, id }) => {
   );
 };
 
-export default BookBlock;
+export default PurchaseBlock;
 
 const Block = styled.div`
   width: 100%;
-  height: 220px;
   flex-shrink: 0;
   border-radius: 20px;
   background: ${({ theme }) => theme.colors.black};
@@ -77,19 +51,7 @@ const ButtonBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 15px;
   flex-shrink: 0;
-`;
-
-const Button = styled.button`
-  padding: 9px 25px;
-  white-space: nowrap;
-  border-radius: 15px;
-  border: 2px solid ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.white};
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.button1};
-  font-size: ${({ theme }) => theme.fontSizes.button1};
 `;
 
 const Row = styled.div`
@@ -110,6 +72,13 @@ const Circle = styled.div`
   flex-shrink: 0;
 `;
 
+const SubTitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  color: ${({ theme }) => theme.colors.white};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  white-space: nowrap;
+`;
+
 const Body = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.white};
@@ -121,5 +90,5 @@ const BodyReg = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: nowrap;
+  white-space: pre;
 `;

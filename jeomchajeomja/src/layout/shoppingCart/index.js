@@ -4,15 +4,21 @@ import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
   const ref = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
 
   const handleRemoveClick = () => {
     dispatch(removeAllCart());
     alert("삭제되었습니다.");
+  };
+
+  const handlePurchaseClick = () => {
+    navigate("/purchase/true");
   };
 
   useEffect(() => {
@@ -33,7 +39,19 @@ const ShoppingCart = () => {
       <SubTitle>장바구니 자료 확인</SubTitle>
       <div style={{ height: "20px" }} />
       {shoppingCart.length === 0 ? (
-        <></>
+        <Column
+          style={{
+            padding: "100px 0 60px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Header style={{ fontSize: "35px" }}>장바구니가 비었습니다.</Header>
+          <div style={{ height: "15px" }} />
+          <SubTitleReg>
+            교재를 장바구니에 담은 후에 이용해주시기 바랍니다.
+          </SubTitleReg>
+        </Column>
       ) : (
         shoppingCart.map((book, i) => {
           return (
@@ -47,12 +65,23 @@ const ShoppingCart = () => {
       <div style={{ height: "90px" }} />
       <ButtonBar>
         <Button
-          style={{ color: "black", backgroundColor: "white" }}
+          disabled={shoppingCart.length === 0}
+          style={
+            shoppingCart.length === 0
+              ? { opacity: "0.2", color: "black", backgroundColor: "white" }
+              : { color: "black", backgroundColor: "white" }
+          }
           onClick={handleRemoveClick}
         >
           전체 삭제하기
         </Button>
-        <Button>전체 구매하기</Button>
+        <Button
+          disabled={shoppingCart.length === 0}
+          style={shoppingCart.length === 0 ? { opacity: "0.2" } : {}}
+          onClick={handlePurchaseClick}
+        >
+          전체 구매하기
+        </Button>
       </ButtonBar>
     </Column>
   );
