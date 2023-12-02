@@ -4,6 +4,7 @@ const Books = [
   {
     id: 0,
     title: "(중등) 쎈 중등 수학 1-1",
+    subject: "수학 1",
     price: 20000,
     publisher: "행복 나눔 재단",
     publicationYear: "2022년",
@@ -31,6 +32,7 @@ const Books = [
   {
     id: 1,
     title: "쎈 고등 수학(상)",
+    subject: "수학 1",
     price: 18000,
     publisher: "희망 나눔 재단",
     publicationYear: "2023년",
@@ -58,6 +60,7 @@ const Books = [
   {
     id: 2,
     title: "수학의 정석(상)",
+    subject: "수학 1",
     price: 18000,
     publisher: "사랑 나눔 재단",
     publicationYear: "2022년",
@@ -85,6 +88,7 @@ const Books = [
   {
     id: 3,
     title: "수학의 정석(하)",
+    subject: "수학 2",
     price: 18000,
     publisher: "사랑 나눔 재단",
     publicationYear: "2022년",

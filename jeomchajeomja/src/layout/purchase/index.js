@@ -7,12 +7,14 @@ import { PurchaseContext } from "../../model/PurchaseProvider";
 import PurchaseBlock from "./components/PurchaseBlock";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
+import StyledModal from "./components/StyledModal";
 
 const Purchase = () => {
   const { id } = useParams();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const totalPrice =
     id === "true"
       ? purchase.reduce((accumulator, item) => {
@@ -57,6 +59,7 @@ const Purchase = () => {
       <Row>
         <Paper
           component="form"
+          style={isDisabled ? { backgroundColor: "lightGray" } : {}}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -86,6 +89,7 @@ const Purchase = () => {
       <div style={{ height: "10px" }} />
       <Paper
         component="form"
+        style={isDisabled ? { backgroundColor: "lightGray" } : {}}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -115,7 +119,7 @@ const Purchase = () => {
       <Row>
         <BodyReg>인쇄비</BodyReg>
         <div style={{ width: "24px" }} />
-        <Body>{totalPrice.toLocaleString()}원</Body>
+        <Body>{totalPrice?.toLocaleString()}원</Body>
         <div style={{ width: "50px" }} />
         <Header>+</Header>
         <div style={{ width: "33px" }} />
@@ -127,7 +131,7 @@ const Purchase = () => {
         <div style={{ width: "33px" }} />
         <BodyReg>수수료</BodyReg>
         <div style={{ width: "24px" }} />
-        <Body>{(totalPrice / 10).toLocaleString()}원</Body>
+        <Body>{(totalPrice / 10)?.toLocaleString()}원</Body>
       </Row>
       <div style={{ width: "15px" }} />
       <hr style={{ width: "100%", borderColor: "black" }} />
@@ -137,10 +141,11 @@ const Purchase = () => {
         <div style={{ width: "33px" }} />
         <SubTitle>총 금액</SubTitle>
         <div style={{ width: "24px" }} />
-        <SubTitle>{(totalPrice * 1.1 + 3000).toLocaleString()}원</SubTitle>
+        <SubTitle>{(totalPrice * 1.1 + 3000)?.toLocaleString()}원</SubTitle>
       </Row>
       <div style={{ height: "47px" }} />
-      <PurchaseButton>구매하기</PurchaseButton>
+      <PurchaseButton onClick={() => setIsOpen(true)}>구매하기</PurchaseButton>
+      <StyledModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </Column>
   );
 };

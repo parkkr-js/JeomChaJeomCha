@@ -68,7 +68,12 @@ const ShoppingCart = () => {
           disabled={shoppingCart.length === 0}
           style={
             shoppingCart.length === 0
-              ? { opacity: "0.2", color: "black", backgroundColor: "white" }
+              ? {
+                  opacity: "0.2",
+                  color: "black",
+                  backgroundColor: "white",
+                  cursor: "not-allowed",
+                }
               : { color: "black", backgroundColor: "white" }
           }
           onClick={handleRemoveClick}
@@ -77,7 +82,11 @@ const ShoppingCart = () => {
         </Button>
         <Button
           disabled={shoppingCart.length === 0}
-          style={shoppingCart.length === 0 ? { opacity: "0.2" } : {}}
+          style={
+            shoppingCart.length === 0
+              ? { opacity: "0.2", cursor: "not-allowed" }
+              : {}
+          }
           onClick={handlePurchaseClick}
         >
           전체 구매하기

@@ -30,12 +30,12 @@ const CartBlock = ({ book, id }) => {
           <div style={{ height: "8px" }} />
           <Row>
             <div style={{ width: "60px" }} />
-            <BigBody>재작 재단</BigBody>
-            <BigBodyReg> | {book.publisher}&nbsp; &nbsp;</BigBodyReg>
+            <BigBody>과목</BigBody>
+            <BigBodyReg> | {book.subject}&nbsp; &nbsp;</BigBodyReg>
+            <BigBody>발행일</BigBody>
+            <BigBodyReg> | {book.publishDate}&nbsp; &nbsp;</BigBodyReg>
             <BigBody>저자</BigBody>
-            <BigBodyReg> | {book.author}&nbsp; &nbsp;</BigBodyReg>
-            <BigBody>작성년도</BigBody>
-            <BigBodyReg> | {book.publicationYear}</BigBodyReg>
+            <BigBodyReg> | {book.author}</BigBodyReg>
           </Row>
         </Link>
       </Block>
@@ -69,8 +69,8 @@ const DeleteButton = styled.div`
   height: 140px;
   white-space: nowrap;
   border-radius: 0 20px 20px 0;
-  border: 2px solid ${({ theme }) => theme.colors.red};
-  background-color: ${({ theme }) => theme.colors.red};
+  border: 2px solid red;
+  background-color: red;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.button1};
   font-size: ${({ theme }) => theme.fontSizes.button1};
