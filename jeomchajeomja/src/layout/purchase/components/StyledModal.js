@@ -81,11 +81,17 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
             <ButtonBar style={{ gap: "10px" }}>
               <TermsButton
                 style={
-                  agree ? {} : { color: "black", backgroundColor: "white" }
+                  agree
+                    ? { width: "154px" }
+                    : {
+                        width: "154px",
+                        color: "black",
+                        backgroundColor: "white",
+                      }
                 }
                 onClick={() => setAgree(!agree)}
               >
-                {agree ? "✓" : ""} 동의
+                {agree ? "동의함" : "동의하지 않음"}
               </TermsButton>
               <TermsButton>자세히 보기</TermsButton>
             </ButtonBar>

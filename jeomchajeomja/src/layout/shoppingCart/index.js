@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
@@ -7,7 +7,6 @@ import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
 import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
-  const ref = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
@@ -21,13 +20,9 @@ const ShoppingCart = () => {
     navigate("/purchase/true");
   };
 
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
-
   return (
     <Column>
-      <TopNavBar ref={ref} />
+      <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>장바구니</Header>
       <div style={{ height: "10px" }} />

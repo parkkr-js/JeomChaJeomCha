@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -14,7 +14,6 @@ const Detail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const ref = useRef(null);
   const [book, setBook] = useState();
   const [, setPurchase] = useContext(PurchaseContext);
 
@@ -29,13 +28,12 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    ref.current?.focus();
     setBook(bookLists.find((item) => String(item.id) === id));
   }, [bookLists, id]);
 
   return (
     <Column>
-      <TopNavBar ref={ref} />
+      <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>{book?.title}</Header>
       <div style={{ height: "60px" }} />
@@ -94,7 +92,7 @@ const SubTitle = styled.span`
 `;
 
 const BodyButton = styled.button`
-  padding: 8px 30px;
+  padding: 12px 30px;
   white-space: nowrap;
   border-radius: 15px;
   border: 2px solid ${({ theme }) => theme.colors.black};
