@@ -18,7 +18,7 @@ function AddressForm({ transcript, isListening }) {
   };
 
   const handleFindAddressClick = () => {
-    setIsModalVisible(true);
+    setIsModalVisible(!isModalVisible);
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function AddressForm({ transcript, isListening }) {
             border: "2px solid #000",
             boxShadow: "0px 6px 10px 0px rgba(0, 0, 0, 0.10)",
             overflow: "hidden",
-            backgroundColor: isListening ? "red" : "transparent",
+            backgroundColor: "transparent",
           }}
         >
           <InputBase
@@ -71,7 +71,7 @@ function AddressForm({ transcript, isListening }) {
               fontWeight: "bold",
               color: "black",
               textAlign: "right",
-              backgroundColor: isListening ? "red" : "transparent",
+              backgroundColor: "transparent",
             }}
           />
         </Paper>
@@ -104,7 +104,9 @@ function AddressForm({ transcript, isListening }) {
           }}
         />
       </Paper>
-      {isModalVisible && <FindAddressModal/> }
+      {isModalVisible && (
+        <FindAddressModal modalClose={handleFindAddressClick} />
+      )}
     </Colunm>
   );
 }

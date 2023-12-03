@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Search from "./Search";
 import AddressCardList from "./AddressCardList";
 
-function FindAddressModal() {
+function FindAddressModal({ modalClose }) {
   return (
     <Backdrop>
       <ModalContainer>
@@ -28,7 +28,7 @@ function FindAddressModal() {
         </ModalHeaderDiv>
         <Search />
         <AddressCardList />
-        <CloseBtn>닫기</CloseBtn>
+        <CloseBtn onClick={modalClose}>닫기</CloseBtn>
       </ModalContainer>
     </Backdrop>
   );
@@ -119,6 +119,12 @@ const CloseBtn = styled.button`
   border-radius: 15px;
   background: ${({ theme }) => theme.colors.black};
   gap: 10px;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 52.5px;
+  margin-top: 23px;
 `;
 
 const Row1 = styled.div`

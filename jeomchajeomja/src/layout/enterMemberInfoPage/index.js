@@ -7,7 +7,6 @@ import AudioBtn from "../../common/AudioBtn";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import PostModal from "./components/PostModal";
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
@@ -22,16 +21,16 @@ function EnterMemberInfo() {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
-  useEffect(() => { 
+  useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening) {
         playBeep();
         setIsListening(true);
         SpeechRecognition.startListening();
-  
+
         // 현재 포커스된 요소 확인
         const activeElement = document.activeElement;
-  
+
         // 전화번호 입력 폼이 활성화되어야 하는 경우
         if (activeElement === phoneRef.current) {
           setActiveForm("phone");
@@ -92,10 +91,10 @@ function EnterMemberInfo() {
         <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
         <Body1>
           스페이스바를 2초간 누른 후 벨소리가 나면
-          <br /> 음성 검색이 활성화됩니다.{" "}
+          <br /> 음성 검색이 활성화됩니다.
         </Body1>
         <PhoneNumForm
-        ref={phoneRef}
+          ref={phoneRef}
           transcript={activeForm === "phone" ? transcript : ""}
           isListening={isListening && activeForm === "phone"}
         />
@@ -104,16 +103,16 @@ function EnterMemberInfo() {
       <Content1_1>
         <SubTitle1>주소를 입력해주세요.</SubTitle1>
         <Body1>
-          {" "}
           스페이스바를 2초간 누른 후 벨소리가 나면
-          <br /> 음성 검색이 활성화됩니다.{" "}
+          <br /> 음성 검색이 활성화됩니다.
         </Body1>
         <AddressForm
-        ref={addressRef} 
+          ref={addressRef}
           transcript={activeForm === "address" ? transcript : ""}
           isListening={isListening && activeForm === "address"}
         />
       </Content1_1>
+      <StartBtn>시작하기</StartBtn>
     </Container>
   );
 }
@@ -161,7 +160,7 @@ const Btn = styled.button`
   line-height: 150%;
 `;
 
-const Header1 = styled.h1`
+const Header1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.header1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
@@ -171,26 +170,38 @@ const Header1 = styled.h1`
 const Content1_1 = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: start;
-  align-items: start; */
   width: 560px;
   height: fit-content;
 `;
-const Content1_2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-`;
-const SubTitle1 = styled.h1`
+
+const SubTitle1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   line-height: 150%;
 `;
-const Body1 = styled.h1`
+const Body1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
   line-height: 150%;
+`;
+
+const StartBtn = styled.button`
+  display: inline-flex;
+  padding: 9px 20px;
+  width: 172px;
+  height: 71px;
+  margin-top: 70px;
+  margin-bottom: 90px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 15px;
+  background: var(--Black, #000);
+  color: var(--Background---White, #fff);
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 52.5px;
 `;
