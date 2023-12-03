@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Search from "./Search";
 
 function FindAddressModal() {
   return (
@@ -24,11 +25,7 @@ function FindAddressModal() {
             <ModalBody2>예) 한빛맹학교</ModalBody2>
           </Row2>
         </ModalHeaderDiv>
-        <InputWrapper>
-          <ModalInput placeholder="검색" />
-          <SearchButton>검색</SearchButton>
-        </InputWrapper>
-        <CloseButton>닫기</CloseButton>
+        <Search />
       </ModalContainer>
     </Backdrop>
   );
@@ -71,6 +68,7 @@ const ModalHeaderDiv = styled.div`
   max-height: 258px;
   border-radius: 20px 20px 0 0;
   background-color: ${({ theme }) => theme.colors.black};
+  margin-bottom: 20px;
 `;
 
 const ModalHeader1 = styled.div`
@@ -110,40 +108,14 @@ const ModalBody2 = styled.div`
   line-height: 30px;
 `;
 
-const InputWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+const CloseBtn = styled.button`
+  display: inline-flex;
+  padding: 9px 20px;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 24px;
-`;
-
-const ModalInput = styled.input`
-  width: 80%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1em;
-`;
-
-const SearchButton = styled.button`
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  background-color: #000;
-  color: #fff;
-  font-size: 1em;
-  cursor: pointer;
-`;
-
-const CloseButton = styled.button`
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  background-color: #ccc;
-  color: #333;
-  font-size: 1em;
-  cursor: pointer;
-  align-self: center;
+  border-radius: 15px;
+  background: ${({ theme }) => theme.colors.black};
+  gap: 10px;
 `;
 
 const Row1 = styled.div`
