@@ -3,35 +3,29 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
 import styled from "styled-components";
-import CertificationForm from "./CertificationForm";
 
-function PhoneNumForm({ transcript, isListening }) {
+function CertificationForm({ transcript, isListening }) {
   const [phoneNum, setPhoneNum] = useState(transcript);
-  const [showCertificationForm, setShowCertificationForm] = useState(false);
-
   const handlePhoneNumChange = (event) => {
     setPhoneNum(event.target.value);
-  };
-
-  const handleButtonClick = () => {
-    setShowCertificationForm(true);
   };
 
   useEffect(() => {
     setPhoneNum(transcript);
   }, [transcript]);
-
-  const isButtonEnabled = phoneNum.length >= 11 && phoneNum.length <= 14;
-
   return (
-    <>
-      <Container>
+    <Container1>
+      <Body1>
+        인증번호를 입력해주세요.
+        <br /> 인증번호를 받지 못했다면 Enter를 다시 눌러주세요.
+      </Body1>
+      <Container2>
         <Paper
           component="form"
           sx={{
             display: "flex",
             alignItems: "center",
-            width: "357px",
+            width: "454px",
             height: "60px",
             borderRadius: "15px",
             border: "2px solid #000",
@@ -69,24 +63,36 @@ function PhoneNumForm({ transcript, isListening }) {
             fontStyle: "normal",
             lineHeight: "36px",
           }}
-          disabled={!isButtonEnabled}
-          onClick={handleButtonClick}
         >
-          인증번호 발송
+          확인
         </Button>
-      </Container>
-      {showCertificationForm && <CertificationForm />}
-    </>
+      </Container2>
+    </Container1>
   );
 }
-export default PhoneNumForm;
+export default CertificationForm;
 
-const Container = styled.div`
+const Container1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: start;
+  justify-content: start;
+`;
+
+const Container2 = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: fit-content;
   align-items: center;
   justify-content: start;
   gap: 20px;
+`;
+
+const Body1 = styled.h1`
+  font-size: ${({ theme }) => theme.fontSizes.body1};
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.body1};
+  line-height: 150%;
+  
 `;

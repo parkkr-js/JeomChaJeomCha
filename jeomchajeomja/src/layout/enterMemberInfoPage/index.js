@@ -22,7 +22,7 @@ function EnterMemberInfo() {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
-  useEffect(() => {
+  useEffect(() => { 
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening) {
         playBeep();
@@ -114,7 +114,6 @@ function EnterMemberInfo() {
           isListening={isListening && activeForm === "address"}
         />
       </Content1_1>
-      <PostModal/>
     </Container>
   );
 }
@@ -175,6 +174,7 @@ const Content1_1 = styled.div`
   /* justify-content: start;
   align-items: start; */
   width: 560px;
+  height: fit-content;
 `;
 const Content1_2 = styled.div`
   display: flex;
