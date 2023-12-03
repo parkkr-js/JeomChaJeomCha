@@ -7,15 +7,16 @@ import AudioBtn from "../../common/AudioBtn";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { useRecoilState } from "recoil";
 import { PhonNumState } from "../../recoil/atoms/PhoneNumState";
+import { useRecoilState } from "recoil";
+
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
-  const { phoneNumber, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
+  const { phoneNumber, resetPhoneNumber, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   useEffect(() => {
     let startTimer;
@@ -76,12 +77,14 @@ function EnterMemberInfo() {
 
   useEffect(() => {
     if (phoneNumber && !isListening) {
+      setPhoneNum(phoneNumber); 
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = phoneNumber;
       window.speechSynthesis.speak(speech);
     }
   }, [phoneNumber, isListening]);
+
 
   if (!browserSupportsSpeechRecognition) {
     return (

@@ -7,20 +7,13 @@ import CertificationForm from "./CertificationForm";
 import { PhonNumState } from "../../../recoil/atoms/PhoneNumState";
 import { useRecoilState } from "recoil";
 
+
 function PhoneNumForm({ isListening }) {
-
-  const [showCertificationForm, setShowCertificationForm] = useState(false);
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
-
-
-  useEffect(() => {
-    setPhoneNum(phoneNum);
-  }, [phoneNum]);
+  const [showCertificationForm, setShowCertificationForm] = useState(false);
 
   const handlePhoneNumChange = (event) => {
-    if (isListening) {
-      event.preventDefault();
-    } else {
+    if (!isListening) {
       setPhoneNum(event.target.value);
     }
   };
@@ -29,8 +22,7 @@ function PhoneNumForm({ isListening }) {
     setShowCertificationForm(true);
   };
 
-  const isButtonEnabled =
-    phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
+  const isButtonEnabled = phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
 
   return (
     <>
@@ -50,7 +42,7 @@ function PhoneNumForm({ isListening }) {
           }}
         >
           <InputBase
-            value={phoneNum}
+             value={phoneNum}
             onChange={handlePhoneNumChange}
             sx={{
               ml: 1,

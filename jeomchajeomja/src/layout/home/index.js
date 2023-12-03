@@ -89,7 +89,6 @@ function Home() {
       speech.lang = "ko-KR";
       speech.text = transcript;
       window.speechSynthesis.speak(speech);
-      console.log(transcript);
     }
   }, [transcript, isListening]);
 
