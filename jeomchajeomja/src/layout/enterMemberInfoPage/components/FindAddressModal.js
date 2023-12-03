@@ -6,16 +6,15 @@ function FindAddressModal() {
     <Backdrop>
       <ModalContainer>
         <ModalHeaderDiv>
-          <ModalHeader>주소 찾기</ModalHeader>
-          <ModalBody>
+          <ModalHeader1>주소 찾기</ModalHeader1>
+          <ModalHeader2>
             다음과 같은 조항으로 검색을 해서 더욱 정확한 결과가 검색됩니다.
-            <br />
-            도로명 + 건물번호 예) 판교역로 135
-            <br />
-            지역명 + 번지 또는 건물명 예) 남동구아이파크
-          </ModalBody>
+          </ModalHeader2>
+          <ModalBody1>도로명 + 건물번호</ModalBody1>
+          <ModalBody2>예) 판교역로 135</ModalBody2>
+          <ModalBody1> 지역명 + 번지 또는 건물명</ModalBody1>
+          <ModalBody2>예) 남동구아이파크</ModalBody2>
         </ModalHeaderDiv>
-
         <InputWrapper>
           <ModalInput placeholder="검색" />
           <SearchButton>검색</SearchButton>
@@ -65,19 +64,35 @@ const ModalHeaderDiv = styled.div`
   background-color: ${({ theme }) => theme.colors.black};
 `;
 
-const ModalHeader = styled.h2`
+const ModalHeader1 = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-size: 50px;
-  margin: 0;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 75px;
 `;
 
-const ModalBody = styled.body`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-size: 20px;
+const ModalHeader2 = styled.div`
   color: ${({ theme }) => theme.colors.white};
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 37.5px%;
+`;
+
+const ModalBody1 = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+`;
+
+const ModalBody2 = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 30px;
 `;
 
@@ -115,4 +130,13 @@ const CloseButton = styled.button`
   font-size: 1em;
   cursor: pointer;
   align-self: center;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: fit-content;
+  gap: 20px;
 `;
