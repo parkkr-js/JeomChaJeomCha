@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
@@ -12,10 +12,11 @@ import SpeechRecognition, {
 
 function PhoneNumForm() {
   const [isListening, setIsListening] = useState(false);
-  const { transcript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
+  const inputRef = useRef(null);
+  const { transcript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   const handlePhoneNumChange = (event) => {
     if (!isListening) {
@@ -27,6 +28,7 @@ function PhoneNumForm() {
     setShowCertificationForm(true);
   };
   useEffect(() => {
+    const inputElement = inputRef.current;
     let startTimer;
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening && !startTimer) {
@@ -70,12 +72,16 @@ function PhoneNumForm() {
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    if (inputElement) {
+      inputElement.addEventListener("keydown", handleKeyDown);
+      inputElement.addEventListener("keyup", handleKeyUp);
+    }
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      if (inputElement) {
+        inputElement.removeEventListener("keydown", handleKeyDown);
+        inputElement.removeEventListener("keyup", handleKeyUp);
+      }
       if (startTimer) {
         clearTimeout(startTimer);
       }
@@ -85,7 +91,6 @@ function PhoneNumForm() {
   useEffect(() => {
     setPhoneNum(transcript);
     if (transcript && !isListening) {
-   
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = phoneNum;
@@ -123,6 +128,7 @@ function PhoneNumForm() {
           }}
         >
           <InputBase
+            ref={inputRef}
             value={phoneNum}
             onChange={handlePhoneNumChange}
             sx={{
@@ -157,7 +163,7 @@ function PhoneNumForm() {
           인증번호 발송
         </Button>
       </Container>
-      {showCertificationForm && <CertificationForm />}
+      {showCertificationForm && <CertificationForm  inputRef={inputRef}/>}
     </>
   );
 }

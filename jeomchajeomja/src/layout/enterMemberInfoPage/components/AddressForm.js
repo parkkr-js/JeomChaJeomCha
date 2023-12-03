@@ -4,26 +4,17 @@ import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
 import styled from "styled-components";
 import FindAddressModal from "./FindAddressModal";
+import { useRecoilValue } from "recoil";
+import { AddressState } from "../../../recoil/atoms/AddressState";
 
-function AddressForm({ transcript, isListening }) {
-  const [address, setAddress] = useState(transcript);
-  const [specificAddress, setSpecificAddress] = useState(transcript);
+function AddressForm() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handlesetAddressChange = (event) => {
-    setAddress(event.target.value);
-  };
-  const handleSpecificAddressChange = (event) => {
-    setSpecificAddress(event.target.value);
-  };
+  const address = useRecoilValue(AddressState);
+  const [isListening, setIsListening] = useState(false);
 
   const handleFindAddressClick = () => {
     setIsModalVisible(!isModalVisible);
   };
-
-  useEffect(() => {
-    setAddress(transcript);
-  }, [transcript]);
 
   return (
     <Colunm>
@@ -63,7 +54,6 @@ function AddressForm({ transcript, isListening }) {
         >
           <InputBase
             value={address}
-            onChange={handlesetAddressChange}
             sx={{
               ml: 1,
               flex: 1,
@@ -87,12 +77,10 @@ function AddressForm({ transcript, isListening }) {
           border: "2px solid #000",
           boxShadow: "0px 6px 10px 0px rgba(0, 0, 0, 0.10)",
           overflow: "hidden",
-          backgroundColor: isListening ? "red" : "transparent",
+          backgroundColor: "transparent",
         }}
       >
         <InputBase
-          value={specificAddress}
-          onChange={handleSpecificAddressChange}
           sx={{
             ml: 1,
             flex: 1,

@@ -5,10 +5,8 @@ import PhoneNumForm from "./components/PhoneNumForm";
 import AddressForm from "./components/AddressForm";
 import AudioBtn from "../../common/AudioBtn";
 
-
 function EnterMemberInfo() {
   const navigate = useNavigate();
-
 
   return (
     <Container>

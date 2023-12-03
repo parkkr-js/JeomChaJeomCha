@@ -2,11 +2,39 @@ import React from "react";
 import styled from "styled-components";
 import Search from "./Search";
 import AddressCardList from "./AddressCardList";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilValue } from "recoil";
+import { AddressState } from "../../../recoil/atoms/AddressState";
+
 
 function FindAddressModal({ modalClose }) {
+  const address = useRecoilValue(AddressState);
+  const [showAddressCardList, setShowAddressCardList] = useState(false);
+  const [isAddressCorrect, setIsAddressCorrect] = useState(false);
+
+  const addressKeywords = [
+    "서울",
+    "강북구",
+    "삼양로",
+    "73가",
+    "73가길",
+    "47",
+    "한빛맹학교",
+  ];
+
+
+  const handleAddressCardList = () => {
+    setShowAddressCardList(true);
+  };
+  useEffect(() => {
+    if (addressKeywords.some((keyword) => address.includes(keyword))) {
+        setIsAddressCorrect(true);
+    }
+}, [address]);
+
   return (
     <Backdrop>
-      <ModalContainer>
+      <ModalContainer >
         <ModalHeaderDiv>
           <Row1>
             <ModalHeader1>주소 찾기</ModalHeader1>
@@ -26,8 +54,8 @@ function FindAddressModal({ modalClose }) {
             <ModalBody2>예) 한빛맹학교</ModalBody2>
           </Row2>
         </ModalHeaderDiv>
-        <Search />
-        <AddressCardList />
+        <Search handleAddressCardList={handleAddressCardList} />
+        {showAddressCardList && isAddressCorrect ? <AddressCardList /> : null}
         <CloseBtn onClick={modalClose}>닫기</CloseBtn>
       </ModalContainer>
     </Backdrop>
@@ -59,6 +87,7 @@ const ModalContainer = styled.div`
   align-items: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   padding: 0;
+  
 `;
 
 const ModalHeaderDiv = styled.div`
