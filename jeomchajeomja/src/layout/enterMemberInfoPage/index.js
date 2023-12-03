@@ -7,64 +7,82 @@ import AudioBtn from "../../common/AudioBtn";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import { useRecoilState } from "recoil";
+import { PhonNumState } from "../../recoil/atoms/PhoneNumState";
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
-  const [activeForm, setActiveForm] = useState("phone");
-  const phoneRef = useRef(null);
-  const addressRef = useRef(null);
-  const activatePhoneForm = () => setActiveForm("phone");
-  const activateAddressForm = () => setActiveForm("address");
-  const deactivateForms = () => setActiveForm(null);
-
-  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+  const { phoneNumber, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+  const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
 
   useEffect(() => {
+    let startTimer;
+
     const handleKeyDown = (event) => {
-      if (event.key === " " && !isListening) {
-        playBeep();
-        setIsListening(true);
-        SpeechRecognition.startListening();
+      if (event.key === " " && !isListening && !startTimer) {
+        startTimer = setTimeout(() => {
+          playBeep();
+          setIsListening(true);
+          SpeechRecognition.startListening();
+          startTimer = null;
+        }, 200);
+      }
+    };
 
-        // 현재 포커스된 요소 확인
-        const activeElement = document.activeElement;
-
-        // 전화번호 입력 폼이 활성화되어야 하는 경우
-        if (activeElement === phoneRef.current) {
-          setActiveForm("phone");
+    const handleKeyUp = (event) => {
+      if (event.key === " ") {
+        if (startTimer) {
+          clearTimeout(startTimer);
+          startTimer = null;
         }
-        // 주소 입력 폼이 활성화되어야 하는 경우
-        else if (activeElement === addressRef.current) {
-          setActiveForm("address");
+        if (isListening) {
+          setIsListening(false);
+          SpeechRecognition.stopListening();
         }
       }
     };
+
     const playBeep = () => {
       const audioContext = new window.AudioContext();
+
       const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨을 0.1로 설정
+
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-      oscillator.connect(audioContext.destination);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
       oscillator.start();
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    const handleKeyUp = (event) => {
-      if (event.key === " " && isListening) {
-        setIsListening(false);
-        SpeechRecognition.stopListening();
-      }
-    };
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
+      if (startTimer) {
+        clearTimeout(startTimer);
+      }
     };
   }, [isListening]);
+
+  useEffect(() => {
+    if (phoneNumber && !isListening) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = phoneNumber;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [phoneNumber, isListening]);
+
   if (!browserSupportsSpeechRecognition) {
     return (
       <span>
@@ -73,6 +91,7 @@ function EnterMemberInfo() {
       </span>
     );
   }
+
   return (
     <Container>
       <NavDiv>
@@ -93,11 +112,7 @@ function EnterMemberInfo() {
           스페이스바를 2초간 누른 후 벨소리가 나면
           <br /> 음성 검색이 활성화됩니다.
         </Body1>
-        <PhoneNumForm
-          ref={phoneRef}
-          transcript={activeForm === "phone" ? transcript : ""}
-          isListening={isListening && activeForm === "phone"}
-        />
+        <PhoneNumForm isListening={isListening} />
       </Content1_1>
 
       <Content1_1>
@@ -106,11 +121,7 @@ function EnterMemberInfo() {
           스페이스바를 2초간 누른 후 벨소리가 나면
           <br /> 음성 검색이 활성화됩니다.
         </Body1>
-        <AddressForm
-          ref={addressRef}
-          transcript={activeForm === "address" ? transcript : ""}
-          isListening={isListening && activeForm === "address"}
-        />
+        <AddressForm />
       </Content1_1>
       <StartBtn>시작하기</StartBtn>
     </Container>
@@ -164,7 +175,8 @@ const Header1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.header1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
-  line-height: 150%;
+  line-height: 75px;
+  margin-bottom: 38px;
 `;
 
 const Content1_1 = styled.div`
@@ -172,19 +184,21 @@ const Content1_1 = styled.div`
   flex-direction: column;
   width: 560px;
   height: fit-content;
+  margin-bottom: 40px;
 `;
 
 const SubTitle1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
-  line-height: 150%;
+  line-height: 45px;
+  margin-bottom: 10px;
 `;
 const Body1 = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
-  line-height: 150%;
+  line-height: 37.5px;
 `;
 
 const StartBtn = styled.button`
@@ -192,7 +206,7 @@ const StartBtn = styled.button`
   padding: 9px 20px;
   width: 172px;
   height: 71px;
-  margin-top: 70px;
+  margin-top: 30px;
   margin-bottom: 90px;
   justify-content: center;
   align-items: center;

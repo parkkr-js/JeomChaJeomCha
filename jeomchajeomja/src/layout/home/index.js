@@ -55,10 +55,18 @@ function Home() {
 
     const playBeep = () => {
       const audioContext = new window.AudioContext();
+
       const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨을 0.1로 설정
+
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-      oscillator.connect(audioContext.destination);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
       oscillator.start();
       oscillator.stop(audioContext.currentTime + 0.6);
     };

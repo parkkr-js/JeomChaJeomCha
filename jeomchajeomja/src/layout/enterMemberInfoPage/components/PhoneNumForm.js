@@ -4,24 +4,33 @@ import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
 import styled from "styled-components";
 import CertificationForm from "./CertificationForm";
+import { PhonNumState } from "../../../recoil/atoms/PhoneNumState";
+import { useRecoilState } from "recoil";
 
-function PhoneNumForm({ transcript, isListening }) {
-  const [phoneNum, setPhoneNum] = useState(transcript);
+function PhoneNumForm({ isListening }) {
+
   const [showCertificationForm, setShowCertificationForm] = useState(false);
+  const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
+
+
+  useEffect(() => {
+    setPhoneNum(phoneNum);
+  }, [phoneNum]);
 
   const handlePhoneNumChange = (event) => {
-    setPhoneNum(event.target.value);
+    if (isListening) {
+      event.preventDefault();
+    } else {
+      setPhoneNum(event.target.value);
+    }
   };
 
   const handleButtonClick = () => {
     setShowCertificationForm(true);
   };
 
-  useEffect(() => {
-    setPhoneNum(transcript);
-  }, [transcript]);
-
-  const isButtonEnabled = phoneNum.length >= 11 && phoneNum.length <= 14;
+  const isButtonEnabled =
+    phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
 
   return (
     <>
