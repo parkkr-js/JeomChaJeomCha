@@ -4,15 +4,12 @@ import { useState } from "react";
 import CompleteModal from "./CompleteModal";
 
 const StyledModal = ({ isOpen, setIsOpen }) => {
-  const [paymentMethod, setPaymentMethod] = useState("네이버페이");
+  const [paymentMethod, setPaymentMethod] = useState("토스페이");
   const [agree, setAgree] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([
-    { id: "①", name: "네이버페이", checked: true },
-    { id: "②", name: "카카오페이", checked: false },
-    { id: "③", name: "PAYCO", checked: false },
-    { id: "④", name: "토스페이", checked: false },
-    { id: "⑤", name: "가상계좌", checked: false },
+    { id: "①", name: "토스페이", checked: true },
+    { id: "②", name: "가상계좌", checked: false },
   ]);
 
   const handleMethodClick = (event, item, index) => {
@@ -24,13 +21,10 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
 
   const handleCancelClick = () => {
     setAgree(false);
-    setPaymentMethod("네이버페이");
+    setPaymentMethod("토스페이");
     setPaymentMethods([
-      { id: "①", name: "네이버페이", checked: true },
-      { id: "②", name: "카카오페이", checked: false },
-      { id: "③", name: "PAYCO", checked: false },
-      { id: "④", name: "토스페이", checked: false },
-      { id: "⑤", name: "가상계좌", checked: false },
+      { id: "①", name: "토스페이", checked: true },
+      { id: "②", name: "가상계좌", checked: false },
     ]);
     setIsOpen(false);
   };
@@ -55,7 +49,7 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
           </SubTitle>
         </Div>
         <ModalBody>
-          <ButtonBar>
+          <ButtonBar style={{ flexGrow: 1 }}>
             {paymentMethods.map((item, index) => {
               if (item.checked) {
                 return (
@@ -135,6 +129,8 @@ const ModalComponent = styled(Modal)`
 `;
 
 const Column = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: 20px;
   width: 810px;
   height: 670px;
@@ -148,6 +144,7 @@ const ModalBody = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
 `;
 
 const Row = styled.div`

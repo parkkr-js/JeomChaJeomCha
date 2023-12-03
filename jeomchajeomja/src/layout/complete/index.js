@@ -24,9 +24,9 @@ const Complete = () => {
         여러분의 소중한 대체자료 참고서가
         <br />
         점자 인쇄소에서 출력 후 4일 내로 배송 예정입니다.
+        <br />
+        점차점자가 여러분의 더 넓은 미래를 응원합니다.
       </SubTitleReg>
-      <div style={{ height: "10px" }} />
-      <SubTitleReg>점차점자가 여러분의 더 넓은 미래를 응원합니다.</SubTitleReg>
       <div style={{ height: "40px" }} />
       <Body>구매 내역</Body>
       <div style={{ height: "20px" }} />
