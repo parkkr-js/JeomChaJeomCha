@@ -28,23 +28,23 @@ const Purchase = () => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "1") {
+    if (event.key === "1" && isDisabled) {
       if (purchase.length > 0) navigate(`/search/${purchase[0].id}`);
-    } else if (event.key === "2") {
+    } else if (event.key === "2" && isDisabled) {
       if (purchase.length > 1) navigate(`/search/${purchase[1].id}`);
-    } else if (event.key === "3") {
+    } else if (event.key === "3" && isDisabled) {
       if (purchase.length > 2) navigate(`/search/${purchase[2].id}`);
-    } else if (event.key === "4") {
+    } else if (event.key === "4" && isDisabled) {
       if (purchase.length > 3) navigate(`/search/${purchase[3].id}`);
-    } else if (event.key === "5") {
+    } else if (event.key === "5" && isDisabled) {
       if (purchase.length > 4) navigate(`/search/${purchase[4].id}`);
-    } else if (event.key === "6") {
+    } else if (event.key === "6" && isDisabled) {
       if (purchase.length > 5) navigate(`/search/${purchase[5].id}`);
-    } else if (event.key === "7") {
+    } else if (event.key === "7" && isDisabled) {
       if (purchase.length > 6) navigate(`/search/${purchase[6].id}`);
-    } else if (event.key === "8") {
+    } else if (event.key === "8" && isDisabled) {
       if (purchase.length > 7) navigate(`/search/${purchase[7].id}`);
-    } else if (event.key === "9") {
+    } else if (event.key === "9" && isDisabled) {
       if (purchase.length > 8) navigate(`/search/${purchase[8].id}`);
     }
   };
@@ -55,7 +55,7 @@ const Purchase = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [isDisabled]);
 
   return (
     <Column>
