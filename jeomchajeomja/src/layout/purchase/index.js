@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TopNavBar from "../../common/TopNavBar";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PurchaseContext } from "../../model/PurchaseProvider";
 import PurchaseBlock from "./components/PurchaseBlock";
@@ -11,6 +11,7 @@ import StyledModal from "./components/StyledModal";
 
 const Purchase = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -25,6 +26,36 @@ const Purchase = () => {
   const handleConditionChange = () => {
     setIsDisabled(!isDisabled);
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "1") {
+      if (purchase.length > 0) navigate(`/search/${purchase[0].id}`);
+    } else if (event.key === "2") {
+      if (purchase.length > 1) navigate(`/search/${purchase[1].id}`);
+    } else if (event.key === "3") {
+      if (purchase.length > 2) navigate(`/search/${purchase[2].id}`);
+    } else if (event.key === "4") {
+      if (purchase.length > 3) navigate(`/search/${purchase[3].id}`);
+    } else if (event.key === "5") {
+      if (purchase.length > 4) navigate(`/search/${purchase[4].id}`);
+    } else if (event.key === "6") {
+      if (purchase.length > 5) navigate(`/search/${purchase[5].id}`);
+    } else if (event.key === "7") {
+      if (purchase.length > 6) navigate(`/search/${purchase[6].id}`);
+    } else if (event.key === "8") {
+      if (purchase.length > 7) navigate(`/search/${purchase[7].id}`);
+    } else if (event.key === "9") {
+      if (purchase.length > 8) navigate(`/search/${purchase[8].id}`);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <Column>

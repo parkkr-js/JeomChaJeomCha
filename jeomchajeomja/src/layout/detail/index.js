@@ -15,9 +15,17 @@ const Detail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [book, setBook] = useState();
+  const book = bookLists.find((item) => String(item.id) === id);
   const [isOpen, setIsOpen] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
+
+  const handleKeyDown = (event) => {
+    if (event.key === "1") {
+      handlePurchaseClick();
+    } else if (event.key === "2") {
+      handleShoppingCartClick();
+    }
+  };
 
   const handleShoppingCartClick = () => {
     dispatch(addCart(book));
@@ -31,8 +39,12 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    setBook(bookLists.find((item) => String(item.id) === id));
-  }, [bookLists, id]);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <Column>

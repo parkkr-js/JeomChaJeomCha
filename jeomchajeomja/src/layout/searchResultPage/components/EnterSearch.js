@@ -11,6 +11,7 @@ const EnterSearch = ({ transcript, isListening, setResult, bookLists }) => {
   const handleSearchClick = (event) => {
     event.preventDefault();
     setKeyword(input);
+    setInput("");
   };
 
   const handleInputChange = (event) => {
@@ -58,8 +59,8 @@ const EnterSearch = ({ transcript, isListening, setResult, bookLists }) => {
           sx={{
             ml: 1,
             flex: 1,
-            fontSize: "20px",
-            padding: "9px 18px",
+            fontSize: "24px",
+            fontWeight: "bold",
             color: "black",
             textAlign: "right",
             backgroundColor: isListening ? "red" : "transparent",
