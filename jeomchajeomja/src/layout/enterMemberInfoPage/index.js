@@ -4,96 +4,11 @@ import { useNavigate } from "react-router-dom";
 import PhoneNumForm from "./components/PhoneNumForm";
 import AddressForm from "./components/AddressForm";
 import AudioBtn from "../../common/AudioBtn";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
-import { PhonNumState } from "../../recoil/atoms/PhoneNumState";
-import { useRecoilState } from "recoil";
 
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
-  const [isListening, setIsListening] = useState(false);
-  const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
-  const { phoneNumber, resetPhoneNumber, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
 
-  useEffect(() => {
-    let startTimer;
-
-    const handleKeyDown = (event) => {
-      if (event.key === " " && !isListening && !startTimer) {
-        startTimer = setTimeout(() => {
-          playBeep();
-          setIsListening(true);
-          SpeechRecognition.startListening();
-          startTimer = null;
-        }, 200);
-      }
-    };
-
-    const handleKeyUp = (event) => {
-      if (event.key === " ") {
-        if (startTimer) {
-          clearTimeout(startTimer);
-          startTimer = null;
-        }
-        if (isListening) {
-          setIsListening(false);
-          SpeechRecognition.stopListening();
-        }
-      }
-    };
-
-    const playBeep = () => {
-      const audioContext = new window.AudioContext();
-
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨을 0.1로 설정
-
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + 0.6);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-      if (startTimer) {
-        clearTimeout(startTimer);
-      }
-    };
-  }, [isListening]);
-
-  useEffect(() => {
-    if (phoneNumber && !isListening) {
-      setPhoneNum(phoneNumber); 
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = phoneNumber;
-      window.speechSynthesis.speak(speech);
-    }
-  }, [phoneNumber, isListening]);
-
-
-  if (!browserSupportsSpeechRecognition) {
-    return (
-      <span>
-        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
-        <br /> 크롬브라우저를 사용해주세요.
-      </span>
-    );
-  }
 
   return (
     <Container>
@@ -115,7 +30,7 @@ function EnterMemberInfo() {
           스페이스바를 2초간 누른 후 벨소리가 나면
           <br /> 음성 검색이 활성화됩니다.
         </Body1>
-        <PhoneNumForm isListening={isListening} />
+        <PhoneNumForm />
       </Content1_1>
 
       <Content1_1>

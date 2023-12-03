@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
@@ -6,9 +6,14 @@ import styled from "styled-components";
 import CertificationForm from "./CertificationForm";
 import { PhonNumState } from "../../../recoil/atoms/PhoneNumState";
 import { useRecoilState } from "recoil";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
-
-function PhoneNumForm({ isListening }) {
+function PhoneNumForm() {
+  const [isListening, setIsListening] = useState(false);
+  const { transcript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
 
@@ -21,8 +26,84 @@ function PhoneNumForm({ isListening }) {
   const handleButtonClick = () => {
     setShowCertificationForm(true);
   };
+  useEffect(() => {
+    let startTimer;
+    const handleKeyDown = (event) => {
+      if (event.key === " " && !isListening && !startTimer) {
+        startTimer = setTimeout(() => {
+          playBeep();
+          setIsListening(true);
+          SpeechRecognition.startListening();
+          startTimer = null;
+        }, 200);
+      }
+    };
 
-  const isButtonEnabled = phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
+    const handleKeyUp = (event) => {
+      if (event.key === " ") {
+        if (startTimer) {
+          clearTimeout(startTimer);
+          startTimer = null;
+        }
+        if (isListening) {
+          setIsListening(false);
+          SpeechRecognition.stopListening();
+        }
+      }
+    };
+
+    const playBeep = () => {
+      const audioContext = new window.AudioContext();
+
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨을 0.1로 설정
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.6);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+      if (startTimer) {
+        clearTimeout(startTimer);
+      }
+    };
+  }, [isListening]);
+
+  useEffect(() => {
+    setPhoneNum(transcript);
+    if (transcript && !isListening) {
+   
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = phoneNum;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [transcript, isListening]);
+
+  if (!browserSupportsSpeechRecognition) {
+    return (
+      <span>
+        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
+        <br /> 크롬브라우저를 사용해주세요.
+      </span>
+    );
+  }
+
+  const isButtonEnabled =
+    phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
 
   return (
     <>
@@ -42,7 +123,7 @@ function PhoneNumForm({ isListening }) {
           }}
         >
           <InputBase
-             value={phoneNum}
+            value={phoneNum}
             onChange={handlePhoneNumChange}
             sx={{
               ml: 1,
