@@ -1,19 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addCart } from "../../../features/shoppingCart/shoppingCartSlice";
 import { PurchaseContext } from "../../../model/PurchaseProvider";
+import AddModal from "../../../common/AddModal";
 
 const BookBlock = ({ book, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
 
   const handleShoppingCartClick = (event) => {
     event.preventDefault();
     dispatch(addCart(book));
-    alert("장바구니에 추가되었습니다.");
+    setIsOpen(true);
+    setTimeout(() => setIsOpen(false), 3000);
   };
 
   const handlePurchaseClick = (event) => {
@@ -52,6 +55,11 @@ const BookBlock = ({ book, id }) => {
             >
               장바구니
             </Button>
+            <AddModal
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              text={"장바구니에 추가되었습니다."}
+            />
             <Button onClick={handlePurchaseClick}>구매하기</Button>
           </ButtonBar>
         </Block>
@@ -118,7 +126,7 @@ const Body = styled.div`
 `;
 
 const BodyReg = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: 25px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
   white-space: nowrap;

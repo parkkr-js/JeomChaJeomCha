@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -8,19 +8,21 @@ import BookInformation from "./components/BookInformation";
 import TopNavBar from "../../common/TopNavBar";
 import { PurchaseContext } from "../../model/PurchaseProvider";
 import { addCart } from "../../features/shoppingCart/shoppingCartSlice";
+import AddModal from "../../common/AddModal";
 
 const Detail = () => {
   const bookLists = useSelector((state) => state.book.book);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const ref = useRef(null);
   const [book, setBook] = useState();
+  const [isOpen, setIsOpen] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
 
   const handleShoppingCartClick = () => {
     dispatch(addCart(book));
-    alert("장바구니에 추가되었습니다.");
+    setIsOpen(true);
+    setTimeout(() => setIsOpen(false), 3000);
   };
 
   const handlePurchaseClick = () => {
@@ -29,13 +31,12 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    ref.current?.focus();
     setBook(bookLists.find((item) => String(item.id) === id));
   }, [bookLists, id]);
 
   return (
     <Column>
-      <TopNavBar ref={ref} />
+      <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>{book?.title}</Header>
       <div style={{ height: "60px" }} />
@@ -59,6 +60,11 @@ const Detail = () => {
           ① 구매하기
         </BodyButton>
         <BodyButton onClick={handleShoppingCartClick}>② 장바구니</BodyButton>
+        <AddModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          text={"장바구니에 추가되었습니다."}
+        />
         <BodyButton>③ 파일 다운받기</BodyButton>
       </ButtonBar>
       <div style={{ height: "60px" }} />
@@ -94,7 +100,7 @@ const SubTitle = styled.span`
 `;
 
 const BodyButton = styled.button`
-  padding: 8px 30px;
+  padding: 12px 30px;
   white-space: nowrap;
   border-radius: 15px;
   border: 2px solid ${({ theme }) => theme.colors.black};

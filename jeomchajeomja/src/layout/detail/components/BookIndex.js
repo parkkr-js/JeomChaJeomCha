@@ -7,6 +7,7 @@ const BookIndex = ({ book }) => {
       <Title>목차</Title>
       <div style={{ height: "40px" }} />
       <BigIndex>{book?.bigIndex[0]}</BigIndex>
+      <div style={{ height: "15px" }} />
       <SmallContent>
         {book?.smallIndex[0].split("\n").map((line) => {
           return (
@@ -19,6 +20,7 @@ const BookIndex = ({ book }) => {
       </SmallContent>
       <div style={{ height: "35px" }} />
       <BigIndex>{book?.bigIndex[1]}</BigIndex>
+      <div style={{ height: "15px" }} />
       <SmallContent>
         {book?.smallIndex[1].split("\n").map((line) => {
           return (
@@ -31,6 +33,7 @@ const BookIndex = ({ book }) => {
       </SmallContent>
       <div style={{ height: "35px" }} />
       <BigIndex>{book?.bigIndex[2]}</BigIndex>
+      <div style={{ height: "15px" }} />
       <SmallContent>
         {book?.smallIndex[2].split("\n").map((line) => {
           return (

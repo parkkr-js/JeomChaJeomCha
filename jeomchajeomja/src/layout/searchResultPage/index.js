@@ -8,14 +8,28 @@ import { SearchContext } from "../../model/SearchProvider";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SearchResult = () => {
+  const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useState([]);
   const [keyword] = useContext(SearchContext);
-
+  const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+
+  useEffect(() => {
+    setResult(
+      bookLists.filter(
+        (book) =>
+          book.title.includes(keyword) ||
+          book.author.includes(keyword) ||
+          book.subject.includes(keyword)
+      )
+    );
+  }, [bookLists, keyword]);
 
   useEffect(() => {
     let startTimer;
@@ -29,6 +43,33 @@ const SearchResult = () => {
           SpeechRecognition.startListening();
           startTimer = null; // 타이머 초기화
         }, 200);
+      } else if (event.key === "1") {
+        console.log(result);
+        if (result.length > 0) navigate(`./${result[0].id}`);
+      } else if (event.key === "2") {
+        console.log(result);
+        if (result.length > 1) navigate(`./${result[1].id}`);
+      } else if (event.key === "3") {
+        console.log(result);
+        if (result.length > 2) navigate(`./${result[2].id}`);
+      } else if (event.key === "4") {
+        console.log(result);
+        if (result.length > 3) navigate(`./${result[3].id}`);
+      } else if (event.key === "5") {
+        console.log(result);
+        if (result.length > 4) navigate(`./${result[4].id}`);
+      } else if (event.key === "6") {
+        console.log(result);
+        if (result.length > 5) navigate(`./${result[5].id}`);
+      } else if (event.key === "7") {
+        console.log(result);
+        if (result.length > 6) navigate(`./${result[6].id}`);
+      } else if (event.key === "8") {
+        console.log(result);
+        if (result.length > 7) navigate(`./${result[7].id}`);
+      } else if (event.key === "9") {
+        console.log(result);
+        if (result.length > 8) navigate(`./${result[8].id}`);
       }
     };
 
@@ -84,6 +125,7 @@ const SearchResult = () => {
         transcript={transcript}
         isListening={isListening}
         setResult={setResult}
+        bookLists={bookLists}
       />
       <div style={{ height: "75px" }} />
       {result.length === 0 ? (

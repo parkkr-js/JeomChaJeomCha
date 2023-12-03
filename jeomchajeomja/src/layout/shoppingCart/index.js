@@ -1,33 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
 import { useNavigate } from "react-router-dom";
+import AddModal from "../../common/AddModal";
 
 const ShoppingCart = () => {
-  const ref = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
 
   const handleRemoveClick = () => {
     dispatch(removeAllCart());
-    alert("삭제되었습니다.");
+    setIsOpen(true);
+    setTimeout(() => setIsOpen(false), 3000);
   };
 
   const handlePurchaseClick = () => {
     navigate("/purchase/true");
   };
 
-  useEffect(() => {
-    ref.current?.focus();
-  }, []);
-
   return (
     <Column>
-      <TopNavBar ref={ref} />
+      <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>장바구니</Header>
       <div style={{ height: "10px" }} />
@@ -80,6 +78,11 @@ const ShoppingCart = () => {
         >
           전체 삭제하기
         </Button>
+        <AddModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          text={"삭제되었습니다."}
+        />
         <Button
           disabled={shoppingCart.length === 0}
           style={

@@ -38,36 +38,11 @@ const Block = styled.div`
   margin: 0 auto;
 `;
 
-const ButtonBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-shrink: 0;
-`;
-
 const Row = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-shrink: 0;
-`;
-
-const Circle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 25px;
-  background: ${({ theme }) => theme.colors.white};
-  flex-shrink: 0;
-`;
-
-const SubTitle = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
-  color: ${({ theme }) => theme.colors.white};
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
-  white-space: nowrap;
 `;
 
 const Body = styled.div`

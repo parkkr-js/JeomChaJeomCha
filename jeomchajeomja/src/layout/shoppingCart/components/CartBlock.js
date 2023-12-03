@@ -10,7 +10,6 @@ const CartBlock = ({ book, id }) => {
 
   const handleDeleteClick = () => {
     dispatch(removeCart(id));
-    alert("삭제되었습니다.");
   };
 
   return (

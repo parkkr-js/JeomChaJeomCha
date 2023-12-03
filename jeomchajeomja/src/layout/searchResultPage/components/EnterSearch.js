@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import { SearchContext } from "../../../model/SearchProvider";
 
-const EnterSearch = ({ transcript, isListening, setResult }) => {
-  const bookLists = useSelector((state) => state.book.book);
+const EnterSearch = ({ transcript, isListening, setResult, bookLists }) => {
   const [keyword, setKeyword] = useContext(SearchContext);
   const [input, setInput] = useState("");
 
@@ -34,7 +32,7 @@ const EnterSearch = ({ transcript, isListening, setResult }) => {
         (book) =>
           book.title.includes(keyword) ||
           book.author.includes(keyword) ||
-          book.referenceGrade.includes(keyword)
+          book.subject.includes(keyword)
       )
     );
   }, [bookLists, keyword, setResult]);

@@ -80,14 +80,14 @@ const SubTitle = styled.div`
 `;
 
 const Body = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: 25px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
   white-space: nowrap;
 `;
 
 const BodyReg = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: 25px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
   white-space: pre;

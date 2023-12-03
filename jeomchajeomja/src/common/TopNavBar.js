@@ -2,18 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const TopNavBar = ({ ref }) => {
+const TopNavBar = () => {
   const navigate = useNavigate();
 
   return (
     <Row>
-      <TitleButton
-        ref={ref}
-        style={{ boxShadow: "0 0 5px #0079e0" }}
-        onClick={() => navigate(-1)}
-      >
-        뒤로가기
-      </TitleButton>
+      <TitleButton onClick={() => navigate(-1)}>뒤로가기</TitleButton>
       <LinkDiv>
         <TitleButton>음성 사용 설명서 듣기</TitleButton>
         <div style={{ width: "20px" }} />
@@ -66,7 +60,7 @@ const TitleButton = styled.button`
   padding: 5px 10px;
   white-space: nowrap;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 2px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
