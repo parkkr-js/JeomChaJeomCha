@@ -8,9 +8,6 @@ function FindAddressModal() {
         <ModalHeaderDiv>
           <ModalHeader>주소 찾기</ModalHeader>
           <ModalBody>
-            서울시 서초구 12가길 남부순환로 내 우편번호가 없어 정확한 정보가
-            필요합니다.
-            <br />
             다음과 같은 조항으로 검색을 해서 더욱 정확한 결과가 검색됩니다.
             <br />
             도로명 + 건물번호 예) 판교역로 135
@@ -59,11 +56,11 @@ const ModalContainer = styled.div`
 const ModalHeaderDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 34px 40px 20px 40px;
   width: 100%;
-  height: 258px;
+  max-height: 258px;
   border-radius: 20px 20px 0 0;
   background-color: ${({ theme }) => theme.colors.black};
 `;
@@ -71,26 +68,28 @@ const ModalHeaderDiv = styled.div`
 const ModalHeader = styled.h2`
   color: ${({ theme }) => theme.colors.white};
   font-size: 50px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 75px;
+  margin: 0;
 `;
 
 const ModalBody = styled.body`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.white};
-  line-height: 1.5;
+  line-height: 30px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px; 
+  margin-bottom: 24px;
 `;
 
 const ModalInput = styled.input`
-  width: 80%; 
+  width: 80%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -115,5 +114,5 @@ const CloseButton = styled.button`
   color: #333;
   font-size: 1em;
   cursor: pointer;
-  align-self: center; 
+  align-self: center;
 `;
