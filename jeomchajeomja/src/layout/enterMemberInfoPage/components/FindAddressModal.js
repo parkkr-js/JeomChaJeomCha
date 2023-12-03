@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Search from "./Search";
+import AddressCardList from "./AddressCardList";
 
 function FindAddressModal() {
   return (
@@ -26,6 +27,8 @@ function FindAddressModal() {
           </Row2>
         </ModalHeaderDiv>
         <Search />
+        <AddressCardList />
+        <CloseBtn>닫기</CloseBtn>
       </ModalContainer>
     </Backdrop>
   );
@@ -37,8 +40,8 @@ const Backdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;

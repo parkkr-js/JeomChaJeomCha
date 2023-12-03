@@ -27,6 +27,7 @@ function Search() {
           color: "black",
           textAlign: "right",
           backgroundColor: "transparent",
+          border: 'none',
         }}
       />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
