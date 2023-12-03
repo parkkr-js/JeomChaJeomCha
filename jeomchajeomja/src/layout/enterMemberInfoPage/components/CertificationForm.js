@@ -3,17 +3,32 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
 import styled from "styled-components";
-
+import VerificationModal from "./VerificationModal";
 function CertificationForm({ transcript, isListening }) {
-  const [phoneNum, setPhoneNum] = useState(transcript);
-  const handlePhoneNumChange = (event) => {
-    setPhoneNum(event.target.value);
+  const [certiNum, setCertiNum] = useState(transcript);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleCertiNumChange = (event) => {
+    setCertiNum(event.target.value);
+  };
+  const handleConfirmClick = () => {
+    setIsModalVisible(true); 
   };
 
   useEffect(() => {
-    setPhoneNum(transcript);
+    setCertiNum(transcript);
   }, [transcript]);
+
+  useEffect(() => {
+    let timer;
+    if (isModalVisible) {
+      timer = setTimeout(() => {
+        setIsModalVisible(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [isModalVisible]);
   return (
+    <>
     <Container1>
       <Body1>
         인증번호를 입력해주세요.
@@ -35,8 +50,8 @@ function CertificationForm({ transcript, isListening }) {
           }}
         >
           <InputBase
-            value={phoneNum}
-            onChange={handlePhoneNumChange}
+            value={certiNum}
+            onChange={handleCertiNumChange}
             sx={{
               ml: 1,
               flex: 1,
@@ -63,11 +78,14 @@ function CertificationForm({ transcript, isListening }) {
             fontStyle: "normal",
             lineHeight: "36px",
           }}
+          onClick={handleConfirmClick}
         >
           확인
         </Button>
       </Container2>
     </Container1>
+     {isModalVisible && <VerificationModal />} 
+     </>
   );
 }
 export default CertificationForm;
