@@ -26,64 +26,39 @@ const ShoppingCart = () => {
     navigate("/purchase/true");
   };
 
-  const setFocus = (element) => {
-    if (!element) return;
-
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
-
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
-
   useEffect(() => {
+    const setFocus = (element) => {
+      if (!element) return;
+
+      if (
+        getComputedStyle(element).whiteSpace === "nowrap" &&
+        element.textContent
+      )
+        element.tabIndex = 0;
+
+      Array.from(element.children).forEach((child) => setFocus(child));
+    };
+
     setFocus(ref.current);
   }, []);
 
-  const handleKeyDown = (event) => {
-    console.log(event.ctrlKey);
-
-    if (event.ctrlKey && event.key >= "1" && event.key <= "9") {
-      if (shoppingCart.length > 0) {
-        setPurchase(shoppingCart[0]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 1) {
-        setPurchase(shoppingCart[1]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 2) {
-        setPurchase(shoppingCart[2]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 3) {
-        setPurchase(shoppingCart[3]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 4) {
-        setPurchase(shoppingCart[4]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 5) {
-        setPurchase(shoppingCart[5]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 6) {
-        setPurchase(shoppingCart[6]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 7) {
-        setPurchase(shoppingCart[7]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 8) {
-        setPurchase(shoppingCart[8]);
-        navigate("/purchase/false");
-      }
-    }
-  };
-
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key >= "1" && event.key <= "9") {
+        const int = parseInt(event.key, 10);
+        if (shoppingCart.length > int - 1) {
+          setPurchase(shoppingCart[int - 1]);
+          navigate("/purchase/false");
+        }
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [navigate, setPurchase, shoppingCart]);
 
   return (
     <Column ref={ref}>

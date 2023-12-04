@@ -188,7 +188,12 @@ const MethodButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.black};
 `;
 
-const BodyReg = styled.div`
+const BodyReg = styled.button`
+  border: none;
+  background-color: transparent;
+  line-height: 150%;
+  font-family: "Nanum Gothic";
+  padding: 0;
   font-size: ${({ theme }) => theme.fontSizes.body1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
@@ -200,18 +205,29 @@ const Div = styled.div`
   flex-direction: column;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
   width: 100%;
   padding: 34px 40px 20px;
 `;
 
-const Header = styled.div`
+const Header = styled.button`
+  border: none;
+  background-color: transparent;
+  line-height: 150%;
+  font-family: "Nanum Gothic";
+  padding: 0;
+  color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
   font-size: ${({ theme }) => theme.fontSizes.header1};
   white-space: nowrap;
 `;
 
-const SubTitle = styled.div`
+const SubTitle = styled.button`
+  border: none;
+  background-color: transparent;
+  line-height: 150%;
+  font-family: "Nanum Gothic";
+  padding: 0;
+  color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   font-size: 25px;
   white-space: nowrap;

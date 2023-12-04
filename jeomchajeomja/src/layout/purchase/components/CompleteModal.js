@@ -12,17 +12,10 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
   };
 
   return (
-    <ModalComponent
-      open={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <ModalComponent open={isModalOpen} onClose={() => setIsModalOpen(false)}>
       <Column>
         <Div>
-          <Header id="modal-modal-title" style={{ color: "white" }}>
-            결제하기
-          </Header>
+          <Header style={{ color: "white" }}>결제하기</Header>
         </Div>
         <ModalBody>
           <Header>
@@ -94,7 +87,13 @@ const Div = styled.div`
   padding: 34px 40px 20px;
 `;
 
-const Header = styled.div`
+const Header = styled.button`
+  border: none;
+  background-color: transparent;
+  line-height: 150%;
+  font-family: "Nanum Gothic";
+  text-align: start;
+  padding: 0;
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.header1};
   font-size: ${({ theme }) => theme.fontSizes.header1};

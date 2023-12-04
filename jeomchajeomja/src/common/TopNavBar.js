@@ -72,6 +72,7 @@ const SubTitleReg = styled.button`
   background-color: transparent;
   line-height: 150%;
   font-family: "Nanum Gothic";
+  padding: 0;
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};

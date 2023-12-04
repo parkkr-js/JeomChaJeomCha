@@ -23,19 +23,19 @@ const SearchResult = () => {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
-  const setFocus = (element) => {
-    if (!element) return;
-
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
-
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
-
   useEffect(() => {
+    const setFocus = (element) => {
+      if (!element) return;
+
+      if (
+        getComputedStyle(element).whiteSpace === "nowrap" &&
+        element.textContent
+      )
+        element.tabIndex = 0;
+
+      Array.from(element.children).forEach((child) => setFocus(child));
+    };
+
     setFocus(ref.current);
   }, []);
 
@@ -48,7 +48,7 @@ const SearchResult = () => {
           book.subject.includes(keyword)
       )
     );
-  }, [bookLists, keyword]);
+  }, [bookLists, keyword, setResult]);
 
   useEffect(() => {
     let startTimer;
@@ -62,24 +62,9 @@ const SearchResult = () => {
           SpeechRecognition.startListening();
           startTimer = null; // 타이머 초기화
         }, 200);
-      } else if (event.key === "1" && !isFocusing) {
-        if (result.length > 0) navigate(`./${result[0].id}`);
-      } else if (event.key === "2" && !isFocusing) {
-        if (result.length > 1) navigate(`./${result[1].id}`);
-      } else if (event.key === "3" && !isFocusing) {
-        if (result.length > 2) navigate(`./${result[2].id}`);
-      } else if (event.key === "4" && !isFocusing) {
-        if (result.length > 3) navigate(`./${result[3].id}`);
-      } else if (event.key === "5" && !isFocusing) {
-        if (result.length > 4) navigate(`./${result[4].id}`);
-      } else if (event.key === "6" && !isFocusing) {
-        if (result.length > 5) navigate(`./${result[5].id}`);
-      } else if (event.key === "7" && !isFocusing) {
-        if (result.length > 6) navigate(`./${result[6].id}`);
-      } else if (event.key === "8" && !isFocusing) {
-        if (result.length > 7) navigate(`./${result[7].id}`);
-      } else if (event.key === "9" && !isFocusing) {
-        if (result.length > 8) navigate(`./${result[8].id}`);
+      } else if (event.key >= "1" && event.key <= "9" && !isFocusing) {
+        const int = parseInt(event.key, 10);
+        if (result.length > int - 1) navigate(`./${result[int - 1].id}`);
       }
     };
 
@@ -117,7 +102,7 @@ const SearchResult = () => {
         clearTimeout(startTimer); // 컴포넌트 언마운트 시 타이머 취소
       }
     };
-  }, [isListening, isFocusing]);
+  }, [isListening, isFocusing, navigate, result]);
 
   if (!browserSupportsSpeechRecognition) {
     return (

@@ -78,7 +78,6 @@ const Block = styled.div`
   background: ${({ theme }) => theme.colors.black};
   padding: 25px 30px;
   overflow: hidden;
-  margin: 0 auto;
 `;
 
 const ButtonBar = styled.div`

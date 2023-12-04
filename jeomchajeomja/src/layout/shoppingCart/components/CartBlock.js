@@ -83,7 +83,7 @@ const Block = styled.div`
   z-index: 2;
 `;
 
-const DeleteButton = styled.div`
+const DeleteButton = styled.button`
   padding: 32px;
   width: 100%;
   height: 140px;
