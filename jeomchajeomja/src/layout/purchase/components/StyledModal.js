@@ -34,19 +34,12 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalComponent
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <ModalComponent open={isOpen} onClose={() => setIsOpen(false)}>
       <Column>
         <Div>
-          <Header id="modal-modal-title">결제하기</Header>
+          <Header>결제하기</Header>
           <div style={{ height: "12px" }} />
-          <SubTitle id="modal-modal-description">
-            페이 앱 또는 가상계좌로 결제 가능합니다.
-          </SubTitle>
+          <SubTitle>페이 앱 또는 가상계좌로 결제 가능합니다.</SubTitle>
         </Div>
         <ModalBody>
           <ButtonBar>

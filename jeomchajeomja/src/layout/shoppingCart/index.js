@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeAllCart } from "../../features/shoppingCart/shoppingCartSlice";
 import { useNavigate } from "react-router-dom";
 import AddModal from "../../common/AddModal";
+import { PurchaseContext } from "../../model/PurchaseProvider";
 
 const ShoppingCart = () => {
+  const ref = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [, setPurchase] = useContext(PurchaseContext);
   const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
 
   const handleRemoveClick = () => {
@@ -23,25 +26,54 @@ const ShoppingCart = () => {
     navigate("/purchase/true");
   };
 
+  const setFocus = (element) => {
+    if (!element) return;
+
+    if (
+      getComputedStyle(element).whiteSpace === "nowrap" &&
+      element.textContent
+    )
+      element.tabIndex = 0;
+
+    Array.from(element.children).forEach((child) => setFocus(child));
+  };
+
+  useEffect(() => {
+    setFocus(ref.current);
+  }, []);
+
   const handleKeyDown = (event) => {
-    if (event.key === "1") {
-      if (shoppingCart.length > 0) navigate(`/search/${shoppingCart[0].id}`);
-    } else if (event.key === "2") {
-      if (shoppingCart.length > 1) navigate(`/search/${shoppingCart[1].id}`);
-    } else if (event.key === "3") {
-      if (shoppingCart.length > 2) navigate(`/search/${shoppingCart[2].id}`);
-    } else if (event.key === "4") {
-      if (shoppingCart.length > 3) navigate(`/search/${shoppingCart[3].id}`);
-    } else if (event.key === "5") {
-      if (shoppingCart.length > 4) navigate(`/search/${shoppingCart[4].id}`);
-    } else if (event.key === "6") {
-      if (shoppingCart.length > 5) navigate(`/search/${shoppingCart[5].id}`);
-    } else if (event.key === "7") {
-      if (shoppingCart.length > 6) navigate(`/search/${shoppingCart[6].id}`);
-    } else if (event.key === "8") {
-      if (shoppingCart.length > 7) navigate(`/search/${shoppingCart[7].id}`);
-    } else if (event.key === "9") {
-      if (shoppingCart.length > 8) navigate(`/search/${shoppingCart[8].id}`);
+    console.log(event.ctrlKey);
+
+    if (event.ctrlKey && event.key >= "1" && event.key <= "9") {
+      if (shoppingCart.length > 0) {
+        setPurchase(shoppingCart[0]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 1) {
+        setPurchase(shoppingCart[1]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 2) {
+        setPurchase(shoppingCart[2]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 3) {
+        setPurchase(shoppingCart[3]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 4) {
+        setPurchase(shoppingCart[4]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 5) {
+        setPurchase(shoppingCart[5]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 6) {
+        setPurchase(shoppingCart[6]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 7) {
+        setPurchase(shoppingCart[7]);
+        navigate("/purchase/false");
+      } else if (shoppingCart.length > 8) {
+        setPurchase(shoppingCart[8]);
+        navigate("/purchase/false");
+      }
     }
   };
 
@@ -54,13 +86,13 @@ const ShoppingCart = () => {
   }, []);
 
   return (
-    <Column>
+    <Column ref={ref}>
       <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>장바구니</Header>
       <div style={{ height: "10px" }} />
       <SubTitleReg>
-        선택 구매를 위해선 ctrl(command)키를 누른 상태로 해당 번호를
+        선택 구매를 위해선 ctrl(control)키를 누른 상태로 해당 번호를
         입력해주세요.
       </SubTitleReg>
       <div style={{ height: "56px" }} />

@@ -90,5 +90,5 @@ const BodyReg = styled.div`
   font-size: 25px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: pre;
+  white-space: nowrap;
 `;

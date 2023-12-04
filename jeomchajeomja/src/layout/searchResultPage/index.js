@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TitleBar from "./components/TitleBar";
 import EnterSearch from "./components/EnterSearch";
 import styled from "styled-components";
@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { ResultContext } from "../../model/ResultProvider";
 
 const SearchResult = () => {
+  const ref = useRef(null);
   const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useContext(ResultContext);
   const [keyword] = useContext(SearchContext);
@@ -21,6 +22,22 @@ const SearchResult = () => {
   const [isFocusing, setIsFocusing] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+
+  const setFocus = (element) => {
+    if (!element) return;
+
+    if (
+      getComputedStyle(element).whiteSpace === "nowrap" &&
+      element.textContent
+    )
+      element.tabIndex = 0;
+
+    Array.from(element.children).forEach((child) => setFocus(child));
+  };
+
+  useEffect(() => {
+    setFocus(ref.current);
+  }, []);
 
   useEffect(() => {
     setResult(
@@ -112,7 +129,7 @@ const SearchResult = () => {
   }
 
   return (
-    <Column>
+    <Column ref={ref}>
       <TitleBar />
       <EnterSearch
         transcript={transcript}

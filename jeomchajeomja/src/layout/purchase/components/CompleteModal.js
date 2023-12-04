@@ -74,15 +74,6 @@ const Row = styled.div`
   width: 100%;
 `;
 
-const ButtonBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
-  flex-wrap: wrap;
-`;
-
 const ModalButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.black};
   padding: 9px 20px;
@@ -92,34 +83,6 @@ const ModalButton = styled.button`
   background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   height: 71px;
-`;
-
-const TermsButton = styled.button`
-  border: 2px solid ${({ theme }) => theme.colors.black};
-  padding: 5px 20px;
-  border-radius: 15px;
-  font-size: ${({ theme }) => theme.fontSizes.body1};
-  font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  background-color: ${({ theme }) => theme.colors.black};
-  color: ${({ theme }) => theme.colors.white};
-`;
-
-const MethodButton = styled.button`
-  width: 230px;
-  height: 90px;
-  border-radius: 15px;
-  background-color: transparent;
-  padding: 8px 30px;
-  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
-  border: 2px solid ${({ theme }) => theme.colors.black};
-`;
-
-const BodyReg = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: nowrap;
 `;
 
 const Div = styled.div`

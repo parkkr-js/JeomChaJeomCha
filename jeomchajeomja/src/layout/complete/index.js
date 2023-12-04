@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,13 +7,30 @@ import { PurchaseContext } from "../../model/PurchaseProvider";
 import CompleteBlock from "./components/CompleteBlock";
 
 const Complete = () => {
+  const ref = useRef(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
 
+  const setFocus = (element) => {
+    if (!element) return;
+
+    if (
+      getComputedStyle(element).whiteSpace === "nowrap" &&
+      element.textContent
+    )
+      element.tabIndex = 0;
+
+    Array.from(element.children).forEach((child) => setFocus(child));
+  };
+
+  useEffect(() => {
+    setFocus(ref.current);
+  }, []);
+
   return (
-    <Column>
+    <Column ref={ref}>
       <TopNavBar />
       <div style={{ height: "115px" }} />
       <Header>구매 완료</Header>
@@ -24,9 +41,9 @@ const Complete = () => {
         여러분의 소중한 대체자료 참고서가
         <br />
         점자 인쇄소에서 출력 후 4일 내로 배송 예정입니다.
-        <br />
-        점차점자가 여러분의 더 넓은 미래를 응원합니다.
       </SubTitleReg>
+      <div style={{ height: "25px" }} />
+      <BodyReg>점차점자가 여러분의 더 넓은 미래를 응원합니다.</BodyReg>
       <div style={{ height: "40px" }} />
       <Body>구매 내역</Body>
       <div style={{ height: "20px" }} />
@@ -81,6 +98,13 @@ const SubTitleReg = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   white-space: nowrap;
   text-align: center;
+`;
+
+const BodyReg = styled.div`
+  font-size: 25px;
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
+  white-space: nowrap;
 `;
 
 const Body = styled.div`

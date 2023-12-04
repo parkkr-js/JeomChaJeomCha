@@ -1,9 +1,17 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const TopNavBar = () => {
   const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    navigate("/login");
+  };
+
+  const handleShoppingCartClick = () => {
+    navigate("/shoppingCart");
+  };
 
   return (
     <Row>
@@ -11,20 +19,30 @@ const TopNavBar = () => {
       <LinkDiv>
         <TitleButton>음성 사용 설명서 듣기</TitleButton>
         <div style={{ width: "20px" }} />
-        <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
-          <SubTitleReg style={{ fontSize: "25px" }}>로그아웃</SubTitleReg>
-        </Link>
-        <SubTitleReg style={{ fontSize: "25px" }}>&nbsp; | &nbsp;</SubTitleReg>
-        <Link style={{ textDecoration: "none", color: "inherit" }}>
-          <SubTitleReg style={{ fontSize: "25px" }}>내정보</SubTitleReg>
-        </Link>
-        <SubTitleReg style={{ fontSize: "25px" }}>&nbsp; | &nbsp;</SubTitleReg>
-        <Link
-          to="/shoppingCart"
-          style={{ textDecoration: "none", color: "inherit" }}
+        <SubTitleReg onClick={handleLogoutClick} style={{ fontSize: "25px" }}>
+          로그아웃
+        </SubTitleReg>
+        <div
+          style={{
+            borderLeft: "2px solid black",
+            height: "20px",
+            margin: "9px 16px",
+          }}
+        />
+        <SubTitleReg style={{ fontSize: "25px" }}>내정보</SubTitleReg>
+        <div
+          style={{
+            borderLeft: "2px solid black",
+            height: "20px",
+            margin: "9px 16px",
+          }}
+        />
+        <SubTitleReg
+          onClick={handleShoppingCartClick}
+          style={{ fontSize: "25px" }}
         >
-          <SubTitleReg style={{ fontSize: "25px" }}>장바구니</SubTitleReg>
-        </Link>
+          장바구니
+        </SubTitleReg>
       </LinkDiv>
     </Row>
   );
@@ -49,7 +67,11 @@ const LinkDiv = styled.div`
   flex-shrink: 0;
 `;
 
-const SubTitleReg = styled.div`
+const SubTitleReg = styled.button`
+  border: none;
+  background-color: transparent;
+  line-height: 150%;
+  font-family: "Nanum Gothic";
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
