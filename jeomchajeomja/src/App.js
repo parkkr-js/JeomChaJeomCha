@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./router/Router";
 import SearchProvider from "./model/SearchProvider";
 import PurchaseProvider from "./model/PurchaseProvider";
+import ResultProvider from "./model/ResultProvider";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
       <BrowserRouter>
         <PurchaseProvider>
           <SearchProvider>
-            <Router />
+            <ResultProvider>
+              <Router />
+            </ResultProvider>
           </SearchProvider>
         </PurchaseProvider>
       </BrowserRouter>

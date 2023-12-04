@@ -8,8 +8,8 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
   const [agree, setAgree] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([
-    { id: "①", name: "토스페이", checked: true },
-    { id: "②", name: "가상계좌", checked: false },
+    { name: "토스페이", checked: true },
+    { name: "가상계좌", checked: false },
   ]);
 
   const handleMethodClick = (event, item, index) => {
@@ -23,8 +23,8 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
     setAgree(false);
     setPaymentMethod("토스페이");
     setPaymentMethods([
-      { id: "①", name: "토스페이", checked: true },
-      { id: "②", name: "가상계좌", checked: false },
+      { name: "토스페이", checked: true },
+      { name: "가상계좌", checked: false },
     ]);
     setIsOpen(false);
   };
@@ -49,14 +49,14 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
           </SubTitle>
         </Div>
         <ModalBody>
-          <ButtonBar style={{ flexGrow: 1 }}>
+          <ButtonBar>
             {paymentMethods.map((item, index) => {
               if (item.checked) {
                 return (
                   <MethodButton
                     style={{ color: "white", backgroundColor: "black" }}
                   >
-                    {item.id} {item.name}
+                    {item.name}
                   </MethodButton>
                 );
               }
@@ -64,7 +64,7 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
                 <MethodButton
                   onClick={(event) => handleMethodClick(event, item, index)}
                 >
-                  {item.id} {item.name}
+                  {item.name}
                 </MethodButton>
               );
             })}
@@ -161,7 +161,6 @@ const ButtonBar = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
-  flex-wrap: wrap;
 `;
 
 const ModalButton = styled.button`
@@ -186,8 +185,8 @@ const TermsButton = styled.button`
 `;
 
 const MethodButton = styled.button`
-  width: 230px;
-  height: 90px;
+  width: 360px;
+  height: 200px;
   border-radius: 15px;
   background-color: transparent;
   padding: 8px 30px;

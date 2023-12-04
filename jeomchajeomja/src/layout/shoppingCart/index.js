@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import CartBlock from "./components/CartBlock";
@@ -22,6 +22,36 @@ const ShoppingCart = () => {
   const handlePurchaseClick = () => {
     navigate("/purchase/true");
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "1") {
+      if (shoppingCart.length > 0) navigate(`/search/${shoppingCart[0].id}`);
+    } else if (event.key === "2") {
+      if (shoppingCart.length > 1) navigate(`/search/${shoppingCart[1].id}`);
+    } else if (event.key === "3") {
+      if (shoppingCart.length > 2) navigate(`/search/${shoppingCart[2].id}`);
+    } else if (event.key === "4") {
+      if (shoppingCart.length > 3) navigate(`/search/${shoppingCart[3].id}`);
+    } else if (event.key === "5") {
+      if (shoppingCart.length > 4) navigate(`/search/${shoppingCart[4].id}`);
+    } else if (event.key === "6") {
+      if (shoppingCart.length > 5) navigate(`/search/${shoppingCart[5].id}`);
+    } else if (event.key === "7") {
+      if (shoppingCart.length > 6) navigate(`/search/${shoppingCart[6].id}`);
+    } else if (event.key === "8") {
+      if (shoppingCart.length > 7) navigate(`/search/${shoppingCart[7].id}`);
+    } else if (event.key === "9") {
+      if (shoppingCart.length > 8) navigate(`/search/${shoppingCart[8].id}`);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <Column>

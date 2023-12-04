@@ -4,13 +4,20 @@ import InputBase from "@mui/material/InputBase";
 import styled from "styled-components";
 import { SearchContext } from "../../../model/SearchProvider";
 
-const EnterSearch = ({ transcript, isListening, setResult, bookLists }) => {
+const EnterSearch = ({
+  transcript,
+  isListening,
+  setResult,
+  bookLists,
+  setIsFocusing,
+}) => {
   const [keyword, setKeyword] = useContext(SearchContext);
   const [input, setInput] = useState("");
 
   const handleSearchClick = (event) => {
     event.preventDefault();
     setKeyword(input);
+    setInput("");
   };
 
   const handleInputChange = (event) => {
@@ -53,13 +60,15 @@ const EnterSearch = ({ transcript, isListening, setResult, bookLists }) => {
         }}
       >
         <InputBase
+          onFocus={() => setIsFocusing(true)}
+          onBlur={() => setIsFocusing(false)}
           value={input}
           onChange={handleInputChange}
           sx={{
             ml: 1,
             flex: 1,
-            fontSize: "20px",
-            padding: "9px 18px",
+            fontSize: "24px",
+            fontWeight: "bold",
             color: "black",
             textAlign: "right",
             backgroundColor: isListening ? "red" : "transparent",
