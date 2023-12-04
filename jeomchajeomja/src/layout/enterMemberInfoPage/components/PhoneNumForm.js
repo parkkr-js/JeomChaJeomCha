@@ -6,20 +6,21 @@ import styled from "styled-components";
 import CertificationForm from "./CertificationForm";
 import { PhonNumState } from "../../../recoil/atoms/PhoneNumState";
 import { useRecoilState } from "recoil";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import { useSpeechRecognition } from "react-speech-kit";
 
 function PhoneNumForm() {
   const [isListening, setIsListening] = useState(false);
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
   const inputRef = useRef(null);
-  const { transcript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result) => {
+      setPhoneNum(result);
+    },
+  });
 
   const handlePhoneNumChange = (event) => {
-    if (!isListening) {
+    if (stop) {
       setPhoneNum(event.target.value);
     }
   };
@@ -27,15 +28,16 @@ function PhoneNumForm() {
   const handleButtonClick = () => {
     setShowCertificationForm(true);
   };
+
   useEffect(() => {
     const inputElement = inputRef.current;
     let startTimer;
     const handleKeyDown = (event) => {
-      if (event.key === " " && !isListening && !startTimer) {
+      if (event.key === " " && !listening && !startTimer) {
         startTimer = setTimeout(() => {
           playBeep();
-          setIsListening(true);
-          SpeechRecognition.startListening();
+          // setIsListening(true);
+          listen();
           startTimer = null;
         }, 200);
       }
@@ -48,26 +50,21 @@ function PhoneNumForm() {
           startTimer = null;
         }
         if (isListening) {
-          setIsListening(false);
-          SpeechRecognition.stopListening();
+          // setIsListening(false);
+          stop();
         }
       }
     };
 
     const playBeep = () => {
       const audioContext = new window.AudioContext();
-
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
-
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // 볼륨을 0.1로 설정
-
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); 
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
-
       oscillator.start();
       oscillator.stop(audioContext.currentTime + 0.6);
     };
@@ -86,32 +83,25 @@ function PhoneNumForm() {
         clearTimeout(startTimer);
       }
     };
-  }, [isListening]);
+  }, [listening]);
 
   useEffect(() => {
-    if (isListening) {
-      setPhoneNum(transcript)
+    if (listening) {
+      const numbersOnly = phoneNum.replace(/\s+/g, "");
+      setPhoneNum(numbersOnly);
     }
-  }, [transcript, isListening]);
+  }, [listen, listening]);
 
   useEffect(() => {
     console.log(inputRef.current.value);
-    if ((inputRef.current.value === phoneNum) && transcript && !isListening) {
+    console.log(phoneNum);
+    if (inputRef.current.value === phoneNum && listen && listening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = phoneNum;
       window.speechSynthesis.speak(speech);
     }
-  }, [transcript, isListening]);
-
-  if (!browserSupportsSpeechRecognition) {
-    return (
-      <span>
-        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
-        <br /> 크롬브라우저를 사용해주세요.
-      </span>
-    );
-  }
+  }, [listen, listening]);
 
   const isButtonEnabled =
     phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
@@ -130,7 +120,7 @@ function PhoneNumForm() {
             border: "2px solid #000",
             boxShadow: "0px 6px 10px 0px rgba(0, 0, 0, 0.10)",
             overflow: "hidden",
-            backgroundColor: isListening ? "red" : "transparent",
+            backgroundColor: listening ? "red" : "transparent",
           }}
         >
           <InputBase
@@ -144,7 +134,7 @@ function PhoneNumForm() {
               fontWeight: "bold",
               color: "black",
               textAlign: "right",
-              backgroundColor: isListening ? "red" : "transparent",
+              backgroundColor: listening ? "red" : "transparent",
             }}
           />
         </Paper>
@@ -169,7 +159,7 @@ function PhoneNumForm() {
           인증번호 발송
         </Button>
       </Container>
-      {showCertificationForm && <CertificationForm inputRef={inputRef}/>}
+      {showCertificationForm && <CertificationForm inputRef={inputRef} />}
     </>
   );
 }

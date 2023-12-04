@@ -9,13 +9,14 @@ import { VerifiNumState } from "../../../recoil/atoms/VerifiNumState";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import ConvertNumberToKorean from "../components/ConvertNumberToKorean";
 
-function CertificationForm({inputRef}) {
+function CertificationForm({ inputRef }) {
   const [isListening, setIsListening] = useState(false);
   const [certiNum, setCertiNum] = useRecoilState(VerifiNumState);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { transcript: certiScript, browserSupportsSpeechRecognition } = useSpeechRecognition();
-
+  const { transcript: certiScript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   const handleCertiNumChange = (event) => {
     if (!isListening) {
@@ -34,7 +35,9 @@ function CertificationForm({inputRef}) {
         startTimer = setTimeout(() => {
           playBeep();
           setIsListening(true);
-          SpeechRecognition.startListening();
+          SpeechRecognition.startListening({
+            language: "ko-KR",
+          });
           startTimer = null;
         }, 200);
       }
@@ -88,17 +91,18 @@ function CertificationForm({inputRef}) {
   }, [isListening]);
 
   useEffect(() => {
-    if (isListening) {
-      setCertiNum(certiScript)
+    if (isListening && certiScript) {
+      const numbersOnly = certiScript.replace(/\s+/g, '');
+      setCertiNum(numbersOnly);
     }
   }, [certiScript, isListening]);
 
   useEffect(() => {
     console.log(inputRef.current.value);
-    if ((inputRef.current.value === certiNum) && certiScript && !isListening) {
+    if (inputRef.current.value === certiNum && certiScript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
-      speech.text = certiNum;
+      speech.text = ConvertNumberToKorean(certiNum);
       window.speechSynthesis.speak(speech);
     }
   }, [certiScript, isListening]);
