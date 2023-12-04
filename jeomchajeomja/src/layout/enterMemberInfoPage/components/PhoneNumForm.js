@@ -89,8 +89,14 @@ function PhoneNumForm() {
   }, [isListening]);
 
   useEffect(() => {
-    setPhoneNum(transcript);
-    if (transcript && !isListening) {
+    if (isListening) {
+      setPhoneNum(transcript)
+    }
+  }, [transcript, isListening]);
+
+  useEffect(() => {
+    console.log(inputRef.current.value);
+    if ((inputRef.current.value === phoneNum) && transcript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = phoneNum;
@@ -128,7 +134,7 @@ function PhoneNumForm() {
           }}
         >
           <InputBase
-            ref={inputRef}
+            inputRef={inputRef}
             value={phoneNum}
             onChange={handlePhoneNumChange}
             sx={{
@@ -163,7 +169,7 @@ function PhoneNumForm() {
           인증번호 발송
         </Button>
       </Container>
-      {showCertificationForm && <CertificationForm  inputRef={inputRef}/>}
+      {showCertificationForm && <CertificationForm inputRef={inputRef}/>}
     </>
   );
 }

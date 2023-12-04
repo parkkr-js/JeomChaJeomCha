@@ -88,8 +88,14 @@ function CertificationForm({inputRef}) {
   }, [isListening]);
 
   useEffect(() => {
-    setCertiNum(certiScript);
-    if (certiScript && !isListening) {
+    if (isListening) {
+      setCertiNum(certiScript)
+    }
+  }, [certiScript, isListening]);
+
+  useEffect(() => {
+    console.log(inputRef.current.value);
+    if ((inputRef.current.value === certiNum) && certiScript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = certiNum;
@@ -139,7 +145,7 @@ function CertificationForm({inputRef}) {
             }}
           >
             <InputBase
-              ref={inputRef}
+              inputRef={inputRef}
               value={certiNum}
               onChange={handleCertiNumChange}
               sx={{
