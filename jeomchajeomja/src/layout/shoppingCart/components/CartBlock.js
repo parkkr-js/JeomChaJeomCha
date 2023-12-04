@@ -30,11 +30,32 @@ const CartBlock = ({ book, id }) => {
           <Row>
             <div style={{ width: "60px" }} />
             <BigBody>과목</BigBody>
-            <BigBodyReg> | {book.subject}&nbsp; &nbsp;</BigBodyReg>
+            <div
+              style={{
+                borderLeft: "1px solid white",
+                height: "20px",
+                margin: "9px 14px",
+              }}
+            />
+            <BigBodyReg>{book.subject}&nbsp; &nbsp;</BigBodyReg>
             <BigBody>발행일</BigBody>
-            <BigBodyReg> | {book.publishDate}&nbsp; &nbsp;</BigBodyReg>
+            <div
+              style={{
+                borderLeft: "1px solid white",
+                height: "20px",
+                margin: "9px 14px",
+              }}
+            />
+            <BigBodyReg>{book.publishDate}&nbsp; &nbsp;</BigBodyReg>
             <BigBody>저자</BigBody>
-            <BigBodyReg> | {book.author}</BigBodyReg>
+            <div
+              style={{
+                borderLeft: "1px solid white",
+                height: "20px",
+                margin: "9px 14px",
+              }}
+            />
+            <BigBodyReg>{book.author}</BigBodyReg>
           </Row>
         </Link>
       </Block>
@@ -134,5 +155,5 @@ const BigBodyReg = styled.div`
   font-size: 25px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.body1_reg};
-  white-space: pre;
+  white-space: nowrap;
 `;
