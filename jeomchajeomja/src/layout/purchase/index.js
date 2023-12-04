@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TopNavBar from "../../common/TopNavBar";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import InputBase from "@mui/material/InputBase";
 import StyledModal from "./components/StyledModal";
 
 const Purchase = () => {
+  const ref = useRef(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
@@ -49,6 +50,22 @@ const Purchase = () => {
     }
   };
 
+  const setFocus = (element) => {
+    if (!element) return;
+
+    if (
+      getComputedStyle(element).whiteSpace === "nowrap" &&
+      element.textContent
+    )
+      element.tabIndex = 0;
+
+    Array.from(element.children).forEach((child) => setFocus(child));
+  };
+
+  useEffect(() => {
+    setFocus(ref.current);
+  }, []);
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
@@ -58,7 +75,7 @@ const Purchase = () => {
   }, [isDisabled]);
 
   return (
-    <Column>
+    <Column ref={ref}>
       <TopNavBar />
       <div style={{ height: "45px" }} />
       <Header>구매하기</Header>
