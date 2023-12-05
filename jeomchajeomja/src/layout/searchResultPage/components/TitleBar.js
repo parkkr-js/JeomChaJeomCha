@@ -41,7 +41,11 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
           뒤로가기
         </Button>
         <LinkDiv>
-          <Button  onClick={handleAudioBtnClick} onFocus={handleFocus} onBlur={handleBlur}>
+          <Button
+            onClick={handleAudioBtnClick}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          >
             점차점차 사용 설명서
           </Button>
           <div style={{ width: "20px" }} />
@@ -58,6 +62,12 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
           ) : (
             <>
               <SubTitleReg
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleLogoutClick();
+                  }
+                }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 onClick={handleLogoutClick}
@@ -74,6 +84,7 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
                 }}
               />
               <SubTitleReg
+                tabIndex={0}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 style={{ fontSize: "25px", cursor: "pointer" }}
@@ -89,6 +100,12 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
                 }}
               />
               <SubTitleReg
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    navigate("/shoppingCart");
+                  }
+                }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 onClick={handleShoppingCartClick}

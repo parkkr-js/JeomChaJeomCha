@@ -44,6 +44,11 @@ function NavBar({ handleFocus, handleBlur }) {
             <>
               <SubTitleReg
                 tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleLogoutClick();
+                  }
+                }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 onClick={handleLogoutClick}
@@ -77,6 +82,11 @@ function NavBar({ handleFocus, handleBlur }) {
               />
               <SubTitleReg
                 tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    navigate("/shoppingCart");
+                  }
+                }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 onClick={handleShoppingCartClick}

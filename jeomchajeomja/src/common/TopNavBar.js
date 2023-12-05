@@ -82,6 +82,11 @@ const TopNavBar = ({ handleFocus, handleBlur }) => {
             />
             <SubTitleReg
               tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  navigate("/shoppingCart");
+                }
+              }}
               onFocus={handleFocus}
               onBlur={handleBlur}
               onClick={handleShoppingCartClick}
