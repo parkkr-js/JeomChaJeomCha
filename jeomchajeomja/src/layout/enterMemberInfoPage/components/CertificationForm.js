@@ -11,7 +11,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import ConvertNumberToKorean from "../components/ConvertNumberToKorean";
 
-function CertificationForm({ inputRef }) {
+function CertificationForm({ onFocus, onBlur, inputRef }) {
   const message = "전화번호 인증에 성공하였습니다.";
   const [isListening, setIsListening] = useState(false);
   const [certiNum, setCertiNum] = useRecoilState(VerifiNumState);
@@ -139,7 +139,7 @@ function CertificationForm({ inputRef }) {
   return (
     <>
       <Container1>
-        <Body1>
+        <Body1 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
           인증번호를 입력해주세요.
           <br /> 인증번호를 받지 못했다면 Enter를 다시 눌러주세요.
         </Body1>
@@ -174,6 +174,8 @@ function CertificationForm({ inputRef }) {
             />
           </Paper>
           <Button
+            onFocus={onFocus}
+            onBlur={onBlur}
             style={{
               display: "inline-flex",
               width: "fit-content",

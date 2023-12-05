@@ -15,7 +15,7 @@ function PhoneNumForm({ onFocus, onBlur}) {
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
   const inputRef = useRef(null);
-  const { transcript, browserSupportsSpeechRecognition } =
+  const { transcript } =
     useSpeechRecognition();
 
   const handlePhoneNumChange = (event) => {
@@ -104,15 +104,6 @@ function PhoneNumForm({ onFocus, onBlur}) {
     }
   }, [transcript, isListening]);
 
-  if (!browserSupportsSpeechRecognition) {
-    return (
-      <span>
-        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
-        <br /> 크롬브라우저를 사용해주세요.
-      </span>
-    );
-  }
-
   const isButtonEnabled =
     phoneNum && phoneNum.length >= 11 && phoneNum.length <= 14;
 
@@ -172,7 +163,7 @@ function PhoneNumForm({ onFocus, onBlur}) {
           인증번호 발송
         </Button>
       </Container>
-      {showCertificationForm && <CertificationForm inputRef={inputRef}/>}
+      {showCertificationForm && <CertificationForm onFocus={onFocus} onBlur={onBlur} inputRef={inputRef}/>}
     </>
   );
 }
