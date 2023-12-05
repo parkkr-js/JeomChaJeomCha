@@ -10,9 +10,12 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 
 function Home() {
-  const keyWords = ["초등저학", "초등고학", "중등", "고등"];
+  const keyWords = ["초등", "중등", "고등", "수능"];
   const [keyword, setKeyword] = useContext(SearchContext);
   const navigate = useNavigate();
+  const [isListening, setIsListening] = useState(false);
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   const handleButtonClick = (event, keyWordText) => {
     event.preventDefault();
@@ -20,9 +23,17 @@ function Home() {
     navigate("/search");
   };
 
-  const [isListening, setIsListening] = useState(false);
-  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
+
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
+  };
 
   useEffect(() => {
     let startTimer;
@@ -103,25 +114,40 @@ function Home() {
 
   return (
     <>
-      <NavBar />
+      <NavBar handleFocus={handleFocus} handleBlur={handleBlur} />
       <Line />
       <Div>
         <Row>
-          <Header>학습자료 검색</Header>
-          <Body>해당 학년 혹은 교재명과 같은 키워드를 입력해주세요.</Body>
+          <Header tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+            학습자료 검색
+          </Header>
+          <Body tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+            해당 학년 혹은 교재명과 같은 키워드를 입력해주세요.
+          </Body>
         </Row>
-        <Body>스페이스바를 누르는 동안 음성 검색이 활성화됩니다.</Body>
-        <Search transcript={transcript} isListening={isListening} />
+        <Body tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+          스페이스바를 누르는 동안 음성 검색이 활성화됩니다.
+        </Body>
+        <Search
+          transcript={transcript}
+          isListening={isListening}
+          handleFocus={handleFocus}
+          handleBlur={handleBlur}
+        />
         <Space />
-        <Header>키워드 검색</Header>
+        <Header tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+          키워드 검색
+        </Header>
         <ButtonContainer>
           {keyWords.map((keyWordText, index) => (
             <Link
               to="/search"
               onClick={(event) => handleButtonClick(event, keyWordText)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <Button key={index}>
+              <Button key={index} tabIndex={-1}>
                 <span>{index + 1}</span>
                 <span>{keyWordText}</span>
               </Button>

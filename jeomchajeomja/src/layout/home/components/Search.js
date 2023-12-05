@@ -5,7 +5,12 @@ import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../../../model/SearchProvider";
 
-export default function Search({ transcript, isListening }) {
+export default function Search({
+  transcript,
+  isListening,
+  handleFocus,
+  handleBlur,
+}) {
   const [keyword, setKeyword] = useContext(SearchContext);
 
   const handleKeywordChange = (event) => {
@@ -49,6 +54,8 @@ export default function Search({ transcript, isListening }) {
       />
       <Link to="/search" style={{ textDecoration: "none", color: "inherit" }}>
         <Button
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           style={{
             display: "inline-flex",
             width: "fit-content",

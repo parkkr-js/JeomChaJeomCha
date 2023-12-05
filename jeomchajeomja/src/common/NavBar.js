@@ -5,11 +5,9 @@ import AudioBtn from "../common/AudioBtn";
 import { useRecoilState } from "recoil";
 import { Credential } from "../recoil/atoms/Credential";
 import { googleLogout } from "@react-oauth/google";
-import { useRef } from "react";
 
-function NavBar() {
+function NavBar({ handleFocus, handleBlur }) {
   const navigate = useNavigate();
-  const focusRef = useRef([]);
   const [credential, setCredential] = useRecoilState(Credential);
 
   const handleLogoutClick = () => {
@@ -30,10 +28,13 @@ function NavBar() {
     <Container>
       <Div>
         <LinkDiv>
-          <AudioBtn />
+          <AudioBtn handleFocus={handleFocus} handleBlur={handleBlur} />
           <div style={{ width: "20px" }} />
           {credential === null ? (
             <SubTitleReg
+              tabIndex={0}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               onClick={handleLoginClick}
               style={{ fontSize: "25px", cursor: "pointer" }}
             >
@@ -42,7 +43,9 @@ function NavBar() {
           ) : (
             <>
               <SubTitleReg
-                ref={(ref) => (focusRef.current[3] = ref)}
+                tabIndex={0}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 onClick={handleLogoutClick}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
@@ -57,7 +60,9 @@ function NavBar() {
                 }}
               />
               <SubTitleReg
-                ref={(ref) => (focusRef.current[4] = ref)}
+                tabIndex={0}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
                 내정보
@@ -71,7 +76,9 @@ function NavBar() {
                 }}
               />
               <SubTitleReg
-                ref={(ref) => (focusRef.current[5] = ref)}
+                tabIndex={0}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 onClick={handleShoppingCartClick}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
@@ -81,11 +88,11 @@ function NavBar() {
           )}
         </LinkDiv>
         <Header>
-          <RowDiv>
+          <RowDiv tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             점차점자
             <MainLogo src={Logo} alt="점차점자 로고" />
           </RowDiv>
-          <SubHeader>
+          <SubHeader tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.
           </SubHeader>
         </Header>
