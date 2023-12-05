@@ -3,11 +3,26 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../img/google_logo.svg";
 
+import { useRecoilState } from "recoil";
+import { Credential } from "../../recoil/atoms/Credential";
+import { useGoogleLogin } from "@react-oauth/google";
+
 function Login() {
   const navigate = useNavigate();
   const focusRef = useRef([]);
   const [reading, setReading] = useState(false);
   const [textContent, setTextContent] = useState("");
+  const [credential, setCredential] = useRecoilState(Credential);
+  const login = useGoogleLogin({
+    onSuccess: (res) => {
+      console.log(res);
+      setCredential(res.credential);
+      if (credential !== null) navigate("/");
+    },
+    onFailure: (err) => {
+      console.log(err);
+    },
+  });
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -74,7 +89,7 @@ function Login() {
         로그인
       </Header>
       <div style={{ height: "95px" }} />
-      <GoogleButton ref={(ref) => (focusRef.current[3] = ref)}>
+      <GoogleButton ref={(ref) => (focusRef.current[3] = ref)} onClick={login}>
         <img src={logo} alt="google logo" />
         <div style={{ width: "20px" }} />
         구글로 로그인
@@ -127,7 +142,7 @@ const GoogleButton = styled.button`
   height: 60px;
   padding: 11px;
   border-radius: 15px;
-  background: var(--Black, #000);
+  background-color: var(--Black, #000);
   /* googleshadow1 */
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.17),
     0px 0px 1px 0px rgba(0, 0, 0, 0.08);
