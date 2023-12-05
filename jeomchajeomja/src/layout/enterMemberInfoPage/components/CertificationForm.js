@@ -25,7 +25,13 @@ function CertificationForm({ onFocus, onBlur, inputRef }) {
     }
   };
   const handleConfirmClick = () => {
-    setIsModalVisible(true);
+    if (certiNum === "") {
+      const speech = new SpeechSynthesisUtterance(
+        " 인증번호를 입력해주세요. 인증번호를 받지 못했다면 Enter를 다시 눌러주세요."
+      );
+      speech.lang = "ko-KR";
+      window.speechSynthesis.speak(speech);
+    } else setIsModalVisible(true);
   };
 
   useEffect(() => {

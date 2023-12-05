@@ -10,13 +10,12 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-function PhoneNumForm({ onFocus, onBlur}) {
+function PhoneNumForm({ onFocus, onBlur }) {
   const [isListening, setIsListening] = useState(false);
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
   const inputRef = useRef(null);
-  const { transcript } =
-    useSpeechRecognition();
+  const { transcript } = useSpeechRecognition();
 
   const handlePhoneNumChange = (event) => {
     if (!isListening) {
@@ -90,13 +89,13 @@ function PhoneNumForm({ onFocus, onBlur}) {
 
   useEffect(() => {
     if (isListening) {
-      setPhoneNum(transcript)
+      setPhoneNum(transcript);
     }
   }, [transcript, isListening]);
 
   useEffect(() => {
     console.log(inputRef.current.value);
-    if ((inputRef.current.value === phoneNum) && transcript && !isListening) {
+    if (inputRef.current.value === phoneNum && transcript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = phoneNum;
@@ -109,7 +108,7 @@ function PhoneNumForm({ onFocus, onBlur}) {
 
   return (
     <>
-      <Container >
+      <Container>
         <Paper
           component="form"
           sx={{
@@ -140,8 +139,8 @@ function PhoneNumForm({ onFocus, onBlur}) {
           />
         </Paper>
         <Button
-         onFocus={onFocus}
-         onBlur={onBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
           style={{
             display: "inline-flex",
             width: "fit-content",
@@ -158,12 +157,17 @@ function PhoneNumForm({ onFocus, onBlur}) {
           }}
           disabled={!isButtonEnabled}
           onClick={handleButtonClick}
-         
         >
           인증번호 발송
         </Button>
       </Container>
-      {showCertificationForm && <CertificationForm onFocus={onFocus} onBlur={onBlur} inputRef={inputRef}/>}
+      {showCertificationForm && (
+        <CertificationForm
+          onFocus={onFocus}
+          onBlur={onBlur}
+          inputRef={inputRef}
+        />
+      )}
     </>
   );
 }
@@ -178,5 +182,3 @@ const Container = styled.div`
   justify-content: start;
   gap: 20px;
 `;
-
-
