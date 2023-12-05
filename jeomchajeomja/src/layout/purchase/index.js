@@ -33,6 +33,10 @@ const Purchase = () => {
     setIsDisabled(!isDisabled);
   };
 
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key >= "1" && event.key <= "9" && isDisabled) {
@@ -144,11 +148,14 @@ const Purchase = () => {
         >
           <InputBase
             disabled={isDisabled}
+            value={address}
+            onChange={handleAddressChange}
             sx={{
               ml: 1,
               flex: 1,
-              fontSize: "20px",
-              padding: "9px 18px",
+              fontSize: "24px",
+              fontWeight: "bold",
+              padding: "9px 0",
               color: "black",
               textAlign: "right",
             }}
@@ -184,9 +191,10 @@ const Purchase = () => {
           sx={{
             ml: 1,
             flex: 1,
-            fontSize: "20px",
-            padding: "9px 18px",
+            fontSize: "24px",
+            fontWeight: "bold",
             color: "black",
+            padding: "9px 0",
             textAlign: "right",
           }}
         />
