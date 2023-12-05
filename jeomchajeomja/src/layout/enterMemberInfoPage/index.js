@@ -55,6 +55,10 @@ function EnterMemberInfo() {
     window.speechSynthesis.speak(speech);
   };
 
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
+  };
+
   useEffect(() => {
     let timer;
     if (isModalVisible) {
@@ -69,36 +73,44 @@ function EnterMemberInfo() {
       <Container>
         <NavDiv>
           <Btn
-            tabIndex="0"
             onFocus={handleFocus}
+            onBlur={handleBlur}
             onClick={() => navigate("../")}
             alt="뒤로가기"
           >
             뒤로가기
           </Btn>
           <AudioBtn
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             customStyle={{
               color: "black",
               border: "1px solid var(--Black, #000",
             }}
           />
         </NavDiv>
-        <Header1>회원 정보 입력</Header1>
+        <Header1 tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
+          회원 정보 입력
+        </Header1>
         <Content1_1>
-          <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
-          <Body1>
+          <SubTitle1 tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
+            전화번호를 입력해주세요.
+          </SubTitle1>
+          <Body1 tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
             스페이스바를 2초간 누른 후 벨소리가 나면
             <br /> 음성 검색이 활성화됩니다.
           </Body1>
-          <PhoneNumForm />
+          <PhoneNumForm onFocus={handleFocus} onBlur={handleBlur} />
         </Content1_1>
         <Content1_1>
-          <SubTitle1>주소를 입력해주세요.</SubTitle1>
-          <Body1>
+          <SubTitle1 tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
+            주소를 입력해주세요.
+          </SubTitle1>
+          <Body1 tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
             스페이스바를 2초간 누른 후 벨소리가 나면
             <br /> 음성 검색이 활성화됩니다.
           </Body1>
-          <AddressForm />
+          <AddressForm onFocus={handleFocus} onBlur={handleBlur} />
         </Content1_1>
         <StartBtn onClick={handleStartClick}>시작하기</StartBtn>
       </Container>

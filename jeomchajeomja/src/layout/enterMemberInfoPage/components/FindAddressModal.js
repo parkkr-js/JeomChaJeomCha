@@ -5,18 +5,18 @@ import AddressCardList from "./AddressCardList";
 import { useState, useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { AddressState } from "../../../recoil/atoms/AddressState";
-import { mainAddress, subAddress, zip } from "./AddressData";
-import { set } from "react-hook-form";
+import { mainAddress } from "./AddressData";
 
-
-function FindAddressModal({ modalClose }) {
+function FindAddressModal({ onFocus, onBlur, modalClose }) {
+  const modalBody2 = useRef(null);
   const address = useRecoilValue(AddressState);
   const [showAddressCardList, setShowAddressCardList] = useState(false);
   const [isAddressCorrect, setIsAddressCorrect] = useState(false);
   const [searchResult, setSearchResult] = useState(false);
-  const speakAllAddress = mainAddress.length > 0
-  ? `${mainAddress[0]} 외 ${mainAddress.length - 1} 개가 검색되었습니다.`
-  : '검색된 주소가 없습니다.';
+  const speakAllAddress =
+    mainAddress.length > 0
+      ? `${mainAddress[0]} 외 ${mainAddress.length - 1} 개가 검색되었습니다.`
+      : "검색된 주소가 없습니다.";
 
   const addressKeywords = [
     "서울",
@@ -33,41 +33,48 @@ function FindAddressModal({ modalClose }) {
     setSearchResult(!searchResult);
   };
 
-
   useEffect(() => {
     if (addressKeywords.some((keyword) => address.includes(keyword))) {
-        setIsAddressCorrect(true);
+      setIsAddressCorrect(true);
+    } else if (address === "") {
+      setIsAddressCorrect(false);
     }
-    else if (address === "") {
-        setIsAddressCorrect(false);
-    }
+  }, [address]);
 
-}, [address]);
+  useEffect(() => {
+    if (showAddressCardList) {
+      if (!isAddressCorrect) {
+        const speech = new SpeechSynthesisUtterance();
+        speech.lang = "ko-KR";
+        speech.text = "검색된 주소가 없습니다";
+        window.speechSynthesis.speak(speech);
+      } else {
+        const speech = new SpeechSynthesisUtterance();
+        speech.lang = "ko-KR";
+        speech.text = speakAllAddress;
+        window.speechSynthesis.speak(speech);
+      }
+    }
+  }, [searchResult]);
 
-useEffect(() => {
-  if (showAddressCardList) {
-    if(!isAddressCorrect) {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = "검색된 주소가 없습니다";
-      window.speechSynthesis.speak(speech);
+  useEffect(() => {
+    if (modalBody2.current) {
+      modalBody2.current.focus();
     }
-    else {
-    const speech = new SpeechSynthesisUtterance();
-    speech.lang = "ko-KR";
-    speech.text = speakAllAddress;
-    window.speechSynthesis.speak(speech);
-    }
-  }
-}, [searchResult]);
+  }, []);
 
   return (
     <Backdrop>
-      <ModalContainer >
+      <ModalContainer>
         <ModalHeaderDiv>
           <Row1>
             <ModalHeader1>주소 찾기</ModalHeader1>
-            <ModalBody2>
+            <ModalBody2
+              ref={modalBody2}
+              tabIndex="0"
+              onFocus={onFocus}
+              onBlur={onBlur}
+            >
               스페이스바를 1초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.
             </ModalBody2>
           </Row1>
@@ -84,7 +91,9 @@ useEffect(() => {
           </Row2>
         </ModalHeaderDiv>
         <Search handleAddressCardList={handleAddressCardList} />
-        {showAddressCardList && isAddressCorrect ? <AddressCardList modalClose={modalClose} /> : null}
+        {showAddressCardList && isAddressCorrect ? (
+          <AddressCardList modalClose={modalClose} />
+        ) : null}
         <CloseBtn onClick={modalClose}>닫기</CloseBtn>
       </ModalContainer>
     </Backdrop>
@@ -116,7 +125,6 @@ const ModalContainer = styled.div`
   align-items: center;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   padding: 0;
-  
 `;
 
 const ModalHeaderDiv = styled.div`

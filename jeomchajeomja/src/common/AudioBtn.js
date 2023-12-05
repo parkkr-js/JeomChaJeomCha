@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-function AudioBtn({ customStyle }) {
+function AudioBtn({ customStyle, onFocus, onBlur }) {
   const { color } = customStyle || {};
   return (
-    <Btn style={customStyle}>
-      <Body style={{color}}>음성 사용 설명서 듣기</Body>
+    <Btn onFocus={onFocus} onBlur={onBlur} style={customStyle}>
+      <Body style={{ color }}>음성 사용 설명서 듣기</Body>
     </Btn>
   );
 }

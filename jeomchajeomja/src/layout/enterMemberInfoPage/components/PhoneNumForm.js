@@ -10,7 +10,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-function PhoneNumForm() {
+function PhoneNumForm({ onFocus, onBlur}) {
   const [isListening, setIsListening] = useState(false);
   const [phoneNum, setPhoneNum] = useRecoilState(PhonNumState);
   const [showCertificationForm, setShowCertificationForm] = useState(false);
@@ -118,7 +118,7 @@ function PhoneNumForm() {
 
   return (
     <>
-      <Container>
+      <Container >
         <Paper
           component="form"
           sx={{
@@ -149,6 +149,8 @@ function PhoneNumForm() {
           />
         </Paper>
         <Button
+         onFocus={onFocus}
+         onBlur={onBlur}
           style={{
             display: "inline-flex",
             width: "fit-content",
@@ -165,6 +167,7 @@ function PhoneNumForm() {
           }}
           disabled={!isButtonEnabled}
           onClick={handleButtonClick}
+         
         >
           인증번호 발송
         </Button>
@@ -184,3 +187,5 @@ const Container = styled.div`
   justify-content: start;
   gap: 20px;
 `;
+
+

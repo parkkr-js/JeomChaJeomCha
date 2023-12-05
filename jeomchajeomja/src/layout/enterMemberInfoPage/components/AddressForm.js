@@ -12,7 +12,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-function AddressForm() {
+function AddressForm({ onFocus, onBlur }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const address = useRecoilValue(AddressState);
@@ -107,6 +107,8 @@ function AddressForm() {
     <Colunm>
       <Row>
         <Button
+          onFocus={onFocus}
+          onBlur={onBlur}
           style={{
             display: "inline-flex",
             width: "138px",
@@ -183,7 +185,11 @@ function AddressForm() {
         />
       </Paper>
       {isModalVisible && (
-        <FindAddressModal modalClose={handleFindAddressClick} />
+        <FindAddressModal
+          onFocus={onFocus}
+          onBlur={onBlur}
+          modalClose={handleFindAddressClick}
+        />
       )}
     </Colunm>
   );
