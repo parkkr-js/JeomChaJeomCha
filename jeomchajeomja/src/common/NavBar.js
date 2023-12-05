@@ -28,7 +28,7 @@ function NavBar({ handleFocus, handleBlur }) {
     <Container>
       <Div>
         <LinkDiv>
-          <AudioBtn handleFocus={handleFocus} handleBlur={handleBlur} />
+          <AudioBtn onFocus={handleFocus} onBlur={handleBlur} />
           <div style={{ width: "20px" }} />
           {credential === null ? (
             <SubTitleReg
