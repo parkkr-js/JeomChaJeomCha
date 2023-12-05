@@ -19,22 +19,18 @@ function EnterMemberInfo() {
   const certiNum = useRecoilValue(VerifiNumState);
 
   const handleStartClick = () => {
-    let emptyField = "";
+    let emptyFields = [];
     if (!address) {
-      emptyField = "주소";
-    } else if (!subAddress) {
-      emptyField = "세부 주소";
-    } else if (!certiNum) {
-      emptyField = "인증 번호";
-    } else if (!certiNum && !address && !subAddress) {
-      emptyField = "주소, 세부 주소, 인증 번호";
-    } else if (!certiNum && !address) {
-      emptyField = "주소, 인증 번호";
-    } else if (!certiNum && !subAddress) {
-      emptyField = "세부 주소, 인증 번호";
-    } else if (!address && !subAddress) {
-      emptyField = "주소, 세부 주소";
+      emptyFields.push("주소");
     }
+    if (!subAddress) {
+      emptyFields.push("세부 주소");
+    }
+    if (!certiNum) {
+      emptyFields.push("인증 번호");
+    }
+
+    const emptyField = emptyFields.join(", ");
 
     if (emptyField) {
       const speech = new SpeechSynthesisUtterance(

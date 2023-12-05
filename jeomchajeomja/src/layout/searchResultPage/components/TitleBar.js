@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Credential } from "../../../recoil/atoms/Credential";
 import { googleLogout } from "@react-oauth/google";
+import { Tutorial } from "../../../common/Tutorial";
 
 const TitleBar = ({ handleFocus, handleBlur }) => {
   const navigate = useNavigate();
@@ -12,6 +13,12 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
     setCredential(null);
     googleLogout();
     navigate("/login");
+  };
+
+  const handleAudioBtnClick = () => {
+    const speech = new SpeechSynthesisUtterance(Tutorial);
+    speech.lang = "ko-KR";
+    window.speechSynthesis.speak(speech);
   };
 
   const handleLoginClick = () => {
@@ -34,7 +41,7 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
           뒤로가기
         </Button>
         <LinkDiv>
-          <Button onFocus={handleFocus} onBlur={handleBlur}>
+          <Button  onClick={handleAudioBtnClick} onFocus={handleFocus} onBlur={handleBlur}>
             점차점차 사용 설명서
           </Button>
           <div style={{ width: "20px" }} />
