@@ -23,7 +23,7 @@ const TopNavBar = ({ focusRef }) => {
       </TitleButton>
       <LinkDiv>
         <TitleButton ref={(ref) => (focusRef.current[2] = ref)}>
-          음성 사용 설명서 듣기
+          점차점자 사용 설명서 듣기
         </TitleButton>
         <div style={{ width: "20px" }} />
         <SubTitleReg
@@ -74,7 +74,6 @@ const Row = styled.div`
   align-items: center;
   width: 100%;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const LinkDiv = styled.div`
