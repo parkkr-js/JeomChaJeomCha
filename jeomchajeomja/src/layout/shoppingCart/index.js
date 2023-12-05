@@ -150,11 +150,13 @@ const ShoppingCart = () => {
         >
           전체 삭제하기
         </Button>
-        <AddModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          text={"삭제되었습니다."}
-        />
+        {isOpen && (
+          <AddModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            text={"삭제되었습니다."}
+          />
+        )}
         <Button
           disabled={shoppingCart.length === 0}
           style={

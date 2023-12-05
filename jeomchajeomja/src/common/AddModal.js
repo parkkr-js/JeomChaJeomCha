@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Modal } from "@mui/material";
 
 const AddModal = ({ isOpen, setIsOpen, text }) => {
+  useEffect(() => {
+    if (text !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = text;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [text]);
+
   return (
     <ModalComponent open={isOpen} onClose={() => setIsOpen(false)}>
       <Column>

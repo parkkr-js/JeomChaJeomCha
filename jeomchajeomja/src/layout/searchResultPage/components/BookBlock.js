@@ -71,11 +71,13 @@ const BookBlock = ({ book, id, focusRef }) => {
             >
               장바구니
             </Button>
-            <AddModal
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              text={"장바구니에 추가되었습니다."}
-            />
+            {isOpen && (
+              <AddModal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                text={"장바구니에 추가되었습니다."}
+              />
+            )}
             <Button
               onClick={handlePurchaseClick}
               ref={(ref) => (focusRef.current[10 + id * 5] = ref)}
