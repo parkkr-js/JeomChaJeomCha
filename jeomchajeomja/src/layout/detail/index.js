@@ -50,7 +50,7 @@ const Detail = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {

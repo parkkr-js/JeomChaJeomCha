@@ -6,6 +6,7 @@ import CompleteModal from "./CompleteModal";
 const StyledModal = ({ isOpen, setIsOpen }) => {
   const focusRef = useRef([]);
   const [textContent, setTextContent] = useState("");
+  const [reading, setReading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("토스페이");
   const [agree, setAgree] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,6 +41,21 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
   }, []);
 
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [reading, agree]);
+
+  useEffect(() => {
     const handleFocus = (index) => {
       setTextContent(focusRef.current[index].textContent);
     };
@@ -54,14 +70,19 @@ const StyledModal = ({ isOpen, setIsOpen }) => {
           ref.removeEventListener("focus", () => handleFocus(index));
       });
     };
-  }, [agree]);
+  }, [agree, reading]);
 
   useEffect(() => {
     if (textContent !== "") {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
       window.speechSynthesis.speak(speech);
+      setReading(true);
     }
   }, [textContent]);
 

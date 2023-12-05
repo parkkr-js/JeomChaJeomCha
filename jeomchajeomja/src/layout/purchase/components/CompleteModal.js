@@ -7,6 +7,7 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
   const navigate = useNavigate();
   const [reRender, setReRender] = useState(false);
   const focusRef = useRef([]);
+  const [reading, setReading] = useState(false);
   const [textContent, setTextContent] = useState("");
 
   const handleCompleteClick = () => {
@@ -18,6 +19,21 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
   useEffect(() => {
     setReRender(true);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [reRender, reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {
@@ -36,6 +52,20 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
       });
     };
   }, [reRender]);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
+      window.speechSynthesis.speak(speech);
+      setReading(true);
+    }
+  }, [textContent]);
 
   useEffect(() => {
     if (textContent !== "") {

@@ -8,6 +8,8 @@ import PurchaseBlock from "./components/PurchaseBlock";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import StyledModal from "./components/StyledModal";
+import { useRecoilState } from "recoil";
+import { AddressState } from "../../recoil/atoms/AddressState";
 
 const Purchase = () => {
   const focusRef = useRef([]);
@@ -19,6 +21,7 @@ const Purchase = () => {
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [address, setAddress] = useRecoilState(AddressState);
   const totalPrice =
     id === "true"
       ? purchase.reduce((accumulator, item) => {
@@ -49,7 +52,7 @@ const Purchase = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isDisabled, navigate, purchase]);
+  }, [isDisabled, navigate, purchase, reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {
