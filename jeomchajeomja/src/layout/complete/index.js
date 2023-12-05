@@ -9,10 +9,26 @@ import CompleteBlock from "./components/CompleteBlock";
 const Complete = () => {
   const focusRef = useRef([]);
   const [textContent, setTextContent] = useState("");
+  const [reading, setReading] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     const handleFocus = (index) => {
@@ -37,7 +53,12 @@ const Complete = () => {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
       window.speechSynthesis.speak(speech);
+      setReading(true);
     }
   }, [textContent]);
 

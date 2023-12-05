@@ -9,6 +9,8 @@ import AddModal from "../../common/AddModal";
 import { PurchaseContext } from "../../model/PurchaseProvider";
 
 const ShoppingCart = () => {
+  const [textContent, setTextContent] = useState("");
+  const [reading, setReading] = useState(false);
   const focusRef = useRef([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +37,11 @@ const ShoppingCart = () => {
           navigate("/purchase/false");
         }
       }
+
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -44,18 +51,53 @@ const ShoppingCart = () => {
     };
   }, [navigate, setPurchase, shoppingCart]);
 
+  useEffect(() => {
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
+
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
+      window.speechSynthesis.speak(speech);
+      setReading(true);
+    }
+  }, [textContent]);
+
   return (
     <Column ref={(ref) => (focusRef.current[0] = ref)}>
       <TopNavBar focusRef={focusRef} />
       <div style={{ height: "45px" }} />
-      <Header>장바구니</Header>
+      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+        장바구니
+      </Header>
       <div style={{ height: "10px" }} />
-      <SubTitleReg>
-        선택 구매를 위해선 ctrl(control)키를 누른 상태로 해당 번호를
-        입력해주세요.
+      <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[7] = ref)}>
+        선택 구매를 위해선 control키를 누른 상태로 해당 번호를 입력해주세요.
       </SubTitleReg>
       <div style={{ height: "56px" }} />
-      <SubTitle>장바구니 자료 확인</SubTitle>
+      <SubTitle tabIndex={0} ref={(ref) => (focusRef.current[8] = ref)}>
+        장바구니 자료 확인
+      </SubTitle>
       <div style={{ height: "20px" }} />
       {shoppingCart.length === 0 ? (
         <Column
@@ -65,9 +107,15 @@ const ShoppingCart = () => {
             alignItems: "center",
           }}
         >
-          <Header style={{ fontSize: "35px" }}>장바구니가 비었습니다.</Header>
+          <Header
+            style={{ fontSize: "35px" }}
+            tabIndex={0}
+            ref={(ref) => (focusRef.current[9] = ref)}
+          >
+            장바구니가 비었습니다.
+          </Header>
           <div style={{ height: "15px" }} />
-          <SubTitleReg>
+          <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
             교재를 장바구니에 담은 후에 이용해주시기 바랍니다.
           </SubTitleReg>
         </Column>
@@ -95,6 +143,11 @@ const ShoppingCart = () => {
                 }
               : { color: "black", backgroundColor: "white" }
           }
+          ref={
+            shoppingCart.length === 0
+              ? (ref) => (focusRef.current[11] = ref)
+              : (ref) => (focusRef.current[9 + shoppingCart.length * 4] = ref)
+          }
           onClick={handleRemoveClick}
         >
           전체 삭제하기
@@ -110,6 +163,11 @@ const ShoppingCart = () => {
             shoppingCart.length === 0
               ? { opacity: "0.2", cursor: "not-allowed" }
               : {}
+          }
+          ref={
+            shoppingCart.length === 0
+              ? (ref) => (focusRef.current[12] = ref)
+              : (ref) => (focusRef.current[10 + shoppingCart.length * 4] = ref)
           }
           onClick={handlePurchaseClick}
         >
