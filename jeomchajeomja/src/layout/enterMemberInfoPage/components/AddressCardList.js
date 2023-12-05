@@ -3,7 +3,7 @@ import { mainAddress, subAddress, zip } from "./AddressData";
 import { AddressState } from "../../../recoil/atoms/AddressState";
 import { useSetRecoilState } from "recoil";
 
-function AddressCardList({modalClose}) {
+function AddressCardList({ onFocus, onBlur, modalClose }) {
   const setAddress = useSetRecoilState(AddressState);
 
   const handleCardClick = (address) => {
@@ -15,8 +15,8 @@ function AddressCardList({modalClose}) {
     <Container>
       {mainAddress.map((address, index) => (
         <Card key={index} onClick={() => handleCardClick(address)}>
-          <RowDiv>
-            <NumBtn>{index + 1}</NumBtn>
+          <RowDiv tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+            <NumBtn >{index + 1}</NumBtn>
             <CardHeader>{zip[index]}</CardHeader>
             <CardHeader>{address}</CardHeader>
           </RowDiv>
@@ -27,7 +27,6 @@ function AddressCardList({modalClose}) {
   );
 }
 export default AddressCardList;
-
 
 const Container = styled.div`
   display: flex;

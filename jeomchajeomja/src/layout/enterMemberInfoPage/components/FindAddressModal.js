@@ -78,23 +78,42 @@ function FindAddressModal({ onFocus, onBlur, modalClose }) {
               스페이스바를 1초간 누른 후 벨소리가 나면 음성 검색이 활성화됩니다.
             </ModalBody2>
           </Row1>
-          <ModalHeader2>
+          <ModalHeader2 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
             다음과 같은 조항으로 검색을 해서 더욱 정확한 결과가 검색됩니다.
           </ModalHeader2>
           <Row2>
-            <ModalBody1>도로명 + 건물번호</ModalBody1>
-            <ModalBody2>예) 삼양로73가길</ModalBody2>
+            <ModalBody1 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              도로명 + 건물번호
+            </ModalBody1>
+            <ModalBody2 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              예) 삼양로73가길
+            </ModalBody2>
           </Row2>
           <Row2>
-            <ModalBody1> 지역명 + 번지 또는 건물명</ModalBody1>
-            <ModalBody2>예) 한빛맹학교</ModalBody2>
+            <ModalBody1 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              {" "}
+              지역명 + 번지 또는 건물명
+            </ModalBody1>
+            <ModalBody2 tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              예) 한빛맹학교
+            </ModalBody2>
           </Row2>
         </ModalHeaderDiv>
-        <Search handleAddressCardList={handleAddressCardList} />
+        <Search
+          onFocus={onFocus}
+          onBlur={onBlur}
+          handleAddressCardList={handleAddressCardList}
+        />
         {showAddressCardList && isAddressCorrect ? (
-          <AddressCardList modalClose={modalClose} />
+          <AddressCardList
+            onFocus={onFocus}
+            onBlur={onBlur}
+            modalClose={modalClose}
+          />
         ) : null}
-        <CloseBtn onClick={modalClose}>닫기</CloseBtn>
+        <CloseBtn onFocus={onFocus} onBlur={onBlur} onClick={modalClose}>
+          닫기
+        </CloseBtn>
       </ModalContainer>
     </Backdrop>
   );

@@ -8,7 +8,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { AddressState } from "../../../recoil/atoms/AddressState";
 
-function Search({ handleAddressCardList }) {
+function Search({ onFocus, onBlur, handleAddressCardList }) {
   const [isListening, setIsListening] = useState(false);
   const [address, setAddress] = useRecoilState(AddressState);
   const { transcript, browserSupportsSpeechRecognition } =
@@ -122,6 +122,8 @@ function Search({ handleAddressCardList }) {
       />
 
       <Button
+        onFocus={onFocus}
+        onBlur={onBlur}
         type="button"
         onClick={handleAddressCardList}
         style={{
