@@ -84,7 +84,7 @@ useEffect(() => {
           </Row2>
         </ModalHeaderDiv>
         <Search handleAddressCardList={handleAddressCardList} />
-        {showAddressCardList && isAddressCorrect ? <AddressCardList /> : null}
+        {showAddressCardList && isAddressCorrect ? <AddressCardList modalClose={modalClose} /> : null}
         <CloseBtn onClick={modalClose}>닫기</CloseBtn>
       </ModalContainer>
     </Backdrop>

@@ -1,11 +1,20 @@
 import styled from "styled-components";
 import { mainAddress, subAddress, zip } from "./AddressData";
+import { AddressState } from "../../../recoil/atoms/AddressState";
+import { useSetRecoilState } from "recoil";
 
-function AddressCardList() {
+function AddressCardList({modalClose}) {
+  const setAddress = useSetRecoilState(AddressState);
+
+  const handleCardClick = (address) => {
+    setAddress(address);
+    modalClose();
+  };
+
   return (
     <Container>
       {mainAddress.map((address, index) => (
-        <Card key={index}>
+        <Card key={index} onClick={() => handleCardClick(address)}>
           <RowDiv>
             <NumBtn>{index + 1}</NumBtn>
             <CardHeader>{zip[index]}</CardHeader>
@@ -18,6 +27,7 @@ function AddressCardList() {
   );
 }
 export default AddressCardList;
+
 
 const Container = styled.div`
   display: flex;
