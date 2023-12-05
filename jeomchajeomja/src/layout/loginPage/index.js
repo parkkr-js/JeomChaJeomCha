@@ -15,7 +15,7 @@ function Login() {
   const login = useGoogleLogin({
     onSuccess: (res) => {
       setCredential(res.credential);
-      navigate("/");
+      navigate("/enterMemberInfo");
     },
     onFailure: (err) => {
       console.log(err);
