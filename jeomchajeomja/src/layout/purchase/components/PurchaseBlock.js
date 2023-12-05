@@ -2,32 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const PurchaseBlock = ({ book, id }) => {
+const PurchaseBlock = ({ book, id, focusRef }) => {
   return (
     <div style={{ width: "100vw", padding: "0 240px" }}>
       <Link
-        to={`/search/${book.id}`}
+        to={`/search/${book.id - 1}`}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Block>
           <Row>
             <Circle>
-              <Body style={{ color: "black" }}>{id + 1}</Body>
+              <Body
+                style={{ color: "black" }}
+                tabIndex={0}
+                ref={(ref) => (focusRef.current[7 + 4 * id - 3] = ref)}
+              >
+                {id}
+              </Body>
             </Circle>
             <div style={{ width: "24px" }} />
-            <Body style={{ fontSize: "30px" }}>{book.title}</Body>
+            <Body
+              style={{ fontSize: "30px" }}
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[7 + 4 * id - 2] = ref)}
+            >
+              {book.title}
+            </Body>
           </Row>
           <div style={{ height: "8px" }} />
           <Row>
             <div style={{ width: "60px" }} />
-            <BodyReg>
+            <BodyReg
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[7 + 4 * id - 1] = ref)}
+            >
               과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
               &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>
           </Row>
           <div style={{ height: "25px" }} />
           <ButtonBar>
-            <SubTitle>인쇄비 {book.price?.toLocaleString()}원</SubTitle>
+            <SubTitle
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[7 + 4 * id] = ref)}
+            >
+              인쇄비 {book.price?.toLocaleString()}원
+            </SubTitle>
           </ButtonBar>
         </Block>
       </Link>

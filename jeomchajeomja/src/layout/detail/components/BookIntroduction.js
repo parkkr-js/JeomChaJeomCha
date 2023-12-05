@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookIntroduction = ({ book }) => {
+const BookIntroduction = ({ book, focusRef }) => {
   return (
     <>
-      <Title>책 소개</Title>
+      <Title tabIndex={0} ref={(ref) => (focusRef.current[11] = ref)}>
+        책 소개
+      </Title>
       <div style={{ height: "40px" }} />
-      <BigContent>{book?.bigContent[0]}</BigContent>
-      <SmallContent>{book?.smallContent[0]}</SmallContent>
-      <div style={{ height: "35px" }} />
-      <BigContent>{book?.bigContent[1]}</BigContent>
-      <SmallContent>{book?.smallContent[1]}</SmallContent>
+      <div tabIndex={0} ref={(ref) => (focusRef.current[12] = ref)}>
+        <BigContent>{book?.bigContent[0]}</BigContent>
+        <SmallContent>{book?.smallContent[0]}</SmallContent>
+        <div style={{ height: "35px" }} />
+        <BigContent>{book?.bigContent[1]}</BigContent>
+        <SmallContent>{book?.smallContent[1]}</SmallContent>
+      </div>
     </>
   );
 };

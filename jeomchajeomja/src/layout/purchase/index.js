@@ -10,7 +10,8 @@ import InputBase from "@mui/material/InputBase";
 import StyledModal from "./components/StyledModal";
 
 const Purchase = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
@@ -28,80 +29,90 @@ const Purchase = () => {
     setIsDisabled(!isDisabled);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "1" && isDisabled) {
-      if (purchase.length > 0) navigate(`/search/${purchase[0].id}`);
-    } else if (event.key === "2" && isDisabled) {
-      if (purchase.length > 1) navigate(`/search/${purchase[1].id}`);
-    } else if (event.key === "3" && isDisabled) {
-      if (purchase.length > 2) navigate(`/search/${purchase[2].id}`);
-    } else if (event.key === "4" && isDisabled) {
-      if (purchase.length > 3) navigate(`/search/${purchase[3].id}`);
-    } else if (event.key === "5" && isDisabled) {
-      if (purchase.length > 4) navigate(`/search/${purchase[4].id}`);
-    } else if (event.key === "6" && isDisabled) {
-      if (purchase.length > 5) navigate(`/search/${purchase[5].id}`);
-    } else if (event.key === "7" && isDisabled) {
-      if (purchase.length > 6) navigate(`/search/${purchase[6].id}`);
-    } else if (event.key === "8" && isDisabled) {
-      if (purchase.length > 7) navigate(`/search/${purchase[7].id}`);
-    } else if (event.key === "9" && isDisabled) {
-      if (purchase.length > 8) navigate(`/search/${purchase[8].id}`);
-    }
-  };
-
-  const setFocus = (element) => {
-    if (!element) return;
-
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
-
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
-
   useEffect(() => {
-    setFocus(ref.current);
-  }, []);
+    const handleKeyDown = (event) => {
+      if (event.key >= "1" && event.key <= "9" && isDisabled) {
+        const int = parseInt(event.key, 10);
+        if (purchase.length > int - 1)
+          navigate(`/search/${purchase[int - 1].id}`);
+      }
+    };
 
-  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isDisabled]);
+  }, [isDisabled, navigate, purchase]);
+
+  useEffect(() => {
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
+
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
 
   return (
-    <Column ref={ref}>
-      <TopNavBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TopNavBar focusRef={focusRef} />
       <div style={{ height: "45px" }} />
-      <Header>구매하기</Header>
+      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+        구매하기
+      </Header>
       <div style={{ height: "50px" }} />
       <Row>
-        <SubTitle>자료 확인</SubTitle>
+        <SubTitle tabIndex={0} ref={(ref) => (focusRef.current[7] = ref)}>
+          자료 확인
+        </SubTitle>
       </Row>
       <div style={{ height: "20px" }} />
       {id === "true" ? (
         purchase.map((item, i) => {
           return (
             <>
-              <PurchaseBlock book={item} id={i} />
+              <PurchaseBlock book={item} id={i + 1} focusRef={focusRef} />
               <div style={{ height: "15px" }} />
             </>
           );
         })
       ) : (
         <>
-          <PurchaseBlock book={book} id={0} />
+          <PurchaseBlock book={book} id={1} focusRef={focusRef} />
           <div style={{ height: "15px" }} />
         </>
       )}
       <div style={{ height: "25px" }} />
       <Row>
-        <SubTitle>배송지 확인</SubTitle>
+        <SubTitle
+          tabIndex={0}
+          ref={(ref) =>
+            id === "true"
+              ? (focusRef.current[8 + purchase.length * 4] = ref)
+              : (focusRef.current[12] = ref)
+          }
+        >
+          배송지 확인
+        </SubTitle>
       </Row>
       <div style={{ height: "28px" }} />
       <Row>
@@ -130,7 +141,14 @@ const Purchase = () => {
           />
         </Paper>
         <div style={{ width: "29px" }} />
-        <EditButton onClick={handleConditionChange}>
+        <EditButton
+          onClick={handleConditionChange}
+          ref={(ref) =>
+            id === "true"
+              ? (focusRef.current[9 + purchase.length * 4] = ref)
+              : (focusRef.current[13] = ref)
+          }
+        >
           {isDisabled ? "수정하기" : "완료"}
         </EditButton>
       </Row>
@@ -161,10 +179,26 @@ const Purchase = () => {
       </Paper>
       <div style={{ height: "40px" }} />
       <Row>
-        <SubTitle>금액 확인</SubTitle>
+        <SubTitle
+          tabIndex={0}
+          ref={(ref) =>
+            id === "true"
+              ? (focusRef.current[10 + purchase.length * 4] = ref)
+              : (focusRef.current[14] = ref)
+          }
+        >
+          금액 확인
+        </SubTitle>
       </Row>
       <div style={{ height: "23px" }} />
-      <Row>
+      <Row
+        tabIndex={0}
+        ref={(ref) =>
+          id === "true"
+            ? (focusRef.current[11 + purchase.length * 4] = ref)
+            : (focusRef.current[15] = ref)
+        }
+      >
         <BodyReg>인쇄비</BodyReg>
         <div style={{ width: "24px" }} />
         <Body>{totalPrice?.toLocaleString()}원</Body>
@@ -184,7 +218,15 @@ const Purchase = () => {
       <div style={{ width: "15px" }} />
       <hr style={{ width: "100%", borderColor: "black" }} />
       <div style={{ width: "15px" }} />
-      <Row style={{ justifyContent: "flex-end" }}>
+      <Row
+        style={{ justifyContent: "flex-end" }}
+        tabIndex={0}
+        ref={(ref) =>
+          id === "true"
+            ? (focusRef.current[12 + purchase.length * 4] = ref)
+            : (focusRef.current[16] = ref)
+        }
+      >
         <Header>=</Header>
         <div style={{ width: "33px" }} />
         <SubTitle>총 금액</SubTitle>
@@ -192,8 +234,18 @@ const Purchase = () => {
         <SubTitle>{(totalPrice * 1.1 + 3000)?.toLocaleString()}원</SubTitle>
       </Row>
       <div style={{ height: "47px" }} />
-      <PurchaseButton onClick={() => setIsOpen(true)}>구매하기</PurchaseButton>
-      <StyledModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <PurchaseButton
+        onClick={() => setIsOpen(true)}
+        tabIndex={0}
+        ref={(ref) =>
+          id === "true"
+            ? (focusRef.current[13 + purchase.length * 4] = ref)
+            : (focusRef.current[17] = ref)
+        }
+      >
+        구매하기
+      </PurchaseButton>
+      {isOpen && <StyledModal isOpen={isOpen} setIsOpen={setIsOpen} />}
     </Column>
   );
 };

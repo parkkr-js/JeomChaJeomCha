@@ -13,7 +13,8 @@ import { useSelector } from "react-redux";
 import { ResultContext } from "../../model/ResultProvider";
 
 const SearchResult = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
   const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useContext(ResultContext);
   const [keyword] = useContext(SearchContext);
@@ -23,21 +24,32 @@ const SearchResult = () => {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
-  const setFocus = (element) => {
-    if (!element) return;
+  useEffect(() => {
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
 
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
 
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
+  }, []);
 
   useEffect(() => {
-    setFocus(ref.current);
-  }, []);
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
 
   useEffect(() => {
     setResult(
@@ -48,7 +60,7 @@ const SearchResult = () => {
           book.subject.includes(keyword)
       )
     );
-  }, [bookLists, keyword]);
+  }, [bookLists, keyword, setResult]);
 
   useEffect(() => {
     let startTimer;
@@ -62,24 +74,9 @@ const SearchResult = () => {
           SpeechRecognition.startListening();
           startTimer = null; // 타이머 초기화
         }, 200);
-      } else if (event.key === "1" && !isFocusing) {
-        if (result.length > 0) navigate(`./${result[0].id}`);
-      } else if (event.key === "2" && !isFocusing) {
-        if (result.length > 1) navigate(`./${result[1].id}`);
-      } else if (event.key === "3" && !isFocusing) {
-        if (result.length > 2) navigate(`./${result[2].id}`);
-      } else if (event.key === "4" && !isFocusing) {
-        if (result.length > 3) navigate(`./${result[3].id}`);
-      } else if (event.key === "5" && !isFocusing) {
-        if (result.length > 4) navigate(`./${result[4].id}`);
-      } else if (event.key === "6" && !isFocusing) {
-        if (result.length > 5) navigate(`./${result[5].id}`);
-      } else if (event.key === "7" && !isFocusing) {
-        if (result.length > 6) navigate(`./${result[6].id}`);
-      } else if (event.key === "8" && !isFocusing) {
-        if (result.length > 7) navigate(`./${result[7].id}`);
-      } else if (event.key === "9" && !isFocusing) {
-        if (result.length > 8) navigate(`./${result[8].id}`);
+      } else if (event.key >= "1" && event.key <= "9" && !isFocusing) {
+        const int = parseInt(event.key, 10);
+        if (result.length > int - 1) navigate(`./${result[int - 1].id}`);
       }
     };
 
@@ -117,7 +114,7 @@ const SearchResult = () => {
         clearTimeout(startTimer); // 컴포넌트 언마운트 시 타이머 취소
       }
     };
-  }, [isListening, isFocusing]);
+  }, [isListening, isFocusing, navigate, result]);
 
   if (!browserSupportsSpeechRecognition) {
     return (
@@ -129,40 +126,64 @@ const SearchResult = () => {
   }
 
   return (
-    <Column ref={ref}>
-      <TitleBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TitleBar focusRef={focusRef} />
       <EnterSearch
         transcript={transcript}
         isListening={isListening}
         setResult={setResult}
         bookLists={bookLists}
         setIsFocusing={setIsFocusing}
+        focusRef={focusRef}
       />
       <div style={{ height: "75px" }} />
       {result.length === 0 ? (
         <>
           <img src={magnifyingGlass} alt="돋보기 아이콘" />
           <div style={{ height: "24px" }} />
-          <SubTitleReg>‘{keyword}’에 맞는 검색 결과가 없습니다</SubTitleReg>
+          <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
+            ‘{keyword}’에 맞는 검색 결과가 없습니다
+          </SubTitleReg>
           <div style={{ height: "120px" }} />
         </>
       ) : (
         <Column style={{ alignItems: "flex-start" }}>
-          <SubTitle style={{ margin: "0 240px 8px" }}>
+          <SubTitle
+            style={{ margin: "0 240px 8px" }}
+            tabIndex={0}
+            ref={(ref) => (focusRef.current[10] = ref)}
+          >
             "{keyword}" 검색 결과 총 {result.length}건
           </SubTitle>
           {result.map((book, i) => (
             <>
-              <BookBlock book={book} id={i} />
+              <BookBlock book={book} id={i + 1} focusRef={focusRef} />
               <div style={{ height: "20px" }} />
             </>
           ))}
         </Column>
       )}
       <div style={{ height: "80px" }} />
-      <BodyReg>찾으시는 자료가 없다면, 새로 신청할 수 있습니다. </BodyReg>
+      <BodyReg
+        tabIndex={0}
+        ref={
+          result.length === 0
+            ? (ref) => (focusRef.current[11] = ref)
+            : (ref) => (focusRef.current[11 + result.length * 5] = ref)
+        }
+      >
+        찾으시는 자료가 없다면, 새로 신청할 수 있습니다.{" "}
+      </BodyReg>
       <div style={{ height: "12px" }} />
-      <Button>학습자료 신청하기</Button>
+      <Button
+        ref={
+          result.length === 0
+            ? (ref) => (focusRef.current[12] = ref)
+            : (ref) => (focusRef.current[12 + result.length * 5] = ref)
+        }
+      >
+        학습자료 신청하기
+      </Button>
       <div style={{ height: "50px" }} />
     </Column>
   );

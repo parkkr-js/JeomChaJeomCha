@@ -5,7 +5,7 @@ import Delete from "../../../img/icomoon-free_bin.svg";
 import { useDispatch } from "react-redux";
 import { removeCart } from "../../../features/shoppingCart/shoppingCartSlice";
 
-const CartBlock = ({ book, id }) => {
+const CartBlock = ({ book, id, focusRef }) => {
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
@@ -21,13 +21,27 @@ const CartBlock = ({ book, id }) => {
         >
           <Row>
             <Circle>
-              <Body style={{ color: "black" }}>{id + 1}</Body>
+              <Body
+                style={{ color: "black" }}
+                tabIndex={0}
+                ref={(ref) => (focusRef.current[8 + id * 4 - 3] = ref)}
+              >
+                {id + 1}
+              </Body>
             </Circle>
             <div style={{ width: "24px" }} />
-            <SubTitle>{book.title}</SubTitle>
+            <SubTitle
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[8 + id * 4 - 2] = ref)}
+            >
+              {book.title}
+            </SubTitle>
           </Row>
           <div style={{ height: "8px" }} />
-          <Row>
+          <Row
+            tabIndex={0}
+            ref={(ref) => (focusRef.current[8 + id * 4 - 1] = ref)}
+          >
             <div style={{ width: "60px" }} />
             <BigBody>과목</BigBody>
             <div
@@ -59,7 +73,11 @@ const CartBlock = ({ book, id }) => {
           </Row>
         </Link>
       </Block>
-      <DeleteButton onClick={handleDeleteClick}>
+      <DeleteButton
+        onClick={handleDeleteClick}
+        tabIndex={0}
+        ref={(ref) => (focusRef.current[8 + id * 4] = ref)}
+      >
         <Column>
           <img src={Delete} alt="삭제 버튼" />
           <div style={{ height: "16px" }} />
@@ -83,7 +101,7 @@ const Block = styled.div`
   z-index: 2;
 `;
 
-const DeleteButton = styled.div`
+const DeleteButton = styled.button`
   padding: 32px;
   width: 100%;
   height: 140px;

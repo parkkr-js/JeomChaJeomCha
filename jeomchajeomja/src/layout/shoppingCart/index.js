@@ -9,7 +9,7 @@ import AddModal from "../../common/AddModal";
 import { PurchaseContext } from "../../model/PurchaseProvider";
 
 const ShoppingCart = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -19,75 +19,34 @@ const ShoppingCart = () => {
   const handleRemoveClick = () => {
     dispatch(removeAllCart());
     setIsOpen(true);
-    setTimeout(() => setIsOpen(false), 3000);
+    setTimeout(() => setIsOpen(false), 1000);
   };
 
   const handlePurchaseClick = () => {
     navigate("/purchase/true");
   };
 
-  const setFocus = (element) => {
-    if (!element) return;
-
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
-
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
-
   useEffect(() => {
-    setFocus(ref.current);
-  }, []);
-
-  const handleKeyDown = (event) => {
-    console.log(event.ctrlKey);
-
-    if (event.ctrlKey && event.key >= "1" && event.key <= "9") {
-      if (shoppingCart.length > 0) {
-        setPurchase(shoppingCart[0]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 1) {
-        setPurchase(shoppingCart[1]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 2) {
-        setPurchase(shoppingCart[2]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 3) {
-        setPurchase(shoppingCart[3]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 4) {
-        setPurchase(shoppingCart[4]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 5) {
-        setPurchase(shoppingCart[5]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 6) {
-        setPurchase(shoppingCart[6]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 7) {
-        setPurchase(shoppingCart[7]);
-        navigate("/purchase/false");
-      } else if (shoppingCart.length > 8) {
-        setPurchase(shoppingCart[8]);
-        navigate("/purchase/false");
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key >= "1" && event.key <= "9") {
+        const int = parseInt(event.key, 10);
+        if (shoppingCart.length > int - 1) {
+          setPurchase(shoppingCart[int - 1]);
+          navigate("/purchase/false");
+        }
       }
-    }
-  };
+    };
 
-  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [navigate, setPurchase, shoppingCart]);
 
   return (
-    <Column ref={ref}>
-      <TopNavBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TopNavBar focusRef={focusRef} />
       <div style={{ height: "45px" }} />
       <Header>장바구니</Header>
       <div style={{ height: "10px" }} />
@@ -116,7 +75,7 @@ const ShoppingCart = () => {
         shoppingCart.map((book, i) => {
           return (
             <>
-              <CartBlock book={book} id={i} />
+              <CartBlock book={book} id={i} focusRef={focusRef} />
               <div style={{ height: "10px" }} />
             </>
           );
