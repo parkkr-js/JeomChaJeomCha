@@ -12,6 +12,7 @@ import StyledModal from "./components/StyledModal";
 const Purchase = () => {
   const focusRef = useRef([]);
   const [textContent, setTextContent] = useState("");
+  const [reading, setReading] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
@@ -35,6 +36,11 @@ const Purchase = () => {
         const int = parseInt(event.key, 10);
         if (purchase.length > int - 1)
           navigate(`/search/${purchase[int - 1].id}`);
+      }
+
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
       }
     };
 
@@ -68,7 +74,12 @@ const Purchase = () => {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
       window.speechSynthesis.speak(speech);
+      setReading(true);
     }
   }, [textContent]);
 

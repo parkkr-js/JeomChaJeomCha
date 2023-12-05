@@ -22,6 +22,7 @@ const TitleBar = ({ focusRef }) => {
           <Link
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}
+            tabIndex={-1}
           >
             <SubTitleReg
               tabIndex={0}
@@ -31,7 +32,10 @@ const TitleBar = ({ focusRef }) => {
             </SubTitleReg>
           </Link>
           <SubTitle>&nbsp; | &nbsp;</SubTitle>
-          <Link style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            style={{ textDecoration: "none", color: "inherit" }}
+            tabIndex={-1}
+          >
             <SubTitleReg
               tabIndex={0}
               ref={(ref) => (focusRef.current[4] = ref)}
@@ -43,6 +47,7 @@ const TitleBar = ({ focusRef }) => {
           <Link
             to="/shoppingCart"
             style={{ textDecoration: "none", color: "inherit" }}
+            tabIndex={-1}
           >
             <SubTitleReg
               tabIndex={0}
