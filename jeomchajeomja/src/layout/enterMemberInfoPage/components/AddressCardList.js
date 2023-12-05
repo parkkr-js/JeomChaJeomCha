@@ -14,13 +14,30 @@ function AddressCardList({ onFocus, onBlur, modalClose }) {
   return (
     <Container>
       {mainAddress.map((address, index) => (
-        <Card key={index} onClick={() => handleCardClick(address)}>
-          <RowDiv tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
-            <NumBtn >{index + 1}</NumBtn>
-            <CardHeader>{zip[index]}</CardHeader>
-            <CardHeader>{address}</CardHeader>
+        <Card
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleCardClick(address);
+            }
+          }}
+          key={index}
+          onClick={() => handleCardClick(address)}
+        >
+          <RowDiv>
+            <NumBtn onFocus={onFocus} onBlur={onBlur}>
+              {index + 1}{" "}
+            </NumBtn>
+            <CardHeader tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              {" "}
+              {zip[index]}
+            </CardHeader>
+            <CardHeader tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+              {address}
+            </CardHeader>
           </RowDiv>
-          <CardBody>{subAddress[index]}</CardBody>
+          <CardBody tabIndex="0" onFocus={onFocus} onBlur={onBlur}>
+            {subAddress[index]}
+          </CardBody>
         </Card>
       ))}
     </Container>
