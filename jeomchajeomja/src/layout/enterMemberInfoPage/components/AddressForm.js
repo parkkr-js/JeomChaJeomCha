@@ -31,6 +31,7 @@ function AddressForm() {
   };
 
   useEffect(() => {
+    const inputElement = subAddressInputRef.current;
     let startTimer;
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening && !startTimer) {
@@ -71,15 +72,15 @@ function AddressForm() {
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    if (document) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.addEventListener("keyup", handleKeyUp);
+    if (inputElement) {
+      inputElement.addEventListener("keydown", handleKeyDown);
+      inputElement.addEventListener("keyup", handleKeyUp);
     }
 
     return () => {
-      if (document) {
-        document.removeEventListener("keydown", handleKeyDown);
-        document.removeEventListener("keyup", handleKeyUp);
+      if (inputElement) {
+        inputElement.removeEventListener("keydown", handleKeyDown);
+        inputElement.removeEventListener("keyup", handleKeyUp);
       }
       if (startTimer) {
         clearTimeout(startTimer);

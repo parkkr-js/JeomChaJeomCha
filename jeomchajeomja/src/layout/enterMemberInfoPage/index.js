@@ -27,6 +27,14 @@ function EnterMemberInfo() {
       emptyField = "세부 주소";
     } else if (!certiNum) {
       emptyField = "인증 번호";
+    } else if (!certiNum && !address && !subAddress) {
+      emptyField = "주소, 세부 주소, 인증 번호";
+    } else if (!certiNum && !address) {
+      emptyField = "주소, 인증 번호";
+    } else if (!certiNum && !subAddress) {
+      emptyField = "세부 주소, 인증 번호";
+    } else if (!address && !subAddress) {
+      emptyField = "주소, 세부 주소";
     }
 
     if (emptyField) {
