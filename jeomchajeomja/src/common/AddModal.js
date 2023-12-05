@@ -1,20 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Modal } from "@mui/material";
 
 const AddModal = ({ isOpen, setIsOpen, text }) => {
-  useEffect(() => {
-    if (text !== "") {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = text;
-      window.speechSynthesis.speak(speech);
-    }
-  }, [text]);
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
+
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
+  };
 
   return (
     <ModalComponent open={isOpen} onClose={() => setIsOpen(false)}>
-      <Column>
+      <Column tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         <SubTitle>{text}</SubTitle>
       </Column>
     </ModalComponent>

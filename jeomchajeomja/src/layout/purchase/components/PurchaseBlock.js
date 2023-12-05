@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const PurchaseBlock = ({ book, id, focusRef }) => {
+const PurchaseBlock = ({ book, id, handleFocus, handleBlur }) => {
   return (
     <div style={{ width: "100vw", padding: "0 240px" }}>
       <Link
@@ -15,7 +15,8 @@ const PurchaseBlock = ({ book, id, focusRef }) => {
               <Body
                 style={{ color: "black" }}
                 tabIndex={0}
-                ref={(ref) => (focusRef.current[7 + 4 * id - 3] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               >
                 {id}
               </Body>
@@ -24,7 +25,8 @@ const PurchaseBlock = ({ book, id, focusRef }) => {
             <Body
               style={{ fontSize: "30px" }}
               tabIndex={0}
-              ref={(ref) => (focusRef.current[7 + 4 * id - 2] = ref)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             >
               {book.title}
             </Body>
@@ -32,20 +34,14 @@ const PurchaseBlock = ({ book, id, focusRef }) => {
           <div style={{ height: "8px" }} />
           <Row>
             <div style={{ width: "60px" }} />
-            <BodyReg
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[7 + 4 * id - 1] = ref)}
-            >
+            <BodyReg tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
               과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
               &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>
           </Row>
           <div style={{ height: "25px" }} />
           <ButtonBar>
-            <SubTitle
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[7 + 4 * id] = ref)}
-            >
+            <SubTitle tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
               인쇄비 {book.price?.toLocaleString()}원
             </SubTitle>
           </ButtonBar>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Credential } from "../../../recoil/atoms/Credential";
 import { googleLogout } from "@react-oauth/google";
 
-const TitleBar = ({ focusRef }) => {
+const TitleBar = ({ handleFocus, handleBlur }) => {
   const navigate = useNavigate();
   const [credential, setCredential] = useRecoilState(Credential);
 
@@ -26,19 +26,23 @@ const TitleBar = ({ focusRef }) => {
     <Column>
       <Row>
         <Button
-          ref={(ref) => (focusRef.current[1] = ref)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           style={{ boxShadow: "0 0 5px #0079e0" }}
           onClick={() => navigate(-1)}
         >
           뒤로가기
         </Button>
         <LinkDiv>
-          <Button ref={(ref) => (focusRef.current[2] = ref)}>
+          <Button onFocus={handleFocus} onBlur={handleBlur}>
             음성 사용 설명서 듣기
           </Button>
           <div style={{ width: "20px" }} />
           {credential === null ? (
             <SubTitleReg
+              tabIndex={0}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               onClick={handleLoginClick}
               style={{ fontSize: "25px", cursor: "pointer" }}
             >
@@ -47,7 +51,8 @@ const TitleBar = ({ focusRef }) => {
           ) : (
             <>
               <SubTitleReg
-                ref={(ref) => (focusRef.current[3] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 onClick={handleLogoutClick}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
@@ -62,7 +67,8 @@ const TitleBar = ({ focusRef }) => {
                 }}
               />
               <SubTitleReg
-                ref={(ref) => (focusRef.current[4] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
                 내정보
@@ -76,7 +82,8 @@ const TitleBar = ({ focusRef }) => {
                 }}
               />
               <SubTitleReg
-                ref={(ref) => (focusRef.current[5] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 onClick={handleShoppingCartClick}
                 style={{ fontSize: "25px", cursor: "pointer" }}
               >
@@ -87,7 +94,7 @@ const TitleBar = ({ focusRef }) => {
         </LinkDiv>
       </Row>
       <div style={{ height: "83px" }} />
-      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+      <Header tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         학습자료 검색
       </Header>
       <div style={{ height: "65px" }} />
