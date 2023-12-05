@@ -5,12 +5,15 @@ import { Button } from "../../home/components/Button";
 import styled from "styled-components";
 import FindAddressModal from "./FindAddressModal";
 import { useRecoilValue } from "recoil";
+import { SubAddressState } from "../../../recoil/atoms/AddressState";
+import { useRecoilState } from "recoil";
 import { AddressState } from "../../../recoil/atoms/AddressState";
 
 function AddressForm() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const address = useRecoilValue(AddressState);
   const [isListening, setIsListening] = useState(false);
+  const address = useRecoilValue(AddressState);
+  const [subAddress, setSubAddress] = useRecoilState(SubAddressState);
 
   const handleFindAddressClick = () => {
     setIsModalVisible(!isModalVisible);
@@ -81,6 +84,7 @@ function AddressForm() {
         }}
       >
         <InputBase
+          value={subAddress}
           sx={{
             ml: 1,
             flex: 1,
