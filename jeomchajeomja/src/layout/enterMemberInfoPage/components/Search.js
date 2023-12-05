@@ -122,6 +122,7 @@ function Search({ handleAddressCardList }) {
       />
 
       <Button
+        type="button"
         onClick={handleAddressCardList}
         style={{
           display: "inline-flex",

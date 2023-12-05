@@ -22,14 +22,15 @@ function FindAddressModal({ modalClose }) {
     "한빛맹학교",
   ];
 
-
   const handleAddressCardList = () => {
     setShowAddressCardList(true);
   };
+
   useEffect(() => {
     if (addressKeywords.some((keyword) => address.includes(keyword))) {
         setIsAddressCorrect(true);
     }
+
 }, [address]);
 
   return (
