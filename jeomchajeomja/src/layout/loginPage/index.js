@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../img/google_logo.svg";
-
 import { useRecoilState } from "recoil";
 import { Credential } from "../../recoil/atoms/Credential";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,9 +14,8 @@ function Login() {
   const [credential, setCredential] = useRecoilState(Credential);
   const login = useGoogleLogin({
     onSuccess: (res) => {
-      console.log(res);
       setCredential(res.credential);
-      if (credential !== null) navigate("/");
+      navigate("/");
     },
     onFailure: (err) => {
       console.log(err);
