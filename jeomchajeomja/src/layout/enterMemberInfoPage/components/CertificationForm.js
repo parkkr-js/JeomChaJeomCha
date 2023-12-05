@@ -12,6 +12,7 @@ import SpeechRecognition, {
 import ConvertNumberToKorean from "../components/ConvertNumberToKorean";
 
 function CertificationForm({ inputRef }) {
+  const message = "전화번호 인증에 성공하였습니다.";
   const [isListening, setIsListening] = useState(false);
   const [certiNum, setCertiNum] = useRecoilState(VerifiNumState);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -87,7 +88,7 @@ function CertificationForm({ inputRef }) {
 
   useEffect(() => {
     if (isListening && certiScript) {
-      const numbersOnly = certiScript.replace(/\s+/g, '');
+      const numbersOnly = certiScript.replace(/\s+/g, "");
       setCertiNum(numbersOnly);
     }
   }, [certiScript, isListening]);
@@ -106,7 +107,7 @@ function CertificationForm({ inputRef }) {
     // 현재 포커스가 inputRef에 있는지 확인
     if (inputRef.current && document.activeElement === inputRef.current) {
       console.log(inputRef.current.value);
-  
+
       if (inputRef.current.value === certiNum && certiScript && !isListening) {
         const speech = new SpeechSynthesisUtterance();
         speech.lang = "ko-KR";
@@ -115,7 +116,6 @@ function CertificationForm({ inputRef }) {
       }
     }
   }, [certiScript, isListening, certiNum]);
-  
 
   useEffect(() => {
     let timer;
@@ -194,7 +194,7 @@ function CertificationForm({ inputRef }) {
           </Button>
         </Container2>
       </Container1>
-      {isModalVisible && <VerificationModal />}
+      {isModalVisible && <VerificationModal message={message} />}
     </>
   );
 }

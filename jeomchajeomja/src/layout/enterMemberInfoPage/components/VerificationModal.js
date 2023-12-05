@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-function VerificationModal() {
-  const message = "전화번호 인증에 성공하였습니다.";
+function VerificationModal({message}) {
   useEffect(() => {
     const utterance = new SpeechSynthesisUtterance(message);
     window.speechSynthesis.speak(utterance);

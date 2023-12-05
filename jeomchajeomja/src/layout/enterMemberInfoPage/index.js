@@ -4,41 +4,85 @@ import { useNavigate } from "react-router-dom";
 import PhoneNumForm from "./components/PhoneNumForm";
 import AddressForm from "./components/AddressForm";
 import AudioBtn from "../../common/AudioBtn";
+import { AddressState } from "../../recoil/atoms/AddressState";
+import { SubAddressState } from "../../recoil/atoms/AddressState";
+import { VerifiNumState } from "../../recoil/atoms/VerifiNumState";
+import { useRecoilValue } from "recoil";
+import VerificationModal from "./components/VerificationModal";
 
 function EnterMemberInfo() {
+  const message = "회원가입이 완료되었습니다.";
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const address = useRecoilValue(AddressState);
+  const subAddress = useRecoilValue(SubAddressState);
+  const certiNum = useRecoilValue(VerifiNumState);
+
+  const handleStartClick = () => {
+    let emptyField = "";
+
+    if (!address) {
+      emptyField = "주소";
+    } else if (!subAddress) {
+      emptyField = "세부 주소";
+    } else if (!certiNum) {
+      emptyField = "인증 번호";
+    }
+
+    if (emptyField) {
+      const speech = new SpeechSynthesisUtterance(
+        `${emptyField}를 입력해주세요.`
+      );
+      speech.lang = "ko-KR";
+      window.speechSynthesis.speak(speech);
+    } else {
+      setIsModalVisible(true);
+    }
+  };
+  useEffect(() => {
+    let timer;
+    if (isModalVisible) {
+      timer = setTimeout(() => {
+        setIsModalVisible(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [isModalVisible]);
   return (
-    <Container>
-      <NavDiv>
-        <Btn onClick={() => navigate("../")} alt="뒤로가기">
-          뒤로가기
-        </Btn>
-        <AudioBtn
-          customStyle={{
-            color: "black",
-            border: "1px solid var(--Black, #000",
-          }}
-        />
-      </NavDiv>
-      <Header1>회원 정보 입력</Header1>
-      <Content1_1>
-        <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
-        <Body1>
-          스페이스바를 2초간 누른 후 벨소리가 나면
-          <br /> 음성 검색이 활성화됩니다.
-        </Body1>
-        <PhoneNumForm />
-      </Content1_1>
-      <Content1_1>
-        <SubTitle1>주소를 입력해주세요.</SubTitle1>
-        <Body1>
-          스페이스바를 2초간 누른 후 벨소리가 나면
-          <br /> 음성 검색이 활성화됩니다.
-        </Body1>
-        <AddressForm />
-      </Content1_1>
-      <StartBtn>시작하기</StartBtn>
-    </Container>
+    <>
+      <Container>
+        <NavDiv>
+          <Btn onClick={() => navigate("../")} alt="뒤로가기">
+            뒤로가기
+          </Btn>
+          <AudioBtn
+            customStyle={{
+              color: "black",
+              border: "1px solid var(--Black, #000",
+            }}
+          />
+        </NavDiv>
+        <Header1>회원 정보 입력</Header1>
+        <Content1_1>
+          <SubTitle1>전화번호를 입력해주세요.</SubTitle1>
+          <Body1>
+            스페이스바를 2초간 누른 후 벨소리가 나면
+            <br /> 음성 검색이 활성화됩니다.
+          </Body1>
+          <PhoneNumForm />
+        </Content1_1>
+        <Content1_1>
+          <SubTitle1>주소를 입력해주세요.</SubTitle1>
+          <Body1>
+            스페이스바를 2초간 누른 후 벨소리가 나면
+            <br /> 음성 검색이 활성화됩니다.
+          </Body1>
+          <AddressForm />
+        </Content1_1>
+        <StartBtn onClick={handleStartClick}>시작하기</StartBtn>
+      </Container>
+      {isModalVisible && <VerificationModal message={message} />}
+    </>
   );
 }
 
