@@ -20,7 +20,6 @@ function EnterMemberInfo() {
 
   const handleStartClick = () => {
     let emptyField = "";
-
     if (!address) {
       emptyField = "주소";
     } else if (!subAddress) {
@@ -47,6 +46,15 @@ function EnterMemberInfo() {
       setIsModalVisible(true);
     }
   };
+
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
+
   useEffect(() => {
     let timer;
     if (isModalVisible) {
@@ -60,7 +68,12 @@ function EnterMemberInfo() {
     <>
       <Container>
         <NavDiv>
-          <Btn onClick={() => navigate("../")} alt="뒤로가기">
+          <Btn
+            tabIndex="0"
+            onFocus={handleFocus}
+            onClick={() => navigate("../")}
+            alt="뒤로가기"
+          >
             뒤로가기
           </Btn>
           <AudioBtn
