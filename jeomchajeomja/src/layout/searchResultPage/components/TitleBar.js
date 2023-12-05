@@ -1,8 +1,26 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { Credential } from "../../../recoil/atoms/Credential";
+import { googleLogout } from "@react-oauth/google";
 
 const TitleBar = ({ focusRef }) => {
   const navigate = useNavigate();
+  const [credential, setCredential] = useRecoilState(Credential);
+
+  const handleLogoutClick = () => {
+    setCredential(null);
+    googleLogout();
+    navigate("/login");
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleShoppingCartClick = () => {
+    navigate("/shoppingCart");
+  };
 
   return (
     <Column>
@@ -19,43 +37,53 @@ const TitleBar = ({ focusRef }) => {
             음성 사용 설명서 듣기
           </Button>
           <div style={{ width: "20px" }} />
-          <Link
-            to="/login"
-            style={{ textDecoration: "none", color: "inherit" }}
-            tabIndex={-1}
-          >
+          {credential === null ? (
             <SubTitleReg
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[3] = ref)}
+              onClick={handleLoginClick}
+              style={{ fontSize: "25px", cursor: "pointer" }}
             >
-              로그아웃
+              로그인
             </SubTitleReg>
-          </Link>
-          <SubTitle>&nbsp; | &nbsp;</SubTitle>
-          <Link
-            style={{ textDecoration: "none", color: "inherit" }}
-            tabIndex={-1}
-          >
-            <SubTitleReg
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[4] = ref)}
-            >
-              내정보
-            </SubTitleReg>
-          </Link>
-          <SubTitle>&nbsp; | &nbsp;</SubTitle>
-          <Link
-            to="/shoppingCart"
-            style={{ textDecoration: "none", color: "inherit" }}
-            tabIndex={-1}
-          >
-            <SubTitleReg
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[5] = ref)}
-            >
-              장바구니
-            </SubTitleReg>
-          </Link>
+          ) : (
+            <>
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[3] = ref)}
+                onClick={handleLogoutClick}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                로그아웃
+              </SubTitleReg>
+              <div
+                style={{
+                  borderLeft: "2px solid black",
+                  height: "20px",
+                  margin: "9px 16px",
+                  borderColor: "white",
+                }}
+              />
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[4] = ref)}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                내정보
+              </SubTitleReg>
+              <div
+                style={{
+                  borderLeft: "2px solid black",
+                  height: "20px",
+                  margin: "9px 16px",
+                  borderColor: "white",
+                }}
+              />
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[5] = ref)}
+                onClick={handleShoppingCartClick}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                장바구니
+              </SubTitleReg>
+            </>
+          )}
         </LinkDiv>
       </Row>
       <div style={{ height: "83px" }} />
@@ -108,15 +136,6 @@ const SubTitleReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: 25px;
-  margin: 0 auto;
-`;
-
-const SubTitle = styled.span`
-  font-size: 25px;
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
-  color: ${({ theme }) => theme.colors.white};
-  white-space: pre;
-  margin: 0 auto;
 `;
 
 const Button = styled.button`

@@ -28,7 +28,7 @@ const Complete = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {

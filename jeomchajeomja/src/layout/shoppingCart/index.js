@@ -36,9 +36,7 @@ const ShoppingCart = () => {
           setPurchase(shoppingCart[int - 1]);
           navigate("/purchase/false");
         }
-      }
-
-      if (event.key === "Tab" && reading) {
+      } else if (event.key === "Tab" && reading) {
         window.speechSynthesis.cancel();
         setReading(false);
       }
@@ -49,7 +47,7 @@ const ShoppingCart = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [navigate, setPurchase, shoppingCart]);
+  }, [navigate, setPurchase, shoppingCart, reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {

@@ -8,6 +8,8 @@ import PurchaseBlock from "./components/PurchaseBlock";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import StyledModal from "./components/StyledModal";
+import { useRecoilState } from "recoil";
+import { AddressState, SubAddressState } from "../../recoil/atoms/AddressState";
 
 const Purchase = () => {
   const focusRef = useRef([]);
@@ -19,6 +21,8 @@ const Purchase = () => {
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [address, setAddress] = useRecoilState(AddressState);
+  const [subAddress, setSubAddress] = useRecoilState(SubAddressState);
   const totalPrice =
     id === "true"
       ? purchase.reduce((accumulator, item) => {
@@ -28,6 +32,14 @@ const Purchase = () => {
 
   const handleConditionChange = () => {
     setIsDisabled(!isDisabled);
+  };
+
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const handleSubAddressChange = (event) => {
+    setSubAddress(event.target.value);
   };
 
   useEffect(() => {
@@ -49,7 +61,7 @@ const Purchase = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isDisabled, navigate, purchase]);
+  }, [isDisabled, navigate, purchase, reading]);
 
   useEffect(() => {
     const handleFocus = (index) => {
@@ -141,11 +153,14 @@ const Purchase = () => {
         >
           <InputBase
             disabled={isDisabled}
+            value={address}
+            onChange={handleAddressChange}
             sx={{
               ml: 1,
               flex: 1,
-              fontSize: "20px",
-              padding: "9px 18px",
+              fontSize: "24px",
+              fontWeight: "bold",
+              padding: "9px 0",
               color: "black",
               textAlign: "right",
             }}
@@ -178,12 +193,15 @@ const Purchase = () => {
       >
         <InputBase
           disabled={isDisabled}
+          value={subAddress}
+          onChange={handleSubAddressChange}
           sx={{
             ml: 1,
             flex: 1,
-            fontSize: "20px",
-            padding: "9px 18px",
+            fontSize: "24px",
+            fontWeight: "bold",
             color: "black",
+            padding: "9px 0",
             textAlign: "right",
           }}
         />

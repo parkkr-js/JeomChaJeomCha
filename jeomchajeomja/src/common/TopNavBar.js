@@ -1,11 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { googleLogout } from "@react-oauth/google";
+import { useRecoilState } from "recoil";
+import { Credential } from "../recoil/atoms/Credential";
 
 const TopNavBar = ({ focusRef }) => {
   const navigate = useNavigate();
+  const [credential, setCredential] = useRecoilState(Credential);
 
   const handleLogoutClick = () => {
+    setCredential(null);
+    googleLogout();
+    navigate("/login");
+  };
+
+  const handleLoginClick = () => {
     navigate("/login");
   };
 
@@ -23,43 +33,51 @@ const TopNavBar = ({ focusRef }) => {
       </TitleButton>
       <LinkDiv>
         <TitleButton ref={(ref) => (focusRef.current[2] = ref)}>
-          음성 사용 설명서 듣기
+          점차점자 사용 설명서 듣기
         </TitleButton>
         <div style={{ width: "20px" }} />
-        <SubTitleReg
-          ref={(ref) => (focusRef.current[3] = ref)}
-          onClick={handleLogoutClick}
-          style={{ fontSize: "25px" }}
-        >
-          로그아웃
-        </SubTitleReg>
-        <div
-          style={{
-            borderLeft: "2px solid black",
-            height: "20px",
-            margin: "9px 16px",
-          }}
-        />
-        <SubTitleReg
-          ref={(ref) => (focusRef.current[4] = ref)}
-          style={{ fontSize: "25px" }}
-        >
-          내정보
-        </SubTitleReg>
-        <div
-          style={{
-            borderLeft: "2px solid black",
-            height: "20px",
-            margin: "9px 16px",
-          }}
-        />
-        <SubTitleReg
-          ref={(ref) => (focusRef.current[5] = ref)}
-          onClick={handleShoppingCartClick}
-          style={{ fontSize: "25px" }}
-        >
-          장바구니
-        </SubTitleReg>
+        {credential === null ? (
+          <SubTitleReg onClick={handleLoginClick} style={{ fontSize: "25px" }}>
+            로그인
+          </SubTitleReg>
+        ) : (
+          <>
+            <SubTitleReg
+              ref={(ref) => (focusRef.current[3] = ref)}
+              onClick={handleLogoutClick}
+              style={{ fontSize: "25px" }}
+            >
+              로그아웃
+            </SubTitleReg>
+            <div
+              style={{
+                borderLeft: "2px solid black",
+                height: "20px",
+                margin: "9px 16px",
+              }}
+            />
+            <SubTitleReg
+              ref={(ref) => (focusRef.current[4] = ref)}
+              style={{ fontSize: "25px" }}
+            >
+              내정보
+            </SubTitleReg>
+            <div
+              style={{
+                borderLeft: "2px solid black",
+                height: "20px",
+                margin: "9px 16px",
+              }}
+            />
+            <SubTitleReg
+              ref={(ref) => (focusRef.current[5] = ref)}
+              onClick={handleShoppingCartClick}
+              style={{ fontSize: "25px" }}
+            >
+              장바구니
+            </SubTitleReg>
+          </>
+        )}
       </LinkDiv>
     </Row>
   );
@@ -74,7 +92,6 @@ const Row = styled.div`
   align-items: center;
   width: 100%;
   flex-shrink: 0;
-  margin: 0 auto;
 `;
 
 const LinkDiv = styled.div`
