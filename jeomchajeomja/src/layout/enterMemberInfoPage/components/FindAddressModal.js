@@ -5,12 +5,18 @@ import AddressCardList from "./AddressCardList";
 import { useState, useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { AddressState } from "../../../recoil/atoms/AddressState";
+import { mainAddress, subAddress, zip } from "./AddressData";
+import { set } from "react-hook-form";
 
 
 function FindAddressModal({ modalClose }) {
   const address = useRecoilValue(AddressState);
   const [showAddressCardList, setShowAddressCardList] = useState(false);
   const [isAddressCorrect, setIsAddressCorrect] = useState(false);
+  const [searchResult, setSearchResult] = useState(false);
+  const speakAllAddress = mainAddress.length > 0
+  ? `${mainAddress[0]} 외 ${mainAddress.length - 1} 개가 검색되었습니다.`
+  : '검색된 주소가 없습니다.';
 
   const addressKeywords = [
     "서울",
@@ -24,14 +30,36 @@ function FindAddressModal({ modalClose }) {
 
   const handleAddressCardList = () => {
     setShowAddressCardList(true);
+    setSearchResult(!searchResult);
   };
+
 
   useEffect(() => {
     if (addressKeywords.some((keyword) => address.includes(keyword))) {
         setIsAddressCorrect(true);
     }
+    else if (address === "") {
+        setIsAddressCorrect(false);
+    }
 
 }, [address]);
+
+useEffect(() => {
+  if (showAddressCardList) {
+    if(!isAddressCorrect) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = "검색된 주소가 없습니다";
+      window.speechSynthesis.speak(speech);
+    }
+    else {
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = speakAllAddress;
+    window.speechSynthesis.speak(speech);
+    }
+  }
+}, [searchResult]);
 
   return (
     <Backdrop>
