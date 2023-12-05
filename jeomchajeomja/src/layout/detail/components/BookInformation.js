@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookInformation = ({ book, focusRef }) => {
+const BookInformation = ({ book, handleFocus, handleBlur }) => {
   return (
     <>
-      <Row tabIndex={0} ref={(ref) => (focusRef.current[7] = ref)}>
+      <Row>
         <div
           style={{
             borderLeft: "4px solid black",
@@ -13,17 +13,17 @@ const BookInformation = ({ book, focusRef }) => {
           }}
         />
         <Column>
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>과목</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.subject}</SubTitleReg>
           </Row>
           <div style={{ height: "20px" }} />
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>발행일</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.publishDate}</SubTitleReg>
           </Row>
           <div style={{ height: "20px" }} />
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>번역년도</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.translationYear}</SubTitleReg>
           </Row>
@@ -36,17 +36,17 @@ const BookInformation = ({ book, focusRef }) => {
           }}
         />
         <Column>
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>쪽수</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.pages}</SubTitleReg>
           </Row>
           <div style={{ height: "20px" }} />
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>저자</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.author}</SubTitleReg>
           </Row>
           <div style={{ height: "20px" }} />
-          <Row>
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <SubTitle>제작 제단</SubTitle>
             <SubTitleReg>&nbsp; | &nbsp;{book?.publisher}</SubTitleReg>
           </Row>

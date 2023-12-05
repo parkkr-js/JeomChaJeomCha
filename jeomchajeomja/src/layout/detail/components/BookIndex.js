@@ -1,53 +1,69 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookIndex = ({ book, focusRef }) => {
+const BookIndex = ({ book, handleFocus, handleBlur }) => {
   return (
     <>
-      <Title tabIndex={0} ref={(ref) => (focusRef.current[13] = ref)}>
+      <Title tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         목차
       </Title>
       <div style={{ height: "40px" }} />
-      <div tabIndex={0} ref={(ref) => (focusRef.current[14] = ref)}>
-        <BigIndex>{book?.bigIndex[0]}</BigIndex>
-        <div style={{ height: "15px" }} />
-        <SmallContent>
-          {book?.smallIndex[0].split("\n").map((line) => {
-            return (
-              <>
-                {line}
-                <br />
-              </>
-            );
-          })}
-        </SmallContent>
-        <div style={{ height: "35px" }} />
-        <BigIndex>{book?.bigIndex[1]}</BigIndex>
-        <div style={{ height: "15px" }} />
-        <SmallContent>
-          {book?.smallIndex[1].split("\n").map((line) => {
-            return (
-              <>
-                {line}
-                <br />
-              </>
-            );
-          })}
-        </SmallContent>
-        <div style={{ height: "35px" }} />
-        <BigIndex>{book?.bigIndex[2]}</BigIndex>
-        <div style={{ height: "15px" }} />
-        <SmallContent>
-          {book?.smallIndex[2].split("\n").map((line) => {
-            return (
-              <>
-                {line}
-                <br />
-              </>
-            );
-          })}
-        </SmallContent>
-      </div>
+      <BigIndex tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.bigIndex[0]}
+      </BigIndex>
+      <div style={{ height: "15px" }} />
+      <SmallContent
+        tabIndex={0}
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+      >
+        {book?.smallIndex[0].split("\n").map((line) => {
+          return (
+            <>
+              {line}
+              <br />
+            </>
+          );
+        })}
+      </SmallContent>
+      <div style={{ height: "35px" }} />
+      <BigIndex tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.bigIndex[1]}
+      </BigIndex>
+      <div style={{ height: "15px" }} />
+      <SmallContent
+        tabIndex={0}
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+      >
+        {book?.smallIndex[1].split("\n").map((line) => {
+          return (
+            <>
+              {line}
+              <br />
+            </>
+          );
+        })}
+      </SmallContent>
+      <div style={{ height: "35px" }} />
+      <BigIndex tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.bigIndex[2]}
+      </BigIndex>
+      <div style={{ height: "15px" }} />
+      <SmallContent
+        tabIndex={0}
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+      >
+        {book?.smallIndex[2].split("\n").map((line) => {
+          return (
+            <>
+              {line}
+              <br />
+            </>
+          );
+        })}
+      </SmallContent>
     </>
   );
 };

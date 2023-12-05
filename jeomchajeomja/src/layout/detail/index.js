@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -11,26 +11,35 @@ import { addCart } from "../../features/shoppingCart/shoppingCartSlice";
 import AddModal from "../../common/AddModal";
 
 const Detail = () => {
-  const focusRef = useRef([]);
-  const [textContent, setTextContent] = useState("");
   const bookLists = useSelector((state) => state.book.book);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const book = bookLists.find((item) => String(item.id) === id);
   const [isOpen, setIsOpen] = useState(false);
-  const [reading, setReading] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
 
   const handleShoppingCartClick = () => {
     dispatch(addCart(book));
     setIsOpen(true);
-    setTimeout(() => setIsOpen(false), 3000);
+    setTimeout(() => setIsOpen(false), 1500);
   };
 
   const handlePurchaseClick = () => {
     setPurchase(book);
     navigate("/purchase/false");
+  };
+
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
+
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
   };
 
   useEffect(() => {
@@ -39,9 +48,6 @@ const Detail = () => {
         handlePurchaseClick();
       } else if (event.key === "2") {
         handleShoppingCartClick();
-      } else if (event.key === "Tab" && reading) {
-        window.speechSynthesis.cancel();
-        setReading(false);
       }
     };
 
@@ -50,51 +56,23 @@ const Detail = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [reading]);
-
-  useEffect(() => {
-    const handleFocus = (index) => {
-      setTextContent(focusRef.current[index].textContent);
-    };
-
-    focusRef.current.forEach((ref, index) => {
-      ref.addEventListener("focus", () => handleFocus(index));
-    });
-
-    return () => {
-      const currentRef = focusRef.current; // 현재 값 저장
-      currentRef.forEach((ref, index) => {
-        if (ref !== null)
-          ref.removeEventListener("focus", () => handleFocus(index));
-      });
-    };
   }, []);
 
-  useEffect(() => {
-    if (textContent !== "") {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = textContent;
-      speech.addEventListener("end", () => {
-        setReading(false);
-      });
-
-      window.speechSynthesis.speak(speech);
-      setReading(true);
-    }
-  }, [textContent]);
-
   return (
-    <Column ref={(ref) => (focusRef.current[0] = ref)}>
-      <TopNavBar focusRef={focusRef} />
+    <Column>
+      <TopNavBar handleFocus={handleFocus} handleBlur={handleBlur} />
       <div style={{ height: "45px" }} />
-      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+      <Header tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         {book?.title}
       </Header>
       <div style={{ height: "60px" }} />
-      <BookInformation focusRef={focusRef} book={book} />
+      <BookInformation
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+        book={book}
+      />
       <div style={{ height: "78px" }} />
-      <Row tabIndex={0} ref={(ref) => (focusRef.current[8] = ref)}>
+      <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         <SubTitle>인쇄비 : {book?.price.toLocaleString()} 원</SubTitle>
         <Title>+</Title>
         <SubTitle>배송비 : 3,000 원</SubTitle>
@@ -103,30 +81,49 @@ const Detail = () => {
       <SubTitle
         style={{ fontSize: "40px" }}
         tabIndex={0}
-        ref={(ref) => (focusRef.current[9] = ref)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       >
         총 금액 : {(book?.price + 3000).toLocaleString()} 원
       </SubTitle>
       <div style={{ height: "40px" }} />
-      <ButtonBar tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
+      <ButtonBar>
         <BodyButton
           style={{ color: "white", backgroundColor: "black" }}
           onClick={handlePurchaseClick}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           ① 구매하기
         </BodyButton>
-        <BodyButton onClick={handleShoppingCartClick}>② 장바구니</BodyButton>
+        <BodyButton
+          onClick={handleShoppingCartClick}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        >
+          ② 장바구니
+        </BodyButton>
         <AddModal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           text={"장바구니에 추가되었습니다."}
         />
-        <BodyButton>③ 파일 다운받기</BodyButton>
+        <BodyButton onFocus={handleFocus} onBlur={handleBlur}>
+          ③ 파일 다운받기
+        </BodyButton>
       </ButtonBar>
       <div style={{ height: "60px" }} />
-      <BookIntroduction focusRef={focusRef} book={book} />
+      <BookIntroduction
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+        book={book}
+      />
       <div style={{ height: "40px" }} />
-      <BookIndex focusRef={focusRef} book={book} />
+      <BookIndex
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
+        book={book}
+      />
     </Column>
   );
 };

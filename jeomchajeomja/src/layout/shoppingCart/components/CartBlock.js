@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import Delete from "../../../img/icomoon-free_bin.svg";
 import { useDispatch } from "react-redux";
 import { removeCart } from "../../../features/shoppingCart/shoppingCartSlice";
+import AddModal from "../../../common/AddModal";
 
-const CartBlock = ({ book, id, focusRef }) => {
+const CartBlock = ({
+  book,
+  id,
+  isOpen,
+  setIsOpen,
+  handleFocus,
+  handleBlur,
+}) => {
   const dispatch = useDispatch();
 
   const handleDeleteClick = () => {
     dispatch(removeCart(id));
+    setIsOpen(true);
+    setTimeout(() => setIsOpen(false), 1500);
   };
 
   return (
@@ -24,24 +34,19 @@ const CartBlock = ({ book, id, focusRef }) => {
               <Body
                 style={{ color: "black" }}
                 tabIndex={0}
-                ref={(ref) => (focusRef.current[8 + id * 4 - 3] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               >
                 {id + 1}
               </Body>
             </Circle>
             <div style={{ width: "24px" }} />
-            <SubTitle
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[8 + id * 4 - 2] = ref)}
-            >
+            <SubTitle tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
               {book.title}
             </SubTitle>
           </Row>
           <div style={{ height: "8px" }} />
-          <Row
-            tabIndex={0}
-            ref={(ref) => (focusRef.current[8 + id * 4 - 1] = ref)}
-          >
+          <Row tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             <div style={{ width: "60px" }} />
             <BigBody>과목</BigBody>
             <div
@@ -76,7 +81,8 @@ const CartBlock = ({ book, id, focusRef }) => {
       <DeleteButton
         onClick={handleDeleteClick}
         tabIndex={0}
-        ref={(ref) => (focusRef.current[8 + id * 4] = ref)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       >
         <Column>
           <img src={Delete} alt="삭제 버튼" />
@@ -84,6 +90,13 @@ const CartBlock = ({ book, id, focusRef }) => {
           삭제
         </Column>
       </DeleteButton>
+      {isOpen && (
+        <AddModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          text={"삭제되었습니다."}
+        />
+      )}
     </Row>
   );
 };

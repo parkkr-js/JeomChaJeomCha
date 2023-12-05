@@ -5,7 +5,7 @@ import { googleLogout } from "@react-oauth/google";
 import { useRecoilState } from "recoil";
 import { Credential } from "../recoil/atoms/Credential";
 
-const TopNavBar = ({ focusRef }) => {
+const TopNavBar = ({ handleFocus, handleBlur }) => {
   const navigate = useNavigate();
   const [credential, setCredential] = useRecoilState(Credential);
 
@@ -26,24 +26,33 @@ const TopNavBar = ({ focusRef }) => {
   return (
     <Row>
       <TitleButton
-        ref={(ref) => (focusRef.current[1] = ref)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onClick={() => navigate(-1)}
       >
         뒤로가기
       </TitleButton>
       <LinkDiv>
-        <TitleButton ref={(ref) => (focusRef.current[2] = ref)}>
+        <TitleButton onFocus={handleFocus} onBlur={handleBlur}>
           점차점자 사용 설명서 듣기
         </TitleButton>
         <div style={{ width: "20px" }} />
         {credential === null ? (
-          <SubTitleReg onClick={handleLoginClick} style={{ fontSize: "25px" }}>
+          <SubTitleReg
+            tabIndex={0}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onClick={handleLoginClick}
+            style={{ fontSize: "25px" }}
+          >
             로그인
           </SubTitleReg>
         ) : (
           <>
             <SubTitleReg
-              ref={(ref) => (focusRef.current[3] = ref)}
+              tabIndex={0}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               onClick={handleLogoutClick}
               style={{ fontSize: "25px" }}
             >
@@ -57,7 +66,9 @@ const TopNavBar = ({ focusRef }) => {
               }}
             />
             <SubTitleReg
-              ref={(ref) => (focusRef.current[4] = ref)}
+              tabIndex={0}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               style={{ fontSize: "25px" }}
             >
               내정보
@@ -70,7 +81,9 @@ const TopNavBar = ({ focusRef }) => {
               }}
             />
             <SubTitleReg
-              ref={(ref) => (focusRef.current[5] = ref)}
+              tabIndex={0}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               onClick={handleShoppingCartClick}
               style={{ fontSize: "25px" }}
             >

@@ -6,7 +6,7 @@ import { addCart } from "../../../features/shoppingCart/shoppingCartSlice";
 import { PurchaseContext } from "../../../model/PurchaseProvider";
 import AddModal from "../../../common/AddModal";
 
-const BookBlock = ({ book, id, focusRef }) => {
+const BookBlock = ({ book, id, handleFocus, handleBlur }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ const BookBlock = ({ book, id, focusRef }) => {
     event.preventDefault();
     dispatch(addCart(book));
     setIsOpen(true);
-    setTimeout(() => setIsOpen(false), 1000);
+    setTimeout(() => setIsOpen(false), 1500);
   };
 
   const handlePurchaseClick = (event) => {
@@ -37,7 +37,8 @@ const BookBlock = ({ book, id, focusRef }) => {
               <Body
                 style={{ color: "black" }}
                 tabIndex={0}
-                ref={(ref) => (focusRef.current[10 + id * 5 - 4] = ref)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               >
                 {id}
               </Body>
@@ -46,7 +47,8 @@ const BookBlock = ({ book, id, focusRef }) => {
             <Body
               style={{ fontSize: "30px" }}
               tabIndex={0}
-              ref={(ref) => (focusRef.current[10 + id * 5 - 3] = ref)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             >
               {book.title}
             </Body>
@@ -54,10 +56,7 @@ const BookBlock = ({ book, id, focusRef }) => {
           <div style={{ height: "8px" }} />
           <Row>
             <div style={{ width: "60px" }} />
-            <BodyReg
-              tabIndex={0}
-              ref={(ref) => (focusRef.current[10 + id * 5 - 2] = ref)}
-            >
+            <BodyReg tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
               과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
               &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>
@@ -67,7 +66,8 @@ const BookBlock = ({ book, id, focusRef }) => {
             <Button
               style={{ color: "white", background: "black" }}
               onClick={handleShoppingCartClick}
-              ref={(ref) => (focusRef.current[10 + id * 5 - 1] = ref)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             >
               장바구니
             </Button>
@@ -80,7 +80,8 @@ const BookBlock = ({ book, id, focusRef }) => {
             )}
             <Button
               onClick={handlePurchaseClick}
-              ref={(ref) => (focusRef.current[10 + id * 5] = ref)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             >
               구매하기
             </Button>

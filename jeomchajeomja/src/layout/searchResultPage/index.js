@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TitleBar from "./components/TitleBar";
 import EnterSearch from "./components/EnterSearch";
 import styled from "styled-components";
@@ -13,49 +13,26 @@ import { useSelector } from "react-redux";
 import { ResultContext } from "../../model/ResultProvider";
 
 const SearchResult = () => {
-  const focusRef = useRef([]);
-  const [textContent, setTextContent] = useState("");
   const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useContext(ResultContext);
   const [keyword] = useContext(SearchContext);
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
   const [isFocusing, setIsFocusing] = useState(false);
-  const [reading, setReading] = useState(false);
   const { transcript, _, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
-  useEffect(() => {
-    const handleFocus = (index) => {
-      setTextContent(focusRef.current[index].textContent);
-    };
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
 
-    focusRef.current.forEach((ref, index) => {
-      ref.addEventListener("focus", () => handleFocus(index));
-    });
-
-    return () => {
-      const currentRef = focusRef.current; // 현재 값 저장
-      currentRef.forEach((ref, index) => {
-        if (ref !== null)
-          ref.removeEventListener("focus", () => handleFocus(index));
-      });
-    };
-  }, []);
-
-  useEffect(() => {
-    if (textContent !== "") {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = textContent;
-      speech.addEventListener("end", () => {
-        setReading(false);
-      });
-
-      window.speechSynthesis.speak(speech);
-      setReading(true);
-    }
-  }, [textContent]);
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
+  };
 
   useEffect(() => {
     setResult(
@@ -85,11 +62,6 @@ const SearchResult = () => {
       if (event.key >= "1" && event.key <= "9" && !isFocusing) {
         const int = parseInt(event.key, 10);
         if (result.length > int - 1) navigate(`./${result[int - 1].id}`);
-      }
-
-      if (event.key === "Tab" && reading) {
-        window.speechSynthesis.cancel();
-        setReading(false);
       }
     };
 
@@ -130,7 +102,7 @@ const SearchResult = () => {
         clearTimeout(startTimer); // 컴포넌트 언마운트 시 타이머 취소
       }
     };
-  }, [isListening, isFocusing, navigate, result, reading]);
+  }, [isListening, isFocusing, navigate, result]);
 
   if (!browserSupportsSpeechRecognition) {
     return (
@@ -142,22 +114,23 @@ const SearchResult = () => {
   }
 
   return (
-    <Column ref={(ref) => (focusRef.current[0] = ref)}>
-      <TitleBar focusRef={focusRef} />
+    <Column>
+      <TitleBar handleFocus={handleFocus} handleBlur={handleBlur} />
       <EnterSearch
         transcript={transcript}
         isListening={isListening}
         setResult={setResult}
         bookLists={bookLists}
         setIsFocusing={setIsFocusing}
-        focusRef={focusRef}
+        handleFocus={handleFocus}
+        handleBlur={handleBlur}
       />
       <div style={{ height: "75px" }} />
       {result.length === 0 ? (
         <>
           <img src={magnifyingGlass} alt="돋보기 아이콘" />
           <div style={{ height: "24px" }} />
-          <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
+          <SubTitleReg tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             ‘{keyword}’에 맞는 검색 결과가 없습니다
           </SubTitleReg>
           <div style={{ height: "120px" }} />
@@ -167,37 +140,30 @@ const SearchResult = () => {
           <SubTitle
             style={{ margin: "0 240px 8px" }}
             tabIndex={0}
-            ref={(ref) => (focusRef.current[10] = ref)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           >
             "{keyword}" 검색 결과 총 {result.length}건
           </SubTitle>
           {result.map((book, i) => (
             <>
-              <BookBlock book={book} id={i + 1} focusRef={focusRef} />
+              <BookBlock
+                handleFocus={handleFocus}
+                handleBlur={handleBlur}
+                book={book}
+                id={i + 1}
+              />
               <div style={{ height: "20px" }} />
             </>
           ))}
         </Column>
       )}
       <div style={{ height: "80px" }} />
-      <BodyReg
-        tabIndex={0}
-        ref={
-          result.length === 0
-            ? (ref) => (focusRef.current[11] = ref)
-            : (ref) => (focusRef.current[11 + result.length * 5] = ref)
-        }
-      >
+      <BodyReg tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         찾으시는 자료가 없다면, 새로 신청할 수 있습니다.{" "}
       </BodyReg>
       <div style={{ height: "12px" }} />
-      <Button
-        ref={
-          result.length === 0
-            ? (ref) => (focusRef.current[12] = ref)
-            : (ref) => (focusRef.current[12 + result.length * 5] = ref)
-        }
-      >
+      <Button onFocus={handleFocus} onBlur={handleBlur}>
         학습자료 신청하기
       </Button>
       <div style={{ height: "50px" }} />

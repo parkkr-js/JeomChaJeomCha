@@ -10,7 +10,8 @@ const EnterSearch = ({
   setResult,
   bookLists,
   setIsFocusing,
-  focusRef,
+  handleFocus,
+  handleBlur,
 }) => {
   const [keyword, setKeyword] = useContext(SearchContext);
   const [input, setInput] = useState("");
@@ -47,7 +48,7 @@ const EnterSearch = ({
 
   return (
     <Column>
-      <SubTitle tabIndex={0} ref={(ref) => (focusRef.current[8] = ref)}>
+      <SubTitle tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         스페이스바를 누르는 동안 음성 검색이 활성화됩니다.
       </SubTitle>
       <Paper
@@ -81,7 +82,8 @@ const EnterSearch = ({
           disabled={input === ""}
           style={input === "" ? { opacity: "0.2", cursor: "not-allowed" } : {}}
           onClick={handleSearchClick}
-          ref={(ref) => (focusRef.current[9] = ref)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           검색
         </Button>

@@ -1,20 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookIntroduction = ({ book, focusRef }) => {
+const BookIntroduction = ({ book, handleFocus, handleBlur }) => {
   return (
     <>
-      <Title tabIndex={0} ref={(ref) => (focusRef.current[11] = ref)}>
+      <Title tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
         책 소개
       </Title>
       <div style={{ height: "40px" }} />
-      <div tabIndex={0} ref={(ref) => (focusRef.current[12] = ref)}>
-        <BigContent>{book?.bigContent[0]}</BigContent>
-        <SmallContent>{book?.smallContent[0]}</SmallContent>
-        <div style={{ height: "35px" }} />
-        <BigContent>{book?.bigContent[1]}</BigContent>
-        <SmallContent>{book?.smallContent[1]}</SmallContent>
-      </div>
+      <BigContent tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.bigContent[0]}
+      </BigContent>
+      <SmallContent tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.smallContent[0]}
+      </SmallContent>
+      <div style={{ height: "35px" }} />
+      <BigContent tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.bigContent[1]}
+      </BigContent>
+      <SmallContent tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        {book?.smallContent[1]}
+      </SmallContent>
     </>
   );
 };

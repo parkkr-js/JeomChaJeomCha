@@ -1,14 +1,9 @@
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 
 const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
   const navigate = useNavigate();
-  const [reRender, setReRender] = useState(false);
-  const focusRef = useRef([]);
-  const [reading, setReading] = useState(false);
-  const [textContent, setTextContent] = useState("");
 
   const handleCompleteClick = () => {
     setIsModalOpen(false);
@@ -16,65 +11,17 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
     navigate("./complete");
   };
 
-  useEffect(() => {
-    setReRender(true);
-  }, []);
+  const handleFocus = (event) => {
+    const text = event.target.innerText;
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = "ko-KR";
+    speech.text = text;
+    window.speechSynthesis.speak(speech);
+  };
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Tab" && reading) {
-        window.speechSynthesis.cancel();
-        setReading(false);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [reRender, reading]);
-
-  useEffect(() => {
-    const handleFocus = (index) => {
-      setTextContent(focusRef.current[index].textContent);
-    };
-
-    focusRef.current.forEach((ref, index) => {
-      ref.addEventListener("focus", () => handleFocus(index));
-    });
-
-    return () => {
-      const currentRef = focusRef.current; // 현재 값 저장
-      currentRef.forEach((ref, index) => {
-        if (ref !== null)
-          ref.removeEventListener("focus", () => handleFocus(index));
-      });
-    };
-  }, [reRender]);
-
-  useEffect(() => {
-    if (textContent !== "") {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = textContent;
-      speech.addEventListener("end", () => {
-        setReading(false);
-      });
-
-      window.speechSynthesis.speak(speech);
-      setReading(true);
-    }
-  }, [textContent]);
-
-  useEffect(() => {
-    if (textContent !== "") {
-      const speech = new SpeechSynthesisUtterance();
-      speech.lang = "ko-KR";
-      speech.text = textContent;
-      window.speechSynthesis.speak(speech);
-    }
-  }, [textContent]);
+  const handleBlur = () => {
+    window.speechSynthesis.cancel();
+  };
 
   return (
     <ModalComponent open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -82,21 +29,23 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
         <Div>
           <Header
             tabIndex={0}
-            ref={(ref) => (focusRef.current[0] = ref)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             style={{ color: "white" }}
           >
             결제하기
           </Header>
         </Div>
         <ModalBody>
-          <Header tabIndex={0} ref={(ref) => (focusRef.current[1] = ref)}>
+          <Header tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
             앱으로 이동하여
             <br />
             결제를 진행해 주세요.
           </Header>
           <Row>
             <ModalButton
-              ref={(ref) => (focusRef.current[2] = ref)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               onClick={handleCompleteClick}
             >
               결제 완료
