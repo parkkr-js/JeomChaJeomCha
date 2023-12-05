@@ -7,7 +7,6 @@ import AudioBtn from "../../common/AudioBtn";
 
 function EnterMemberInfo() {
   const navigate = useNavigate();
-
   return (
     <Container>
       <NavDiv>
@@ -30,7 +29,6 @@ function EnterMemberInfo() {
         </Body1>
         <PhoneNumForm />
       </Content1_1>
-
       <Content1_1>
         <SubTitle1>주소를 입력해주세요.</SubTitle1>
         <Body1>

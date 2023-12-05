@@ -13,7 +13,6 @@ function Search({ handleAddressCardList }) {
   const [address, setAddress] = useRecoilState(AddressState);
   const { transcript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-  const inputRef = useRef(null);
 
   const handleAddressChange = (event) => {
     if (!isListening) {
@@ -22,7 +21,6 @@ function Search({ handleAddressCardList }) {
   };
 
   useEffect(() => {
-    const inputElement = inputRef.current;
     let startTimer;
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening && !startTimer) {
@@ -63,15 +61,15 @@ function Search({ handleAddressCardList }) {
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    if (inputElement) {
-      inputElement.addEventListener("keydown", handleKeyDown);
-      inputElement.addEventListener("keyup", handleKeyUp);
+    if (document) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
     }
 
     return () => {
-      if (inputElement) {
-        inputElement.removeEventListener("keydown", handleKeyDown);
-        inputElement.removeEventListener("keyup", handleKeyUp);
+      if (document) {
+        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("keyup", handleKeyUp);
       }
       if (startTimer) {
         clearTimeout(startTimer);
@@ -86,8 +84,7 @@ function Search({ handleAddressCardList }) {
   }, [transcript, isListening]);
 
   useEffect(() => {
-    console.log(inputRef.current.value);
-    if (inputRef.current.value === address && transcript && !isListening) {
+    if (address && transcript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = address;
@@ -110,7 +107,6 @@ function Search({ handleAddressCardList }) {
       }}
     >
       <InputBase
-        ref={inputRef}
         value={address}
         onChange={handleAddressChange}
         sx={{
