@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import TopNavBar from "../../common/TopNavBar";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,63 +7,92 @@ import { PurchaseContext } from "../../model/PurchaseProvider";
 import CompleteBlock from "./components/CompleteBlock";
 
 const Complete = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const [book] = useContext(PurchaseContext);
   const purchase = useSelector((state) => state.shoppingCart.shoppingCart);
 
-  const setFocus = (element) => {
-    if (!element) return;
-
-    if (
-      getComputedStyle(element).whiteSpace === "nowrap" &&
-      element.textContent
-    )
-      element.tabIndex = 0;
-
-    Array.from(element.children).forEach((child) => setFocus(child));
-  };
-
   useEffect(() => {
-    setFocus(ref.current);
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
+
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
   }, []);
 
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
+
   return (
-    <Column ref={ref}>
-      <TopNavBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TopNavBar focusRef={focusRef} />
       <div style={{ height: "115px" }} />
-      <Header>구매 완료</Header>
+      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+        구매 완료
+      </Header>
       <div style={{ height: "35px" }} />
-      <Title>결제가 완료되었습니다.</Title>
+      <Title tabIndex={0} ref={(ref) => (focusRef.current[7] = ref)}>
+        결제가 완료되었습니다.
+      </Title>
       <div style={{ height: "15px" }} />
-      <SubTitleReg>
+      <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[8] = ref)}>
         여러분의 소중한 대체자료 참고서가
         <br />
         점자 인쇄소에서 출력 후 4일 내로 배송 예정입니다.
       </SubTitleReg>
       <div style={{ height: "25px" }} />
-      <BodyReg>점차점자가 여러분의 더 넓은 미래를 응원합니다.</BodyReg>
+      <BodyReg tabIndex={0} ref={(ref) => (focusRef.current[9] = ref)}>
+        점차점자가 여러분의 더 넓은 미래를 응원합니다.
+      </BodyReg>
       <div style={{ height: "40px" }} />
-      <Body>구매 내역</Body>
+      <Body tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
+        구매 내역
+      </Body>
       <div style={{ height: "20px" }} />
       {id === "true" ? (
-        purchase.map((item) => {
+        purchase.map((item, i) => {
           return (
             <>
-              <CompleteBlock book={item} />
+              <CompleteBlock book={item} id={i + 1} focusRef={focusRef} />
               <div style={{ height: "10px" }} />
             </>
           );
         })
       ) : (
         <>
-          <CompleteBlock book={book} />
+          <CompleteBlock book={book} id={1} focusRef={focusRef} />
           <div style={{ height: "10px" }} />
         </>
       )}
       <div style={{ height: "60px" }} />
-      <Button onClick={() => navigate("/")}>홈으로 돌아가기</Button>
+      <Button
+        ref={(ref) =>
+          id === "true"
+            ? (focusRef.current[10 + purchase.length * 2 + 1] = ref)
+            : (focusRef.current[13] = ref)
+        }
+        onClick={() => navigate("/")}
+      >
+        홈으로 돌아가기
+      </Button>
     </Column>
   );
 };

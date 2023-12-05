@@ -9,7 +9,7 @@ import AddModal from "../../common/AddModal";
 import { PurchaseContext } from "../../model/PurchaseProvider";
 
 const ShoppingCart = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -19,28 +19,12 @@ const ShoppingCart = () => {
   const handleRemoveClick = () => {
     dispatch(removeAllCart());
     setIsOpen(true);
-    setTimeout(() => setIsOpen(false), 3000);
+    setTimeout(() => setIsOpen(false), 1000);
   };
 
   const handlePurchaseClick = () => {
     navigate("/purchase/true");
   };
-
-  useEffect(() => {
-    const setFocus = (element) => {
-      if (!element) return;
-
-      if (
-        getComputedStyle(element).whiteSpace === "nowrap" &&
-        element.textContent
-      )
-        element.tabIndex = 0;
-
-      Array.from(element.children).forEach((child) => setFocus(child));
-    };
-
-    setFocus(ref.current);
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -61,8 +45,8 @@ const ShoppingCart = () => {
   }, [navigate, setPurchase, shoppingCart]);
 
   return (
-    <Column ref={ref}>
-      <TopNavBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TopNavBar focusRef={focusRef} />
       <div style={{ height: "45px" }} />
       <Header>장바구니</Header>
       <div style={{ height: "10px" }} />
@@ -91,7 +75,7 @@ const ShoppingCart = () => {
         shoppingCart.map((book, i) => {
           return (
             <>
-              <CartBlock book={book} id={i} />
+              <CartBlock book={book} id={i} focusRef={focusRef} />
               <div style={{ height: "10px" }} />
             </>
           );

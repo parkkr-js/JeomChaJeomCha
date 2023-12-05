@@ -1,9 +1,13 @@
 import Modal from "@mui/material/Modal";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
   const navigate = useNavigate();
+  const [reRender, setReRender] = useState(false);
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
 
   const handleCompleteClick = () => {
     setIsModalOpen(false);
@@ -11,20 +15,62 @@ const CompleteModal = ({ isModalOpen, setIsModalOpen, handleCancelClick }) => {
     navigate("./complete");
   };
 
+  useEffect(() => {
+    setReRender(true);
+  }, []);
+
+  useEffect(() => {
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
+
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
+  }, [reRender]);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
+
   return (
     <ModalComponent open={isModalOpen} onClose={() => setIsModalOpen(false)}>
       <Column>
         <Div>
-          <Header style={{ color: "white" }}>결제하기</Header>
+          <Header
+            tabIndex={0}
+            ref={(ref) => (focusRef.current[0] = ref)}
+            style={{ color: "white" }}
+          >
+            결제하기
+          </Header>
         </Div>
         <ModalBody>
-          <Header>
+          <Header tabIndex={0} ref={(ref) => (focusRef.current[1] = ref)}>
             앱으로 이동하여
             <br />
             결제를 진행해 주세요.
           </Header>
           <Row>
-            <ModalButton onClick={handleCompleteClick}>결제 완료</ModalButton>
+            <ModalButton
+              ref={(ref) => (focusRef.current[2] = ref)}
+              onClick={handleCompleteClick}
+            >
+              결제 완료
+            </ModalButton>
           </Row>
         </ModalBody>
       </Column>

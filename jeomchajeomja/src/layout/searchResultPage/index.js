@@ -13,7 +13,8 @@ import { useSelector } from "react-redux";
 import { ResultContext } from "../../model/ResultProvider";
 
 const SearchResult = () => {
-  const ref = useRef(null);
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
   const bookLists = useSelector((state) => state.book.book);
   const [result, setResult] = useContext(ResultContext);
   const [keyword] = useContext(SearchContext);
@@ -24,20 +25,31 @@ const SearchResult = () => {
     useSpeechRecognition();
 
   useEffect(() => {
-    const setFocus = (element) => {
-      if (!element) return;
-
-      if (
-        getComputedStyle(element).whiteSpace === "nowrap" &&
-        element.textContent
-      )
-        element.tabIndex = 0;
-
-      Array.from(element.children).forEach((child) => setFocus(child));
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
     };
 
-    setFocus(ref.current);
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
   }, []);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
 
   useEffect(() => {
     setResult(
@@ -114,40 +126,64 @@ const SearchResult = () => {
   }
 
   return (
-    <Column ref={ref}>
-      <TitleBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TitleBar focusRef={focusRef} />
       <EnterSearch
         transcript={transcript}
         isListening={isListening}
         setResult={setResult}
         bookLists={bookLists}
         setIsFocusing={setIsFocusing}
+        focusRef={focusRef}
       />
       <div style={{ height: "75px" }} />
       {result.length === 0 ? (
         <>
           <img src={magnifyingGlass} alt="돋보기 아이콘" />
           <div style={{ height: "24px" }} />
-          <SubTitleReg>‘{keyword}’에 맞는 검색 결과가 없습니다</SubTitleReg>
+          <SubTitleReg tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
+            ‘{keyword}’에 맞는 검색 결과가 없습니다
+          </SubTitleReg>
           <div style={{ height: "120px" }} />
         </>
       ) : (
         <Column style={{ alignItems: "flex-start" }}>
-          <SubTitle style={{ margin: "0 240px 8px" }}>
+          <SubTitle
+            style={{ margin: "0 240px 8px" }}
+            tabIndex={0}
+            ref={(ref) => (focusRef.current[10] = ref)}
+          >
             "{keyword}" 검색 결과 총 {result.length}건
           </SubTitle>
           {result.map((book, i) => (
             <>
-              <BookBlock book={book} id={i} />
+              <BookBlock book={book} id={i + 1} focusRef={focusRef} />
               <div style={{ height: "20px" }} />
             </>
           ))}
         </Column>
       )}
       <div style={{ height: "80px" }} />
-      <BodyReg>찾으시는 자료가 없다면, 새로 신청할 수 있습니다. </BodyReg>
+      <BodyReg
+        tabIndex={0}
+        ref={
+          result.length === 0
+            ? (ref) => (focusRef.current[11] = ref)
+            : (ref) => (focusRef.current[11 + result.length * 5] = ref)
+        }
+      >
+        찾으시는 자료가 없다면, 새로 신청할 수 있습니다.{" "}
+      </BodyReg>
       <div style={{ height: "12px" }} />
-      <Button>학습자료 신청하기</Button>
+      <Button
+        ref={
+          result.length === 0
+            ? (ref) => (focusRef.current[12] = ref)
+            : (ref) => (focusRef.current[12 + result.length * 5] = ref)
+        }
+      >
+        학습자료 신청하기
+      </Button>
       <div style={{ height: "50px" }} />
     </Column>
   );

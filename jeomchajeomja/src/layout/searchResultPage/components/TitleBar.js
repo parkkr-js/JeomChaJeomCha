@@ -1,49 +1,62 @@
-import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const TitleBar = () => {
+const TitleBar = ({ focusRef }) => {
   const navigate = useNavigate();
-  const ref = useRef(null);
-
-  useEffect(() => {
-    ref.current.focus();
-  }, []);
 
   return (
     <Column>
       <Row>
         <Button
-          ref={ref}
+          ref={(ref) => (focusRef.current[1] = ref)}
           style={{ boxShadow: "0 0 5px #0079e0" }}
           onClick={() => navigate(-1)}
         >
           뒤로가기
         </Button>
         <LinkDiv>
-          <Button>음성 사용 설명서 듣기</Button>
+          <Button ref={(ref) => (focusRef.current[2] = ref)}>
+            음성 사용 설명서 듣기
+          </Button>
           <div style={{ width: "20px" }} />
           <Link
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <SubTitleReg>로그아웃</SubTitleReg>
+            <SubTitleReg
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[3] = ref)}
+            >
+              로그아웃
+            </SubTitleReg>
           </Link>
           <SubTitle>&nbsp; | &nbsp;</SubTitle>
           <Link style={{ textDecoration: "none", color: "inherit" }}>
-            <SubTitleReg>내정보</SubTitleReg>
+            <SubTitleReg
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[4] = ref)}
+            >
+              내정보
+            </SubTitleReg>
           </Link>
           <SubTitle>&nbsp; | &nbsp;</SubTitle>
           <Link
             to="/shoppingCart"
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <SubTitleReg>장바구니</SubTitleReg>
+            <SubTitleReg
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[5] = ref)}
+            >
+              장바구니
+            </SubTitleReg>
           </Link>
         </LinkDiv>
       </Row>
       <div style={{ height: "83px" }} />
-      <Header>학습자료 검색</Header>
+      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+        학습자료 검색
+      </Header>
       <div style={{ height: "65px" }} />
     </Column>
   );

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookInformation = ({ book }) => {
+const BookInformation = ({ book, focusRef }) => {
   return (
     <>
-      <Row>
+      <Row tabIndex={0} ref={(ref) => (focusRef.current[7] = ref)}>
         <div
           style={{
             borderLeft: "4px solid black",

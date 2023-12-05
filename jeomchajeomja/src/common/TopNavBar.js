@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const TopNavBar = () => {
+const TopNavBar = ({ focusRef }) => {
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
@@ -15,11 +15,22 @@ const TopNavBar = () => {
 
   return (
     <Row>
-      <TitleButton onClick={() => navigate(-1)}>뒤로가기</TitleButton>
+      <TitleButton
+        ref={(ref) => (focusRef.current[1] = ref)}
+        onClick={() => navigate(-1)}
+      >
+        뒤로가기
+      </TitleButton>
       <LinkDiv>
-        <TitleButton>음성 사용 설명서 듣기</TitleButton>
+        <TitleButton ref={(ref) => (focusRef.current[2] = ref)}>
+          음성 사용 설명서 듣기
+        </TitleButton>
         <div style={{ width: "20px" }} />
-        <SubTitleReg onClick={handleLogoutClick} style={{ fontSize: "25px" }}>
+        <SubTitleReg
+          ref={(ref) => (focusRef.current[3] = ref)}
+          onClick={handleLogoutClick}
+          style={{ fontSize: "25px" }}
+        >
           로그아웃
         </SubTitleReg>
         <div
@@ -29,7 +40,12 @@ const TopNavBar = () => {
             margin: "9px 16px",
           }}
         />
-        <SubTitleReg style={{ fontSize: "25px" }}>내정보</SubTitleReg>
+        <SubTitleReg
+          ref={(ref) => (focusRef.current[4] = ref)}
+          style={{ fontSize: "25px" }}
+        >
+          내정보
+        </SubTitleReg>
         <div
           style={{
             borderLeft: "2px solid black",
@@ -38,6 +54,7 @@ const TopNavBar = () => {
           }}
         />
         <SubTitleReg
+          ref={(ref) => (focusRef.current[5] = ref)}
           onClick={handleShoppingCartClick}
           style={{ fontSize: "25px" }}
         >

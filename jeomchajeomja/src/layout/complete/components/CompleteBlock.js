@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const CompleteBlock = ({ book }) => {
+const CompleteBlock = ({ book, id, focusRef }) => {
   return (
     <div style={{ width: "100vw", padding: "0 340px" }}>
       <Link
@@ -11,11 +11,20 @@ const CompleteBlock = ({ book }) => {
       >
         <Block>
           <Row>
-            <Body style={{ fontSize: "30px" }}>{book.title}</Body>
+            <Body
+              tabIndex={0}
+              style={{ fontSize: "30px" }}
+              ref={(ref) => (focusRef.current[10 + (2 * id - 1)] = ref)}
+            >
+              {book.title}
+            </Body>
           </Row>
           <div style={{ height: "8px" }} />
           <Row>
-            <BodyReg>
+            <BodyReg
+              tabIndex={0}
+              ref={(ref) => (focusRef.current[10 + 2 * id] = ref)}
+            >
               과목 | {book.subject}&nbsp; &nbsp;발행일 | {book.publishDate}
               &nbsp; &nbsp;저자 | {book.author}
             </BodyReg>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -11,6 +11,8 @@ import { addCart } from "../../features/shoppingCart/shoppingCartSlice";
 import AddModal from "../../common/AddModal";
 
 const Detail = () => {
+  const focusRef = useRef([]);
+  const [textContent, setTextContent] = useState("");
   const bookLists = useSelector((state) => state.book.book);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,14 +20,6 @@ const Detail = () => {
   const book = bookLists.find((item) => String(item.id) === id);
   const [isOpen, setIsOpen] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
-
-  const handleKeyDown = (event) => {
-    if (event.key === "1") {
-      handlePurchaseClick();
-    } else if (event.key === "2") {
-      handleShoppingCartClick();
-    }
-  };
 
   const handleShoppingCartClick = () => {
     dispatch(addCart(book));
@@ -39,6 +33,14 @@ const Detail = () => {
   };
 
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "1") {
+        handlePurchaseClick();
+      } else if (event.key === "2") {
+        handleShoppingCartClick();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -46,25 +48,58 @@ const Detail = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleFocus = (index) => {
+      setTextContent(focusRef.current[index].textContent);
+    };
+
+    focusRef.current.forEach((ref, index) => {
+      ref.addEventListener("focus", () => handleFocus(index));
+    });
+
+    return () => {
+      const currentRef = focusRef.current; // 현재 값 저장
+      currentRef.forEach((ref, index) => {
+        if (ref !== null)
+          ref.removeEventListener("focus", () => handleFocus(index));
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    if (textContent !== "") {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = textContent;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [textContent]);
+
   return (
-    <Column>
-      <TopNavBar />
+    <Column ref={(ref) => (focusRef.current[0] = ref)}>
+      <TopNavBar focusRef={focusRef} />
       <div style={{ height: "45px" }} />
-      <Header>{book?.title}</Header>
+      <Header tabIndex={0} ref={(ref) => (focusRef.current[6] = ref)}>
+        {book?.title}
+      </Header>
       <div style={{ height: "60px" }} />
-      <BookInformation book={book} />
+      <BookInformation focusRef={focusRef} book={book} />
       <div style={{ height: "78px" }} />
-      <Row>
+      <Row tabIndex={0} ref={(ref) => (focusRef.current[8] = ref)}>
         <SubTitle>인쇄비 : {book?.price.toLocaleString()} 원</SubTitle>
         <Title>+</Title>
         <SubTitle>배송비 : 3,000 원</SubTitle>
       </Row>
       <div style={{ height: "14px" }} />
-      <SubTitle style={{ fontSize: "40px" }}>
+      <SubTitle
+        style={{ fontSize: "40px" }}
+        tabIndex={0}
+        ref={(ref) => (focusRef.current[9] = ref)}
+      >
         총 금액 : {(book?.price + 3000).toLocaleString()} 원
       </SubTitle>
       <div style={{ height: "40px" }} />
-      <ButtonBar>
+      <ButtonBar tabIndex={0} ref={(ref) => (focusRef.current[10] = ref)}>
         <BodyButton
           style={{ color: "white", backgroundColor: "black" }}
           onClick={handlePurchaseClick}
@@ -80,9 +115,9 @@ const Detail = () => {
         <BodyButton>③ 파일 다운받기</BodyButton>
       </ButtonBar>
       <div style={{ height: "60px" }} />
-      <BookIntroduction book={book} />
+      <BookIntroduction focusRef={focusRef} book={book} />
       <div style={{ height: "40px" }} />
-      <BookIndex book={book} />
+      <BookIndex focusRef={focusRef} book={book} />
     </Column>
   );
 };

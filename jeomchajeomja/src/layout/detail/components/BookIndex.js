@@ -1,49 +1,53 @@
 import React from "react";
 import styled from "styled-components";
 
-const BookIndex = ({ book }) => {
+const BookIndex = ({ book, focusRef }) => {
   return (
     <>
-      <Title>목차</Title>
+      <Title tabIndex={0} ref={(ref) => (focusRef.current[13] = ref)}>
+        목차
+      </Title>
       <div style={{ height: "40px" }} />
-      <BigIndex>{book?.bigIndex[0]}</BigIndex>
-      <div style={{ height: "15px" }} />
-      <SmallContent>
-        {book?.smallIndex[0].split("\n").map((line) => {
-          return (
-            <>
-              {line}
-              <br />
-            </>
-          );
-        })}
-      </SmallContent>
-      <div style={{ height: "35px" }} />
-      <BigIndex>{book?.bigIndex[1]}</BigIndex>
-      <div style={{ height: "15px" }} />
-      <SmallContent>
-        {book?.smallIndex[1].split("\n").map((line) => {
-          return (
-            <>
-              {line}
-              <br />
-            </>
-          );
-        })}
-      </SmallContent>
-      <div style={{ height: "35px" }} />
-      <BigIndex>{book?.bigIndex[2]}</BigIndex>
-      <div style={{ height: "15px" }} />
-      <SmallContent>
-        {book?.smallIndex[2].split("\n").map((line) => {
-          return (
-            <>
-              {line}
-              <br />
-            </>
-          );
-        })}
-      </SmallContent>
+      <div tabIndex={0} ref={(ref) => (focusRef.current[14] = ref)}>
+        <BigIndex>{book?.bigIndex[0]}</BigIndex>
+        <div style={{ height: "15px" }} />
+        <SmallContent>
+          {book?.smallIndex[0].split("\n").map((line) => {
+            return (
+              <>
+                {line}
+                <br />
+              </>
+            );
+          })}
+        </SmallContent>
+        <div style={{ height: "35px" }} />
+        <BigIndex>{book?.bigIndex[1]}</BigIndex>
+        <div style={{ height: "15px" }} />
+        <SmallContent>
+          {book?.smallIndex[1].split("\n").map((line) => {
+            return (
+              <>
+                {line}
+                <br />
+              </>
+            );
+          })}
+        </SmallContent>
+        <div style={{ height: "35px" }} />
+        <BigIndex>{book?.bigIndex[2]}</BigIndex>
+        <div style={{ height: "15px" }} />
+        <SmallContent>
+          {book?.smallIndex[2].split("\n").map((line) => {
+            return (
+              <>
+                {line}
+                <br />
+              </>
+            );
+          })}
+        </SmallContent>
+      </div>
     </>
   );
 };
