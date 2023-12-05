@@ -35,7 +35,7 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
         </Button>
         <LinkDiv>
           <Button onFocus={handleFocus} onBlur={handleBlur}>
-            음성 사용 설명서 듣기
+            점차점차 사용 설명서
           </Button>
           <div style={{ width: "20px" }} />
           {credential === null ? (

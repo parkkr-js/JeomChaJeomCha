@@ -4,7 +4,7 @@ function AudioBtn({ customStyle, onFocus, onBlur }) {
   const { color } = customStyle || {};
   return (
     <Btn onFocus={onFocus} onBlur={onBlur} style={customStyle}>
-      <Body style={{ color }}>음성 사용 설명서 듣기</Body>
+      <Body style={{ color }}>점차점차 사용 설명서</Body>
     </Btn>
   );
 }
