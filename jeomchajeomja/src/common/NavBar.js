@@ -1,28 +1,95 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../img/점차점자로고.svg";
 import AudioBtn from "../common/AudioBtn";
+import { useRecoilState } from "recoil";
+import { Credential } from "../recoil/atoms/Credential";
+import { googleLogout } from "@react-oauth/google";
+import { useRef } from "react";
 
 function NavBar() {
+  const navigate = useNavigate();
+  const focusRef = useRef([]);
+  const [credential, setCredential] = useRecoilState(Credential);
+
+  const handleLogoutClick = () => {
+    setCredential(null);
+    googleLogout();
+    navigate("/login");
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleShoppingCartClick = () => {
+    navigate("/shoppingCart");
+  };
+
   return (
     <Container>
-    <Div>
-      <LinkDiv>
-        <AudioBtn />
-        <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
-          <Body>로그인</Body>
-        </Link>
-      </LinkDiv>
-      <Header>
-        <RowDiv>
-          점차점자
-          <MainLogo src={Logo} alt="점차점자 로고" />
-        </RowDiv>
-        <SubHeader>
-          더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.
-        </SubHeader>
-      </Header>
-    </Div>
+      <Div>
+        <LinkDiv>
+          <AudioBtn />
+          <div style={{ width: "20px" }} />
+          {credential === null ? (
+            <SubTitleReg
+              onClick={handleLoginClick}
+              style={{ fontSize: "25px", cursor: "pointer" }}
+            >
+              로그인
+            </SubTitleReg>
+          ) : (
+            <>
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[3] = ref)}
+                onClick={handleLogoutClick}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                로그아웃
+              </SubTitleReg>
+              <div
+                style={{
+                  borderLeft: "2px solid black",
+                  height: "20px",
+                  margin: "9px 16px",
+                  borderColor: "white",
+                }}
+              />
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[4] = ref)}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                내정보
+              </SubTitleReg>
+              <div
+                style={{
+                  borderLeft: "2px solid black",
+                  height: "20px",
+                  margin: "9px 16px",
+                  borderColor: "white",
+                }}
+              />
+              <SubTitleReg
+                ref={(ref) => (focusRef.current[5] = ref)}
+                onClick={handleShoppingCartClick}
+                style={{ fontSize: "25px", cursor: "pointer" }}
+              >
+                장바구니
+              </SubTitleReg>
+            </>
+          )}
+        </LinkDiv>
+        <Header>
+          <RowDiv>
+            점차점자
+            <MainLogo src={Logo} alt="점차점자 로고" />
+          </RowDiv>
+          <SubHeader>
+            더 넓은 시야, 더 큰 꿈을 위해, 여러분들의 더 넓은 미래를 기대합니다.
+          </SubHeader>
+        </Header>
+      </Div>
     </Container>
   );
 }
@@ -54,14 +121,10 @@ const RowDiv = styled.div`
   gap: 20px;
 `;
 
-const Body = styled.body`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
-  font-style: normal;
-  font-weight: ${({ theme }) => theme.fontWeights.body1};
+const SubTitleReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
-  width: 80px;
-  line-height: 37.5px;
-  margin-left: 20px;
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
+  font-size: 25px;
 `;
 
 const LinkDiv = styled.div`
@@ -89,13 +152,13 @@ const Header = styled.div`
 `;
 
 const SubHeader = styled.div`
-color: ${({ theme }) => theme.colors.white};
-font-family: 'NanumMyeongjo', serif;
-font-size: 26px;
-font-style: normal;
-font-weight: ${({ theme }) => theme.fontWeights.header1};
-line-height: 39px;
-padding-bottom: 23px;
+  color: ${({ theme }) => theme.colors.white};
+  font-family: "NanumMyeongjo", serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: ${({ theme }) => theme.fontWeights.header1};
+  line-height: 39px;
+  padding-bottom: 23px;
 `;
 
 const MainLogo = styled.img`

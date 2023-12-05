@@ -136,15 +136,6 @@ const SubTitleReg = styled.div`
   color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1_reg};
   font-size: 25px;
-  margin: 0 auto;
-`;
-
-const SubTitle = styled.span`
-  font-size: 25px;
-  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
-  color: ${({ theme }) => theme.colors.white};
-  white-space: pre;
-  margin: 0 auto;
 `;
 
 const Button = styled.button`
