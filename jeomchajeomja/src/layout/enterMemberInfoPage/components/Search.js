@@ -1,7 +1,7 @@
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import { Button } from "../../home/components/Button";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -10,9 +10,10 @@ import { AddressState } from "../../../recoil/atoms/AddressState";
 
 function Search({ handleAddressCardList }) {
   const [isListening, setIsListening] = useState(false);
+  const [address, setAddress] = useRecoilState(AddressState);
   const { transcript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-  const [address, setAddress] = useRecoilState(AddressState);
+  const inputRef = useRef(null);
 
   const handleAddressChange = (event) => {
     if (!isListening) {
@@ -21,13 +22,16 @@ function Search({ handleAddressCardList }) {
   };
 
   useEffect(() => {
+    const inputElement = inputRef.current;
     let startTimer;
     const handleKeyDown = (event) => {
       if (event.key === " " && !isListening && !startTimer) {
         startTimer = setTimeout(() => {
           playBeep();
           setIsListening(true);
-          SpeechRecognition.startListening();
+          SpeechRecognition.startListening({
+            language: "ko-KR",
+          });
           startTimer = null;
         }, 200);
       }
@@ -48,28 +52,27 @@ function Search({ handleAddressCardList }) {
 
     const playBeep = () => {
       const audioContext = new window.AudioContext();
-
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
-
       gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
-
       oscillator.start();
       oscillator.stop(audioContext.currentTime + 0.6);
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+    if (inputElement) {
+      inputElement.addEventListener("keydown", handleKeyDown);
+      inputElement.addEventListener("keyup", handleKeyUp);
+    }
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
+      if (inputElement) {
+        inputElement.removeEventListener("keydown", handleKeyDown);
+        inputElement.removeEventListener("keyup", handleKeyUp);
+      }
       if (startTimer) {
         clearTimeout(startTimer);
       }
@@ -77,23 +80,20 @@ function Search({ handleAddressCardList }) {
   }, [isListening]);
 
   useEffect(() => {
-    setAddress(transcript);
-    if (transcript && !isListening) {
+    if (isListening && transcript) {
+      setAddress(transcript);
+    }
+  }, [transcript, isListening]);
+
+  useEffect(() => {
+    console.log(inputRef.current.value);
+    if (inputRef.current.value === address && transcript && !isListening) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = address;
       window.speechSynthesis.speak(speech);
     }
   }, [transcript, isListening]);
-
-  if (!browserSupportsSpeechRecognition) {
-    return (
-      <span>
-        죄송합니다. 음성인식을 지원하지 않는 브라우저입니다.
-        <br /> 크롬브라우저를 사용해주세요.
-      </span>
-    );
-  }
 
   return (
     <Paper
@@ -110,6 +110,7 @@ function Search({ handleAddressCardList }) {
       }}
     >
       <InputBase
+        ref={inputRef}
         value={address}
         onChange={handleAddressChange}
         sx={{
