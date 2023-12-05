@@ -21,7 +21,8 @@ const SearchResult = () => {
   const navigate = useNavigate();
   const [isListening, setIsListening] = useState(false);
   const [isFocusing, setIsFocusing] = useState(false);
-  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+  const [reading, setReading] = useState(false);
+  const { transcript, _, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
   useEffect(() => {
@@ -47,7 +48,12 @@ const SearchResult = () => {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
       window.speechSynthesis.speak(speech);
+      setReading(true);
     }
   }, [textContent]);
 
@@ -74,9 +80,16 @@ const SearchResult = () => {
           SpeechRecognition.startListening();
           startTimer = null; // 타이머 초기화
         }, 200);
-      } else if (event.key >= "1" && event.key <= "9" && !isFocusing) {
+      }
+
+      if (event.key >= "1" && event.key <= "9" && !isFocusing) {
         const int = parseInt(event.key, 10);
         if (result.length > int - 1) navigate(`./${result[int - 1].id}`);
+      }
+
+      if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
       }
     };
 
@@ -97,9 +110,12 @@ const SearchResult = () => {
     const playBeep = () => {
       const audioContext = new window.AudioContext();
       const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-      oscillator.connect(audioContext.destination);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
       oscillator.start();
       oscillator.stop(audioContext.currentTime + 0.6);
     };

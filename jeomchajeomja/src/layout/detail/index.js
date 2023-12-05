@@ -19,6 +19,7 @@ const Detail = () => {
   const { id } = useParams();
   const book = bookLists.find((item) => String(item.id) === id);
   const [isOpen, setIsOpen] = useState(false);
+  const [reading, setReading] = useState(false);
   const [, setPurchase] = useContext(PurchaseContext);
 
   const handleShoppingCartClick = () => {
@@ -38,6 +39,9 @@ const Detail = () => {
         handlePurchaseClick();
       } else if (event.key === "2") {
         handleShoppingCartClick();
+      } else if (event.key === "Tab" && reading) {
+        window.speechSynthesis.cancel();
+        setReading(false);
       }
     };
 
@@ -71,7 +75,12 @@ const Detail = () => {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "ko-KR";
       speech.text = textContent;
+      speech.addEventListener("end", () => {
+        setReading(false);
+      });
+
       window.speechSynthesis.speak(speech);
+      setReading(true);
     }
   }, [textContent]);
 

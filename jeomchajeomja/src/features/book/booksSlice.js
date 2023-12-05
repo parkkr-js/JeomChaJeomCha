@@ -36,7 +36,7 @@ const Books = [
     price: 18000,
     publisher: "희망 나눔 재단",
     publicationYear: "2023년",
-    author: "박지성",
+    author: "홍범준",
     translationYear: "2023년",
     publishDate: "2023년 12월 15일",
     referenceGrade: "고등학교 3학년",
