@@ -33,6 +33,11 @@ function NavBar({ handleFocus, handleBlur }) {
           {credential === null ? (
             <SubTitleReg
               tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleLogoutClick();
+                }
+              }}
               onFocus={handleFocus}
               onBlur={handleBlur}
               onClick={handleLoginClick}
