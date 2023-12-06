@@ -46,6 +46,15 @@ const EnterSearch = ({
     );
   }, [bookLists, keyword, setResult]);
 
+  useEffect(() => {
+    if (input && transcript && !isListening) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "ko-KR";
+      speech.text = input;
+      window.speechSynthesis.speak(speech);
+    }
+  }, [isListening]);
+
   return (
     <Column>
       <SubTitle tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
