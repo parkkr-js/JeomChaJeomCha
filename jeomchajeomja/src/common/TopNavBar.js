@@ -50,6 +50,11 @@ const TopNavBar = ({ handleFocus, handleBlur }) => {
         ) : (
           <>
             <SubTitleReg
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleLogoutClick();
+                }
+              }}
               tabIndex={0}
               onFocus={handleFocus}
               onBlur={handleBlur}
