@@ -46,7 +46,7 @@ const TitleBar = ({ handleFocus, handleBlur }) => {
             onFocus={handleFocus}
             onBlur={handleBlur}
           >
-            점차점차 사용 설명서
+            점차점자 사용 설명서
           </Button>
           <div style={{ width: "20px" }} />
           {credential === null ? (
