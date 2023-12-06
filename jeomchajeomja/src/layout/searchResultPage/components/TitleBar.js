@@ -134,6 +134,7 @@ const Column = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.black};
   width: 100%;
+  height: 293px;
   padding: 24px 240px;
   margin: 0 auto;
 `;
