@@ -91,7 +91,7 @@ const TitleButton = styled.button`
 
 const Header = styled.div`
   color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.header1};
+  font-weight: 900;
   font-size: ${({ theme }) => theme.fontSizes.header1};
   white-space: nowrap;
 `;

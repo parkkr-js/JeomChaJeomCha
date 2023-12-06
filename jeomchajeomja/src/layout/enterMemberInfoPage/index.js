@@ -184,10 +184,11 @@ const SubTitle1 = styled.div`
   margin-bottom: 10px;
 `;
 const Body1 = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: ${({ theme }) => theme.fontSizes.button1};
   color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.body1};
-  line-height: 37.5px;
+  font-weight: 400;
+  line-height: 150%;
+  padding-bottom: 15px;
 `;
 
 const StartBtn = styled.button`
