@@ -34,7 +34,7 @@ const TopNavBar = ({ handleFocus, handleBlur }) => {
       </TitleButton>
       <LinkDiv>
         <TitleButton onFocus={handleFocus} onBlur={handleBlur}>
-          점차점자 사용 설명서 듣기
+          점차점자 사용 설명서
         </TitleButton>
         <div style={{ width: "20px" }} />
         {credential === null ? (

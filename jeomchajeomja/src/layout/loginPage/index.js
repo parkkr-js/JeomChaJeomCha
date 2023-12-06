@@ -42,7 +42,7 @@ function Login() {
           뒤로가기
         </TitleButton>
         <TitleButton onFocus={handleFocus} onBlur={handleBlur}>
-          점차점자 사용 설명서 듣기
+          점차점자 사용 설명서
         </TitleButton>
       </Row>
       <div style={{ height: "115px" }} />
