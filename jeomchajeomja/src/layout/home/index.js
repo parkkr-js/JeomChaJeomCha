@@ -154,6 +154,7 @@ function Home() {
             </Link>
           ))}
         </ButtonContainer>
+        <Body3>해당 키워드의 번호를 입력하여 검색할 수 있습니다. </Body3>
       </Div>
     </>
   );
@@ -203,6 +204,14 @@ const Body2 = styled.div`
   line-height: 150%;
 `;
 
+const Body3 = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  line-height: 150%;
+  padding-bottom: 65px;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -211,7 +220,7 @@ const ButtonContainer = styled.div`
   gap: 10px;
   width: 1200px;
   height: fit-content;
-  margin-bottom: 80px;
+  margin-bottom: 15px;
   margin-top: 36px;
 `;
 
