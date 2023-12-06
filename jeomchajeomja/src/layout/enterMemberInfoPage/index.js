@@ -60,7 +60,9 @@ function EnterMemberInfo() {
     if (isModalVisible) {
       timer = setTimeout(() => {
         setIsModalVisible(false);
-      }, 3000);
+        navigate("/");
+      }, 2300);
+      
     }
     return () => clearTimeout(timer);
   }, [isModalVisible]);
