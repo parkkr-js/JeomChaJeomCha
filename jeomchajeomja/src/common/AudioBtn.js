@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Tutorial } from "./Tutorial"
+import { Tutorial } from "./Tutorial";
 
 function AudioBtn({ customStyle, onFocus, onBlur }) {
   const { color } = customStyle || {};
@@ -31,7 +31,7 @@ const Btn = styled.button`
   align-items: center;
   gap: 10px;
   border-radius: 10px;
-  border: 1.5px solid ${({ theme }) => theme.colors.white};
+  border: 2px solid ${({ theme }) => theme.colors.white};
   background-color: transparent;
 `;
 

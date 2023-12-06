@@ -182,6 +182,7 @@ const ModalBody1 = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 30px;
+  padding-bottom: 4px;
 `;
 
 const ModalBody2 = styled.div`
@@ -191,6 +192,7 @@ const ModalBody2 = styled.div`
   align-items: flex-start;
   color: ${({ theme }) => theme.colors.white};
   font-size: 20px;
+  padding-bottom: 4px;
   font-style: normal;
   font-weight: 400;
   line-height: 30px;

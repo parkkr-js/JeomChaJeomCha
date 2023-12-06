@@ -226,8 +226,8 @@ const Container2 = styled.div`
 `;
 
 const Body1 = styled.h1`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: ${({ theme }) => theme.fontSizes.button1};
   color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.fontWeights.body1};
+  font-weight: 400;
   line-height: 150%;
 `;

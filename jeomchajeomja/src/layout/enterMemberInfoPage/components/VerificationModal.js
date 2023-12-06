@@ -42,7 +42,7 @@ const ModalContainer = styled.div`
 `;
 
 const Body1 = styled.h1`
-  font-size: ${({ theme }) => theme.fontSizes.body1};
+  font-size: 25px;
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.body1};
   line-height: 150%;

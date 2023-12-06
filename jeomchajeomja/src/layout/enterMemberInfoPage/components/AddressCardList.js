@@ -67,13 +67,14 @@ const RowDiv = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  padding-bottom: 8px;
 `;
 
 const Card = styled.div`
   width: 920px;
   height: 140px;
   border-radius: 20px;
-  border: 2px solid ${({ theme }) => theme.colors.black};
+  border: 3px solid ${({ theme }) => theme.colors.black};
   padding: 23px 40px 34px 40px;
 `;
 const CardHeader = styled.div`
@@ -81,7 +82,7 @@ const CardHeader = styled.div`
   font-size: 30px;
   font-style: normal;
   margin-right: 23px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 45px;
   gap: 23px;
 `;
@@ -103,7 +104,7 @@ const NumBtn = styled.button`
   color: var(--Background---White, #fff);
   font-size: 20px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 30px;
   padding: 10px;
   flex-direction: column;

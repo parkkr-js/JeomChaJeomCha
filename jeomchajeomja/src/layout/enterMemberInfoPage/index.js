@@ -83,7 +83,7 @@ function EnterMemberInfo() {
             onBlur={handleBlur}
             customStyle={{
               color: "black",
-              border: "1px solid var(--Black, #000",
+              border: "2px solid var(--Black, #000",
             }}
           />
         </NavDiv>
@@ -137,6 +137,8 @@ const NavDiv = styled.div`
   width: 100%;
   height: fit-content;
   margin-top: 25px;
+  padding-left: 240px;
+  padding-right: 240px;
   margin-bottom: 115px;
 `;
 
@@ -151,7 +153,7 @@ const Btn = styled.button`
   align-items: center;
   gap: 10px;
   border-radius: 10px;
-  border: 1px solid #000;
+  border: 2px solid #000;
   color: #000;
   font-family: "NanumGothic", serif;
   font-size: 20px;
