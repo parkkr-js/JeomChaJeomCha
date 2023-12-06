@@ -16,7 +16,7 @@ function AudioBtn({ customStyle, onFocus, onBlur }) {
       onBlur={onBlur}
       style={customStyle}
     >
-      <Body style={{ color }}>점차점차 사용 설명서</Body>
+      <Body style={{ color }}>점차점자 사용 설명서</Body>
     </Btn>
   );
 }

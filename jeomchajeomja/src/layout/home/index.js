@@ -125,9 +125,9 @@ function Home() {
             해당 학년 혹은 교재명과 같은 키워드를 입력해주세요.
           </Body>
         </Row>
-        <Body tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
+        <Body2 tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
           스페이스바를 누르는 동안 음성 검색이 활성화됩니다.
-        </Body>
+        </Body2>
         <Search
           transcript={transcript}
           isListening={isListening}
@@ -190,7 +190,16 @@ const Body = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitle1};
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
+  /* padding-bottom: 36px; */
+  line-height: 150%;
+`;
+
+const Body2 = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.subtitle1};
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.fontWeights.subtitle1};
   padding-bottom: 36px;
+  padding-top: 4px;
   line-height: 150%;
 `;
 
