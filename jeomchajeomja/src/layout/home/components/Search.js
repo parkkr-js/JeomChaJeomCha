@@ -56,7 +56,11 @@ export default function Search({
         <Button
           onFocus={handleFocus}
           onBlur={handleBlur}
+          disabled={keyword === ""}
           style={{
+            ...(keyword === ""
+              ? { opacity: "0.2", cursor: "not-allowed" }
+              : {}),
             display: "inline-flex",
             width: "fit-content",
             height: "auto",
