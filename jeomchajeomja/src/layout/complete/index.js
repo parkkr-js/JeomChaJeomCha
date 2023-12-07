@@ -40,7 +40,7 @@ const Complete = () => {
     });
 
     return () => {
-      const currentRef = focusRef.current; // 현재 값 저장
+      const currentRef = focusRef.current;
       currentRef.forEach((ref, index) => {
         if (ref !== null)
           ref.removeEventListener("focus", () => handleFocus(index));

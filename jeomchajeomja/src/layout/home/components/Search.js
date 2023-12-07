@@ -15,9 +15,8 @@ export default function Search({
 
   const handleKeywordChange = (event) => {
     if (isListening) {
-      event.preventDefault(); // isListening이 true일 때 스페이스바 쭈욱~입력 방지
+      event.preventDefault();
     } else {
-      // isListening이 false일 때 정상적으로 입력 처리 ㄱㄱ
       setKeyword(event.target.value);
     }
   };

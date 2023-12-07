@@ -99,18 +99,7 @@ function CertificationForm({ onFocus, onBlur, inputRef }) {
     }
   }, [certiScript, isListening]);
 
-  // useEffect(() => {
-  //   console.log(inputRef.current.value);
-  //   if ( inputRef.current.value === certiNum && certiScript && !isListening) {
-  //     const speech = new SpeechSynthesisUtterance();
-  //     speech.lang = "ko-KR";
-  //     speech.text = ConvertNumberToKorean(certiNum);
-  //     window.speechSynthesis.speak(speech);
-  //   }
-  // }, [certiScript, isListening]);
-
   useEffect(() => {
-    // 현재 포커스가 inputRef에 있는지 확인
     if (inputRef.current && document.activeElement === inputRef.current) {
       console.log(inputRef.current.value);
 

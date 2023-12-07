@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import PhoneNumForm from "./components/PhoneNumForm";
@@ -62,7 +62,6 @@ function EnterMemberInfo() {
         setIsModalVisible(false);
         navigate("/");
       }, 2300);
-      
     }
     return () => clearTimeout(timer);
   }, [isModalVisible]);
