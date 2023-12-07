@@ -37,7 +37,6 @@ const Btn = styled.button`
 
 const Body = styled.div`
   color: ${({ theme }) => theme.colors.white};
-  /* font-family: "Nanum Gothic", serif; */
   font-size: 20px;
   font-style: normal;
   font-weight: 700;

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import NotFoundImg from "../../img/404.png";
 import Logo from "../../img/점차점자로고.svg";
 
 function NotFound() {
@@ -13,7 +12,6 @@ function NotFound() {
         <br />
         입력하신 주소가 정확한지 다시 한번 확인해주세요.
       </Description>
-      <NotFoundImage src={NotFoundImg} alt="404 Not Found" />
     </NotFoundContainer>
   );
 }
@@ -25,8 +23,8 @@ const NotFoundContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw; 
-  height: 100vh; 
+  width: 100vw;
+  height: 100vh;
   text-align: center;
   background-color: ${({ theme }) => theme.colors.black};
 `;
@@ -43,13 +41,7 @@ const Description = styled.body`
   color: ${({ theme }) => theme.colors.white};
 `;
 
-const NotFoundImage = styled.img`
-  width: auto;
-  height: auto;
-  border-radius: 200px;
-`;
-
 const MainLogo = styled.img`
-    width: 300px;
-    height: auto;
-    `;
+  width: 300px;
+  height: auto;
+`;
