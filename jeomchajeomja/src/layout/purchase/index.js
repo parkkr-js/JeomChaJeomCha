@@ -58,6 +58,12 @@ const Purchase = () => {
         if (purchase.length > int - 1)
           navigate(`/search/${purchase[int - 1].id}`);
       }
+
+      if (event.key === "2") {
+        handleConditionChange();
+      } else if (event.key === "3") {
+        setIsOpen(true);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -147,7 +153,7 @@ const Purchase = () => {
           onFocus={handleFocus}
           onBlur={handleBlur}
         >
-          {isDisabled ? "수정하기" : "완료"}
+          ② {isDisabled ? "수정하기" : "완료"}
         </EditButton>
       </Row>
       <div style={{ height: "10px" }} />
@@ -224,7 +230,7 @@ const Purchase = () => {
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        구매하기
+        ③ 구매하기
       </PurchaseButton>
       {isOpen && <StyledModal isOpen={isOpen} setIsOpen={setIsOpen} />}
     </Column>
