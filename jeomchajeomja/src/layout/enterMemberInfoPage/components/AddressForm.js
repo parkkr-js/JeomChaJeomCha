@@ -21,8 +21,8 @@ function AddressForm({ onFocus, onBlur }) {
   const subAddressInputRef = useRef(null);
 
   const handleFindAddressClick = () => {
-    setIsModalVisible(!isModalVisible);   
-    subAddressInputRef.current.focus(); 
+    setIsModalVisible(!isModalVisible);
+    subAddressInputRef.current.focus();
   };
 
   const handleAddressChange = (event) => {
@@ -103,7 +103,7 @@ function AddressForm({ onFocus, onBlur }) {
       window.speechSynthesis.speak(speech);
     }
   }, [isListening]);
-  
+
   return (
     <Colunm>
       <Row>
