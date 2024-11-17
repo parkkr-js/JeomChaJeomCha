@@ -45,6 +45,10 @@ const ShoppingCart = () => {
           setPurchase(shoppingCart[int - 1]);
           navigate("/purchase/false");
         }
+      } else if (event.key === "2") {
+        handleRemoveClick();
+      } else if (event.key === "3") {
+        handlePurchaseClick();
       }
     };
 
@@ -127,7 +131,7 @@ const ShoppingCart = () => {
           onBlur={handleBlur}
           onClick={handleRemoveClick}
         >
-          전체 삭제하기
+          ② 전체 삭제하기
         </Button>
         {isOpen && (
           <AddModal
@@ -147,7 +151,7 @@ const ShoppingCart = () => {
           onBlur={handleBlur}
           onClick={handlePurchaseClick}
         >
-          전체 구매하기
+          ③ 전체 구매하기
         </Button>
       </ButtonBar>
     </Column>

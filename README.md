@@ -24,6 +24,7 @@
 |:---:|:---:|
 | Slide 7 | Slide 7 |
 ### RoadMap
- ![Slide 16_9 - 9](https://github.com/Park21700305/JeomChaJeomCha/assets/93187535/7fb4e5c3-624a-4284-b1ea-d39459712ab3) 
+ ![KakaoTalk_Photo_2024-11-17-17-09-00](https://github.com/user-attachments/assets/c05a0dd0-cb87-4bc6-8c76-04c32dbfaa7a)
+
 
 
