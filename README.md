@@ -4,8 +4,6 @@
 - 박지성
 - 김진서
 
-## 개발 진행중
-
 ### 서비스 설명
 
 | ![Slide 11](https://github.com/Park21700305/JeomChaJeomCha/assets/93187535/e5dfa489-f4b4-49a7-948b-5d343e22b2dd) | ![Slide 12](https://github.com/Park21700305/JeomChaJeomCha/assets/93187535/7de88aef-e0f4-40a9-99b7-bcb3fe3b9e47) |
